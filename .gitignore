@@ -1,0 +1,31 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Natural Earth build inputs remain local; production uses generated assets.
+data/raw/
+
+# This generated file is stored as a smaller gzip in the source repository and
+# restored by scripts/prepare-deploy-data.mjs before each production build.
+public/geo/admin1.geojson
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
