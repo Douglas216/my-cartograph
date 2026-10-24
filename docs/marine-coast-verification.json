@@ -5,699 +5,638 @@
     {
       "name": "Black Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.0838250944998444e-07,
-      "previousLandOverlapSquareDegrees": 0.2898401364641281
+      "landOverlapSquareDegrees": 1.0838250944998444e-07
     },
     {
       "name": "Philippine Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 4.775849241451645e-08,
-      "previousLandOverlapSquareDegrees": 0.5942290144963077
+      "landOverlapSquareDegrees": 4.775849241451645e-08
     },
     {
       "name": "Tasman Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 9.705939745199544e-08,
-      "previousLandOverlapSquareDegrees": 0.5185549486051263
+      "landOverlapSquareDegrees": 9.705939745199544e-08
     },
     {
       "name": "Bay of Bengal",
       "valid": true,
-      "landOverlapSquareDegrees": 1.7852316317631843e-07,
-      "previousLandOverlapSquareDegrees": 0.6536038418183807
+      "landOverlapSquareDegrees": 1.7852316317631843e-07
     },
     {
       "name": "South China Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.0015128077107512e-07,
-      "previousLandOverlapSquareDegrees": 1.4514105752998525
+      "landOverlapSquareDegrees": 2.0015128077107512e-07
     },
     {
       "name": "Arabian Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.0606932388270807e-08,
-      "previousLandOverlapSquareDegrees": 0.3309215305435992
+      "landOverlapSquareDegrees": 5.0606932388270807e-08
     },
     {
       "name": "Beaufort Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.6461675924475583e-07,
-      "previousLandOverlapSquareDegrees": 0.4110694587073101
+      "landOverlapSquareDegrees": 2.6461675924475583e-07
     },
     {
       "name": "Caribbean Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.97705321614631e-07,
-      "previousLandOverlapSquareDegrees": 1.0555262664601377
+      "landOverlapSquareDegrees": 1.97705321614631e-07
     },
     {
       "name": "Gulf of Mexico",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2754730612649476e-07,
-      "previousLandOverlapSquareDegrees": 0.5504288316419745
+      "landOverlapSquareDegrees": 1.2754730612649476e-07
     },
     {
       "name": "Labrador Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.111236631372294e-07,
-      "previousLandOverlapSquareDegrees": 0.8362622745607835
+      "landOverlapSquareDegrees": 3.111236631372294e-07
     },
     {
       "name": "Hudson Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.3896807250134641e-07,
-      "previousLandOverlapSquareDegrees": 1.3833645849552957e-15
+      "landOverlapSquareDegrees": 1.3896807250134641e-07
     },
     {
       "name": "Caspian Sea",
       "valid": true,
       "landOverlapSquareDegrees": 0,
-      "note": "Inland lake; land-mask overlap does not apply.",
-      "previousLandOverlapSquareDegrees": 0.40472935211411487
+      "note": "Inland lake; land-mask overlap does not apply."
     },
     {
       "name": "Baffin Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 7.12121279345064e-07,
-      "previousLandOverlapSquareDegrees": 1.3912664684881828
+      "landOverlapSquareDegrees": 7.12121279345064e-07
     },
     {
       "name": "Gulf of Alaska",
       "valid": true,
-      "landOverlapSquareDegrees": 2.2417452558589209e-07,
-      "previousLandOverlapSquareDegrees": 1.0442322058037954
+      "landOverlapSquareDegrees": 2.2417452558589209e-07
     },
     {
       "name": "Red Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.216902458928552e-07,
-      "previousLandOverlapSquareDegrees": 0.3425129728472461
+      "landOverlapSquareDegrees": 1.216902458928552e-07
     },
     {
       "name": "Sea of Okhotsk",
       "valid": true,
-      "landOverlapSquareDegrees": 1.3606821080534865e-07,
-      "previousLandOverlapSquareDegrees": 0.61568871073779
+      "landOverlapSquareDegrees": 1.3606821080534865e-07
     },
     {
       "name": "Weddell Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.0578004997203357e-06,
-      "previousLandOverlapSquareDegrees": 2.787497469709763
+      "landOverlapSquareDegrees": 2.0578004997203357e-06
     },
     {
       "name": "Persian Gulf",
       "valid": true,
-      "landOverlapSquareDegrees": 8.269380720991278e-08,
-      "previousLandOverlapSquareDegrees": 0.37726630022154356
+      "landOverlapSquareDegrees": 8.269380720991278e-08
     },
     {
       "name": "Mediterranean Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.9319310039758505e-07,
-      "previousLandOverlapSquareDegrees": 0.6470138979291039
+      "landOverlapSquareDegrees": 2.9319310039758505e-07
     },
     {
       "name": "Ross Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.6953712789079633e-06,
-      "previousLandOverlapSquareDegrees": 3.298728241216264
+      "landOverlapSquareDegrees": 2.6953712789079633e-06
     },
     {
       "name": "Coral Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 4.973439705271038e-08,
-      "previousLandOverlapSquareDegrees": 0.6891639276598371
+      "landOverlapSquareDegrees": 4.973439705271038e-08
     },
     {
       "name": "Sea of Japan",
       "valid": true,
-      "landOverlapSquareDegrees": 8.631570327472717e-08,
-      "previousLandOverlapSquareDegrees": 0.5165820690708502
+      "landOverlapSquareDegrees": 8.631570327472717e-08
     },
     {
       "name": "Celebes Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.164200144764258e-08,
-      "previousLandOverlapSquareDegrees": 0.3589969264107796
+      "landOverlapSquareDegrees": 3.164200144764258e-08
     },
     {
       "name": "Sulu Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.6753312022640775e-08,
-      "previousLandOverlapSquareDegrees": 0.2708460151211632
+      "landOverlapSquareDegrees": 2.6753312022640775e-08
     },
     {
       "name": "Norwegian Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.8987849768524965e-07,
-      "previousLandOverlapSquareDegrees": 1.5249865409612609
+      "landOverlapSquareDegrees": 3.8987849768524965e-07
     },
     {
       "name": "Greenland Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 9.978812519467108e-07,
-      "previousLandOverlapSquareDegrees": 3.465268089676656
+      "landOverlapSquareDegrees": 9.978812519467108e-07
     },
     {
       "name": "Banda Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.4905673488530164e-08,
-      "previousLandOverlapSquareDegrees": 0.6720968271205991
+      "landOverlapSquareDegrees": 5.4905673488530164e-08
     },
     {
       "name": "Luzon Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 0.0,
-      "previousLandOverlapSquareDegrees": 9.421899979845548e-08
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Bay of Biscay",
       "valid": true,
-      "landOverlapSquareDegrees": 9.272185949917852e-09,
-      "previousLandOverlapSquareDegrees": 0.1697443741003926
+      "landOverlapSquareDegrees": 9.272185949917852e-09
     },
     {
       "name": "Mozambique Channel",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2081291457749263e-07,
-      "previousLandOverlapSquareDegrees": 0.44513511591597604
+      "landOverlapSquareDegrees": 1.2081291457749263e-07
     },
     {
       "name": "Gulf of Guinea",
       "valid": true,
-      "landOverlapSquareDegrees": 6.168329102680618e-08,
-      "previousLandOverlapSquareDegrees": 0.14649080140397872
+      "landOverlapSquareDegrees": 6.168329102680618e-08
     },
     {
       "name": "Scotia Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.5426447803530228e-09,
-      "previousLandOverlapSquareDegrees": 0.042573823260716466
+      "landOverlapSquareDegrees": 3.5426447803530228e-09
     },
     {
       "name": "Baltic Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.7900601320873886e-07,
-      "previousLandOverlapSquareDegrees": 0.3943599123462633
+      "landOverlapSquareDegrees": 1.7900601320873886e-07
     },
     {
       "name": "Barents Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2797911874704926e-06,
-      "previousLandOverlapSquareDegrees": 2.4130605304338943
+      "landOverlapSquareDegrees": 1.2797911874704926e-06
     },
     {
       "name": "North Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.1380069225944753e-07,
-      "previousLandOverlapSquareDegrees": 0.6465872292582867
+      "landOverlapSquareDegrees": 2.1380069225944753e-07
     },
     {
       "name": "Irish Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 7.477775541107393e-10,
-      "previousLandOverlapSquareDegrees": 0.16971752475558677
+      "landOverlapSquareDegrees": 7.477775541107393e-10
     },
     {
       "name": "Java Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 6.557383793549289e-08,
-      "previousLandOverlapSquareDegrees": 0.32495441651030077
+      "landOverlapSquareDegrees": 6.557383793549289e-08
     },
     {
       "name": "Andaman Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 6.908669781784215e-08,
-      "previousLandOverlapSquareDegrees": 0.5228285941553832
+      "landOverlapSquareDegrees": 6.908669781784215e-08
     },
     {
       "name": "Yellow Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.6818771712899335e-08,
-      "previousLandOverlapSquareDegrees": 0.4690348519785756
+      "landOverlapSquareDegrees": 5.6818771712899335e-08
     },
     {
       "name": "East China Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.5842606142580744e-08,
-      "previousLandOverlapSquareDegrees": 0.5107922759546226
+      "landOverlapSquareDegrees": 5.5842606142580744e-08
     },
     {
       "name": "Chukchi Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.599645890384676e-07,
-      "previousLandOverlapSquareDegrees": 0.37113196900794515
+      "landOverlapSquareDegrees": 2.599645890384676e-07
     },
     {
       "name": "Bah\u00eda de Campeche",
       "valid": true,
-      "landOverlapSquareDegrees": 1.879182584404537e-08,
-      "previousLandOverlapSquareDegrees": 0.04567156391627426
+      "landOverlapSquareDegrees": 1.879182584404537e-08
     },
     {
       "name": "Arafura Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 7.197794700192025e-08,
-      "previousLandOverlapSquareDegrees": 0.5475632173899792
+      "landOverlapSquareDegrees": 7.197794700192025e-08
     },
     {
       "name": "Timor Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 4.221058713574021e-08,
-      "previousLandOverlapSquareDegrees": 0.15015431723585532
+      "landOverlapSquareDegrees": 4.221058713574021e-08
     },
     {
       "name": "Gulf of Thailand",
       "valid": true,
-      "landOverlapSquareDegrees": 4.039715352526908e-08,
-      "previousLandOverlapSquareDegrees": 0.2304904409577527
+      "landOverlapSquareDegrees": 4.039715352526908e-08
     },
     {
       "name": "Laccadive Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.470581125472106e-08,
-      "previousLandOverlapSquareDegrees": 0.07069971450463158
+      "landOverlapSquareDegrees": 5.470581125472106e-08
     },
     {
       "name": "Davis Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 7.529395803561486e-07,
-      "previousLandOverlapSquareDegrees": 1.4093514517068026
+      "landOverlapSquareDegrees": 7.529395803561486e-07
     },
     {
       "name": "Kara Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 9.49543486847671e-07,
-      "previousLandOverlapSquareDegrees": 2.143709382572763
+      "landOverlapSquareDegrees": 9.49543486847671e-07
     },
     {
       "name": "Laptev Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.392757834721058e-07,
-      "previousLandOverlapSquareDegrees": 0.865114101939168
+      "landOverlapSquareDegrees": 5.392757834721058e-07
     },
     {
       "name": "Drake Passage",
       "valid": true,
-      "landOverlapSquareDegrees": 3.962809662406749e-09,
-      "previousLandOverlapSquareDegrees": 3.063120784789662e-06
+      "landOverlapSquareDegrees": 3.962809662406749e-09
     },
     {
       "name": "Bering Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.7778753096203195e-07,
-      "previousLandOverlapSquareDegrees": 1.262820499906452
+      "landOverlapSquareDegrees": 2.7778753096203195e-07
     },
     {
       "name": "Sargasso Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 0.0,
-      "previousLandOverlapSquareDegrees": 0.005965749966499438
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Great Australian Bight",
       "valid": true,
-      "landOverlapSquareDegrees": 1.5466681283004218e-07,
-      "previousLandOverlapSquareDegrees": 0.27735476472335
+      "landOverlapSquareDegrees": 1.5466681283004218e-07
     },
     {
       "name": "Gulf of Aden",
       "valid": true,
-      "landOverlapSquareDegrees": 4.661763286624941e-08,
-      "previousLandOverlapSquareDegrees": 0.09565505297694325
+      "landOverlapSquareDegrees": 4.661763286624941e-08
     },
     {
       "name": "Gulf of Oman",
       "valid": true,
-      "landOverlapSquareDegrees": 3.0043736161890287e-08,
-      "previousLandOverlapSquareDegrees": 0.07589506300924373
+      "landOverlapSquareDegrees": 3.0043736161890287e-08
     },
     {
       "name": "Tyrrhenian Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.5081343946696004e-08,
-      "previousLandOverlapSquareDegrees": 0.16076524429330064
+      "landOverlapSquareDegrees": 3.5081343946696004e-08
     },
     {
       "name": "White Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.3290134142117355e-07,
-      "previousLandOverlapSquareDegrees": 0.42293787388973497
+      "landOverlapSquareDegrees": 2.3290134142117355e-07
     },
     {
       "name": "James Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.4021901773478092e-09,
-      "previousLandOverlapSquareDegrees": 0.0
+      "landOverlapSquareDegrees": 1.4021901773478092e-09
     },
     {
       "name": "Gulf of Carpentaria",
       "valid": true,
-      "landOverlapSquareDegrees": 1.1478926580559756e-08,
-      "previousLandOverlapSquareDegrees": 0.2002053815889837
+      "landOverlapSquareDegrees": 1.1478926580559756e-08
     },
     {
       "name": "Golfo de California",
       "valid": true,
-      "landOverlapSquareDegrees": 3.6997633961186496e-08,
-      "previousLandOverlapSquareDegrees": 0.28958509700610996
+      "landOverlapSquareDegrees": 3.6997633961186496e-08
     },
     {
       "name": "Hudson Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2574625983374084e-07,
-      "previousLandOverlapSquareDegrees": 0.6981831143311181
+      "landOverlapSquareDegrees": 1.2574625983374084e-07
     },
     {
       "name": "English Channel",
       "valid": true,
-      "landOverlapSquareDegrees": 5.547927659906684e-09,
-      "previousLandOverlapSquareDegrees": 0.17722758605333505
+      "landOverlapSquareDegrees": 5.547927659906684e-09
     },
     {
       "name": "Gulf of Honduras",
       "valid": true,
-      "landOverlapSquareDegrees": 6.131199059833696e-09,
-      "previousLandOverlapSquareDegrees": 0.023852791036400103
+      "landOverlapSquareDegrees": 6.131199059833696e-09
     },
     {
       "name": "Gulf of Bothnia",
       "valid": true,
-      "landOverlapSquareDegrees": 1.000689862608169e-07,
-      "previousLandOverlapSquareDegrees": 0.6013487243567466
+      "landOverlapSquareDegrees": 1.000689862608169e-07
     },
     {
       "name": "Adriatic Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 9.755583277004626e-08,
-      "previousLandOverlapSquareDegrees": 0.2748290892095525
+      "landOverlapSquareDegrees": 9.755583277004626e-08
     },
     {
       "name": "Great Barrier Reef",
       "valid": true,
-      "landOverlapSquareDegrees": 3.2536230463691452e-09,
-      "previousLandOverlapSquareDegrees": 0.2715497616988196
+      "landOverlapSquareDegrees": 3.2536230463691452e-09
     },
     {
       "name": "Bristol Channel",
       "valid": true,
-      "landOverlapSquareDegrees": 5.119445719618915e-09,
-      "previousLandOverlapSquareDegrees": 0.06627490117582245
+      "landOverlapSquareDegrees": 5.119445719618915e-09
     },
     {
       "name": "Inner Seas",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2387402115838903e-07,
-      "previousLandOverlapSquareDegrees": 0.4820533656020953
+      "landOverlapSquareDegrees": 1.2387402115838903e-07
     },
     {
       "name": "Gulf of Finland",
       "valid": true,
-      "landOverlapSquareDegrees": 7.477274810300022e-08,
-      "previousLandOverlapSquareDegrees": 0.15648736201576088
+      "landOverlapSquareDegrees": 7.477274810300022e-08
     },
     {
       "name": "Straits of Florida",
       "valid": true,
-      "landOverlapSquareDegrees": 1.4764413888280767e-08,
-      "previousLandOverlapSquareDegrees": 0.0405582831001509
+      "landOverlapSquareDegrees": 1.4764413888280767e-08
     },
     {
       "name": "Bay of Plenty",
       "valid": true,
-      "landOverlapSquareDegrees": 1.0828045240483777e-08,
-      "previousLandOverlapSquareDegrees": 0.016702103408636253
+      "landOverlapSquareDegrees": 1.0828045240483777e-08
     },
     {
       "name": "The North Western Passages",
       "valid": true,
-      "landOverlapSquareDegrees": 3.128125715952504e-06,
-      "previousLandOverlapSquareDegrees": 5.067878168940658
+      "landOverlapSquareDegrees": 3.128125715952504e-06
     },
     {
       "name": "Ionian Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 7.9509640167157e-09,
-      "previousLandOverlapSquareDegrees": 0.1904927269667503
+      "landOverlapSquareDegrees": 7.9509640167157e-09
     },
     {
       "name": "Gulf of Saint Lawrence",
       "valid": true,
-      "landOverlapSquareDegrees": 1.6239054725250874e-07,
-      "previousLandOverlapSquareDegrees": 0.4885450181808359
+      "landOverlapSquareDegrees": 1.6239054725250874e-07
     },
     {
       "name": "Molucca Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.4636171914876216e-08,
-      "previousLandOverlapSquareDegrees": 0.16960736858611433
+      "landOverlapSquareDegrees": 1.4636171914876216e-08
     },
     {
       "name": "Bismarck Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.2472743672783162e-08,
-      "previousLandOverlapSquareDegrees": 0.19078198439123537
+      "landOverlapSquareDegrees": 2.2472743672783162e-08
     },
     {
       "name": "Solomon Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.7130827519606394e-08,
-      "previousLandOverlapSquareDegrees": 0.5278225692792636
+      "landOverlapSquareDegrees": 2.7130827519606394e-08
     },
     {
       "name": "Gulf of Tonkin",
       "valid": true,
-      "landOverlapSquareDegrees": 2.370945705132788e-08,
-      "previousLandOverlapSquareDegrees": 0.2041112551437555
+      "landOverlapSquareDegrees": 2.370945705132788e-08
     },
     {
       "name": "Bay of Fundy",
       "valid": true,
-      "landOverlapSquareDegrees": 2.6626595548025788e-08,
-      "previousLandOverlapSquareDegrees": 0.10749628682867371
+      "landOverlapSquareDegrees": 2.6626595548025788e-08
     },
     {
       "name": "R\u00edo de la Plata",
       "valid": true,
-      "landOverlapSquareDegrees": 2.952409012388776e-08,
-      "previousLandOverlapSquareDegrees": 0.06023831628591758
+      "landOverlapSquareDegrees": 2.952409012388776e-08
     },
     {
       "name": "Strait of Malacca",
       "valid": true,
-      "landOverlapSquareDegrees": 3.908598393567495e-08,
-      "previousLandOverlapSquareDegrees": 0.3590430148415189
+      "landOverlapSquareDegrees": 3.908598393567495e-08
     },
     {
       "name": "Strait of Singapore",
       "valid": true,
-      "landOverlapSquareDegrees": 5.641341162705647e-09,
-      "previousLandOverlapSquareDegrees": 0.02388671311205015
+      "landOverlapSquareDegrees": 5.641341162705647e-09
     },
     {
       "name": "Makassar Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 3.827751641441472e-08,
-      "previousLandOverlapSquareDegrees": 0.18944621847984042
+      "landOverlapSquareDegrees": 3.827751641441472e-08
     },
     {
       "name": "Ceram Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 8.876619733663803e-09,
-      "previousLandOverlapSquareDegrees": 0.15493286282032775
+      "landOverlapSquareDegrees": 8.876619733663803e-09
     },
     {
       "name": "Inner Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 9.652480023732494e-09,
-      "previousLandOverlapSquareDegrees": 0.2074707611643397
+      "landOverlapSquareDegrees": 9.652480023732494e-09
     },
     {
       "name": "Taiwan Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 2.7110475765642566e-08,
-      "previousLandOverlapSquareDegrees": 0.10736455167523458
+      "landOverlapSquareDegrees": 2.7110475765642566e-08
     },
     {
       "name": "Cook Inlet",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2144771104375875e-09,
-      "previousLandOverlapSquareDegrees": 0.15039899591614928
+      "landOverlapSquareDegrees": 1.2144771104375875e-09
     },
     {
       "name": "Bristol Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.346697110321797e-07,
-      "previousLandOverlapSquareDegrees": 0.17395702624469872
+      "landOverlapSquareDegrees": 1.346697110321797e-07
     },
     {
       "name": "Gulf of Maine",
       "valid": true,
-      "landOverlapSquareDegrees": 2.6739040794877987e-08,
-      "previousLandOverlapSquareDegrees": 0.1896533471388639
+      "landOverlapSquareDegrees": 2.6739040794877987e-08
     },
     {
       "name": "Chesapeake Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 2.835855395898358e-08,
-      "previousLandOverlapSquareDegrees": 0.17224562783086705
+      "landOverlapSquareDegrees": 2.835855395898358e-08
     },
     {
       "name": "Strait of Gibraltar",
       "valid": true,
-      "landOverlapSquareDegrees": 8.201969310708604e-09,
-      "previousLandOverlapSquareDegrees": 0.000912751170729044
+      "landOverlapSquareDegrees": 8.201969310708604e-09
     },
     {
       "name": "Balearic Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 3.112620702501883e-08,
-      "previousLandOverlapSquareDegrees": 0.06062540753443374
+      "landOverlapSquareDegrees": 3.112620702501883e-08
     },
     {
       "name": "Aegean Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 4.6596659026209784e-08,
-      "previousLandOverlapSquareDegrees": 0.5179103634052475
+      "landOverlapSquareDegrees": 4.6596659026209784e-08
     },
     {
       "name": "Gulf of Mannar",
       "valid": true,
-      "landOverlapSquareDegrees": 6.086575735983698e-09,
-      "previousLandOverlapSquareDegrees": 0.025509095140238046
+      "landOverlapSquareDegrees": 6.086575735983698e-09
+    },
+    {
+      "name": "Shelikhov Gulf",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.6106146587104794e-08
     },
     {
       "name": "Bo Hai",
       "valid": true,
-      "landOverlapSquareDegrees": 1.4300814048622903e-08,
-      "previousLandOverlapSquareDegrees": 0.14985984649115353
+      "landOverlapSquareDegrees": 1.4300814048622903e-08
     },
     {
       "name": "Gulf of Kutch",
       "valid": true,
-      "landOverlapSquareDegrees": 1.3102577448417116e-10,
-      "previousLandOverlapSquareDegrees": 0.020554797585522585
+      "landOverlapSquareDegrees": 1.3102577448417116e-10
     },
     {
       "name": "Golfo de Panam\u00e1",
       "valid": true,
-      "landOverlapSquareDegrees": 3.5645969546440498e-09,
-      "previousLandOverlapSquareDegrees": 0.06812250748261037
+      "landOverlapSquareDegrees": 3.5645969546440498e-09
     },
     {
       "name": "Great Barrier Reef",
       "valid": true,
-      "landOverlapSquareDegrees": 1.0337874774040873e-14,
-      "previousLandOverlapSquareDegrees": 0.2715497616988196
+      "landOverlapSquareDegrees": 1.0337874774040873e-14
     },
     {
       "name": "Amazon River",
       "valid": true,
-      "landOverlapSquareDegrees": 2.3638337551983202e-08,
-      "previousLandOverlapSquareDegrees": 0.1935525821330998
+      "landOverlapSquareDegrees": 2.3638337551983202e-08
     },
     {
       "name": "Yangtze River",
       "valid": true,
-      "landOverlapSquareDegrees": 4.656699072418023e-09,
-      "previousLandOverlapSquareDegrees": 0.10832142124669372
+      "landOverlapSquareDegrees": 4.656699072418023e-09
     },
     {
       "name": "Columbia River",
       "valid": true,
-      "landOverlapSquareDegrees": 2.9286187898342574e-09,
-      "previousLandOverlapSquareDegrees": 0.013725995313493333
+      "landOverlapSquareDegrees": 2.9286187898342574e-09
     },
     {
       "name": "Korea Strait",
       "valid": true,
-      "landOverlapSquareDegrees": 1.8003564711917418e-08,
-      "previousLandOverlapSquareDegrees": 0.2942606246955144
+      "landOverlapSquareDegrees": 1.8003564711917418e-08
+    },
+    {
+      "name": "Skagerrak",
+      "valid": true,
+      "landOverlapSquareDegrees": 2.212069984534456e-08
+    },
+    {
+      "name": "Ligurian Sea",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Alboran Sea",
+      "valid": true,
+      "landOverlapSquareDegrees": 2.0191749081520664e-08
+    },
+    {
+      "name": "Khatanga Gulf",
+      "valid": true,
+      "landOverlapSquareDegrees": 3.255314132905204e-07
+    },
+    {
+      "name": "Gulf of Ob",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.735621137940338e-07
+    },
+    {
+      "name": "Kattegat",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.049076214708886e-08
+    },
+    {
+      "name": "Cantabrian Sea",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.8558093199396843e-08
+    },
+    {
+      "name": "Strait of Tartary",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.917591715844276e-10
+    },
+    {
+      "name": "Penzhina Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 7.007779185743653e-11
+    },
+    {
+      "name": "Academy Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.7008324965176174e-09
     },
     {
       "name": "Gulf of Bangkok",
       "valid": true,
-      "landOverlapSquareDegrees": 1.7178920690366804e-09,
-      "previousLandOverlapSquareDegrees": 4.040127427312181e-05
+      "landOverlapSquareDegrees": 1.7178920690366804e-09
     },
     {
       "name": "Laizhou Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.1435251731987456e-09,
-      "previousLandOverlapSquareDegrees": 1.4540230288631915e-05
+      "landOverlapSquareDegrees": 1.1435251731987456e-09
     },
     {
       "name": "Bohai Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 2.890924486905752e-09,
-      "previousLandOverlapSquareDegrees": 4.275787725276158e-05
+      "landOverlapSquareDegrees": 2.890924486905752e-09
     },
     {
       "name": "Liaodong Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.3059173774841789e-08,
-      "previousLandOverlapSquareDegrees": 8.36920050001852e-05
+      "landOverlapSquareDegrees": 1.3059173774841789e-08
     },
     {
       "name": "Hangzhou Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 3.97938754966143e-09,
-      "previousLandOverlapSquareDegrees": 4.868686696419698e-05
+      "landOverlapSquareDegrees": 3.97938754966143e-09
     },
     {
       "name": "Sea of Azov",
       "valid": true,
-      "landOverlapSquareDegrees": 7.644140542232168e-09,
-      "previousLandOverlapSquareDegrees": 0.00020189624244011474
+      "landOverlapSquareDegrees": 7.644140542232168e-09
     },
     {
       "name": "Gulf of Martaban",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2974605786979822e-09,
-      "previousLandOverlapSquareDegrees": 0.00012259540967314879
+      "landOverlapSquareDegrees": 1.2974605786979822e-09
     },
     {
       "name": "Delaware Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 1.4618086641077012e-08,
-      "previousLandOverlapSquareDegrees": 1.3840694408788092e-05
+      "landOverlapSquareDegrees": 1.4618086641077012e-08
     },
     {
       "name": "Norton Sound",
       "valid": true,
-      "landOverlapSquareDegrees": 0.0,
-      "previousLandOverlapSquareDegrees": 0.0001351674939059418
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Long Island Sound",
       "valid": true,
-      "landOverlapSquareDegrees": 1.9165809942132486e-08,
-      "previousLandOverlapSquareDegrees": 7.25939425579786e-05
+      "landOverlapSquareDegrees": 1.9165809942132486e-08
     },
     {
       "name": "Cape Cod Bay",
       "valid": true,
-      "landOverlapSquareDegrees": 2.826042334923567e-09,
-      "previousLandOverlapSquareDegrees": 2.4077079851802223e-05
+      "landOverlapSquareDegrees": 2.826042334923567e-09
     },
     {
       "name": "Gulf of Tomini",
       "valid": true,
-      "landOverlapSquareDegrees": 1.3488279956786986e-09,
-      "previousLandOverlapSquareDegrees": 0.00013522034527736244
+      "landOverlapSquareDegrees": 1.3488279956786986e-09
     },
     {
       "name": "Kotzebue Sound",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2536159749786517e-08,
-      "previousLandOverlapSquareDegrees": 0.00013396398164401598
+      "landOverlapSquareDegrees": 1.2536159749786517e-08
     },
     {
       "name": "East Siberian Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 5.95466393037331e-08,
-      "previousLandOverlapSquareDegrees": 0.001108930955658213
+      "landOverlapSquareDegrees": 5.95466393037331e-08
     }
   ],
   "selections": [
@@ -1179,7 +1118,7 @@
     {
       "name": "Strait of Gibraltar",
       "valid": true,
-      "parentGapSquareDegrees": 4.275403601068171e-18
+      "parentGapSquareDegrees": 0.0
     },
     {
       "name": "Balearic Sea",
@@ -1193,6 +1132,11 @@
     },
     {
       "name": "Gulf of Mannar",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Shelikhov Gulf",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },
@@ -1230,6 +1174,56 @@
       "name": "Korea Strait",
       "valid": true,
       "parentGapSquareDegrees": 7.96143207783262e-17
+    },
+    {
+      "name": "Skagerrak",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Ligurian Sea",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Alboran Sea",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Khatanga Gulf",
+      "valid": true,
+      "parentGapSquareDegrees": 6.295842002735757e-16
+    },
+    {
+      "name": "Gulf of Ob",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Kattegat",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Cantabrian Sea",
+      "valid": true,
+      "parentGapSquareDegrees": 2.4029422096747936e-18
+    },
+    {
+      "name": "Strait of Tartary",
+      "valid": true,
+      "parentGapSquareDegrees": 6.770647171496641e-16
+    },
+    {
+      "name": "Penzhina Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 2.6651467353112405e-17
+    },
+    {
+      "name": "Academy Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 2.725074397906535e-17
     },
     {
       "name": "Gulf of Bangkok",

@@ -25,14 +25,14 @@ const RAW_DIR = path.join(__dirname, '..', 'data', 'raw');
 // Personal marine membership. Removing a name hides its labels, hit target and
 // catalog row; its water still belongs to the containing ocean/sea's full extent.
 const PERSONAL_MARINE_EXCLUDED = new Set([
-  'Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Shelikhova Gulf',
+  'Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea',
   'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion',
 ]);
 const MARINE_OCEAN_GROUPS = {
-    'Atlantic Ocean': ['Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
-    'Pacific Ocean': ['Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
+    'Atlantic Ocean': ['Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
     'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
-    'Arctic Ocean': ['Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
+    'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
     'Atlantic / Southern oceans': ['Scotia Sea'],
     'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
@@ -42,6 +42,11 @@ const MARINE_OCEAN_GROUPS = {
 // Containment only. Connections between transitional waters never expand a
 // selection into another ocean. No new bays are added by declaring a hierarchy.
 const MARINE_PARENT_OVERRIDES = {
+  'Alboran Sea': 'Mediterranean Sea', 'Ligurian Sea': 'Mediterranean Sea',
+  'Cantabrian Sea': 'Bay of Biscay', 'Kattegat': 'Baltic Sea', 'Skagerrak': 'North Sea',
+  'Gulf of Ob': 'Kara Sea', 'Khatanga Gulf': 'Laptev Sea',
+  'Strait of Tartary': 'Sea of Japan', 'Shelikhov Gulf': 'Sea of Okhotsk',
+  'Penzhina Bay': 'Shelikhov Gulf', 'Academy Bay': 'Sea of Okhotsk',
   'Gulf of Bangkok': 'Gulf of Thailand', 'Laizhou Bay': 'Bo Hai',
   'Bohai Bay': 'Bo Hai', 'Liaodong Bay': 'Bo Hai', 'Hangzhou Bay': 'East China Sea',
   'Bo Hai': 'Yellow Sea', 'Gulf of Martaban': 'Andaman Sea',
@@ -1109,6 +1114,25 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  // Kattegat proper: southern entrances between Hasenore/Gniben and
+  // Gilbjerg Hoved/Kullen; the historic Skagen–Pater Noster northern line
+  // shares the Natural Earth Skagerrak boundary.
+  { name: 'Kattegat', featurecla: 'sea', scalerank: 4, labelAt: [11.2,56.9],
+    ring: [[10.580833,57.736373],[11.256554,58.370313],[12.5,58.4],[13.0,56.7],[12.45,56.3],[12.3,56.13],[11.8,55.9],[11.5,55.8],[11.29,56.0],[10.36,56.14],[9.6,56.0],[9.8,57.2],[10.580833,57.736373]] },
+  // Cantabrian is the coastal southern Bay of Biscay. The offshore limit is
+  // generalized; Estaca de Bares is the western cape (Turismo de Galicia).
+  { name: 'Cantabrian Sea', featurecla: 'sea', scalerank: 4, labelAt: [-4.2,44.0],
+    ring: [[-7.69,43.79],[-7.69,44.7],[-1.5,44.7],[-1.1,43.5],[-2.0,42.8],[-7.8,43.0],[-7.69,43.79]] },
+  // NOAA Tatarskiy Proliv southern entrance: Cape Belkina–Cape Kuznetsova;
+  // the northern connection runs through Nevelskoy Strait to the Amur liman.
+  { name: 'Strait of Tartary', featurecla: 'strait', scalerank: 4, labelAt: [140.8,49.4],
+    ring: [[137.69,45.82],[142.08,46.03],[142.5,49.5],[142.2,53.4],[140.7,53.4],[139.4,50.2],[137.0,47.0],[137.69,45.82]] },
+  // Penzhina's mouth: Cape Taygonos–Cape Bozhedomova. Inland edges are
+  // deliberately generous so all branches are cut from the detailed coast.
+  { name: 'Penzhina Bay', featurecla: 'bay', scalerank: 5, labelAt: [163.0,61.5],
+    ring: [[160.1833,60.5667],[161.8833,60.3],[164.0,60.9],[166.2,62.7],[164.5,63.2],[161.0,62.0],[160.1833,60.5667]] },
+  { name: 'Academy Bay', featurecla: 'bay', scalerank: 5, labelAt: [138.05,54.1],
+    ring: [[137.733,54.317],[138.719249,54.317613],[139.1,54.0],[138.6,53.1],[137.0,53.1],[137.1,54.0],[137.733,54.317]] },
   { name: 'Gulf of Bangkok', featurecla: 'gulf', scalerank: 5, labelAt: [100.4, 13.0],
     ring: [[99.9,12.55],[100.95,12.55],[101.3,13.9],[99.5,14.0],[99.9,12.55]] },
   { name: 'Laizhou Bay', featurecla: 'bay', scalerank: 5, labelAt: [119.35,37.35],
@@ -1273,6 +1297,18 @@ function refitBayCoast(geometry, land, landBb) {
 function enrichSeas() {
   const data = readRaw('seas-raw.geojson');
   data.features = data.features.filter((f) => !f.properties.curated); // idempotent
+  // Retained subset of Natural Earth's 10m marine source; unrelated names
+  // never enter the personal atlas. Keep membership decisions in this script.
+  const additions=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','marine-additions.geojson')));
+  const requested=new Set(['Alboran Sea','Ligurian Sea','Skagerrak','Gulf of Ob','Khatanga Gulf']);
+  data.features.push(...additions.features.filter(f=>requested.has(f.properties.name)));
+  for (const f of data.features) {
+    if (f.properties.name === 'Shelikhova Gulf') f.properties.name='Shelikhov Gulf';
+    if (f.properties.name === 'Skagerrak') f.properties.featurecla='strait';
+    const label = {'Ligurian Sea':[8.9,43.8], 'Skagerrak':[9.3,57.9], 'Gulf of Ob':[73.1,70.5], 'Khatanga Gulf':[110.5,73.7]}[f.properties.name];
+    if(label) {f.properties.label_lon=label[0];f.properties.label_lat=label[1];}
+
+  }
   const land = readRaw('countries-10m-raw.geojson');
   const landBb = land.features.map((f) => (f.geometry ? plainBbox(f.geometry) : [0, 0, 0, 0]));
   for (const name of ['Hudson Bay', 'James Bay']) {

@@ -2836,10 +2836,12 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-122 records; 122 distinct catalog entries. Multiple geometry records can represent one feature.
+133 records; 133 distinct catalog entries. Multiple geometry records can represent one feature.
 
+- Academy Bay
 - Adriatic Sea
 - Aegean Sea
+- Alboran Sea
 - Amazon River
 - Andaman Sea
 - Arabian Sea
@@ -2863,6 +2865,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Bohai Bay
 - Bristol Bay
 - Bristol Channel
+- Cantabrian Sea
 - Cape Cod Bay
 - Caribbean Sea
 - Caspian Sea
@@ -2897,6 +2900,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Mannar
 - Gulf of Martaban
 - Gulf of Mexico
+- Gulf of Ob
 - Gulf of Oman
 - Gulf of Saint Lawrence
 - Gulf of Thailand
@@ -2913,6 +2917,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - James Bay
 - Java Sea
 - Kara Sea
+- Kattegat
+- Khatanga Gulf
 - Korea Strait
 - Kotzebue Sound
 - Labrador Sea
@@ -2920,6 +2926,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Laizhou Bay
 - Laptev Sea
 - Liaodong Bay
+- Ligurian Sea
 - Long Island Sound
 - Luzon Strait
 - Makassar Strait
@@ -2931,6 +2938,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - North Sea
 - Norton Sound
 - Norwegian Sea
+- Penzhina Bay
 - Persian Gulf
 - Philippine Sea
 - Red Sea
@@ -2941,6 +2949,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Sea of Azov
 - Sea of Japan
 - Sea of Okhotsk
+- Shelikhov Gulf
+- Skagerrak
 - Solomon Sea
 - South Atlantic Ocean
 - South China Sea
@@ -2949,6 +2959,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Strait of Gibraltar
 - Strait of Malacca
 - Strait of Singapore
+- Strait of Tartary
 - Straits of Florida
 - Sulu Sea
 - Taiwan Strait

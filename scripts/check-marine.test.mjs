@@ -3,14 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import clipping from 'polygon-clipping';
 const read = file => JSON.parse(fs.readFileSync(new URL(`../public/geo/${file}`, import.meta.url)));
-const excluded = ['Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Shelikhova Gulf', 'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion'];
+const excluded = ['Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion'];
 const hierarchy = read('marine-hierarchy.json');
 const byName = new Map(hierarchy.map(r => [r.name, r]));
 const selections = new Map(read('marine-selections.geojson').features.map(f => [f.properties.name, f]));
 const catalog = read('catalog.json');
 const seaRows = catalog.sections.find(s => s.id === 'seas').rows;
 
-test('all nine unlearned waters are absent from labels, hit targets, selection records and catalog rows', () => {
+test('all eight unlearned waters are absent from labels, hit targets, selection records and catalog rows', () => {
   for (const name of excluded) {
     assert(!read('seas.geojson').features.some(f => f.properties.name === name), name);
     assert(!read('sea-labels.geojson').features.some(f => f.properties.name === name), name);
@@ -19,7 +19,7 @@ test('all nine unlearned waters are absent from labels, hit targets, selection r
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 115);
+  assert.equal(seaRows.length, 126);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -100,4 +100,42 @@ test('Hudson and James Bay fit the detailed coast, exclude islands and retain th
     assert((b[0]-a[0])*(y-a[1])-(b[1]-a[1])*(x-a[0]) < 2e-6, 'James Bay extends past its original mouth');
   }
   assert(area(clipping.difference(selections.get('James Bay').geometry.coordinates,selections.get('Hudson Bay').geometry.coordinates)) < 1e-8);
+});
+
+test('the eleven requested marine additions appear once in map labels and tables with their parents', () => {
+  const labels=read('sea-labels.geojson').features;
+  for (const [name,parent] of [
+    ['Alboran Sea','Mediterranean Sea'],['Ligurian Sea','Mediterranean Sea'],
+    ['Cantabrian Sea','Bay of Biscay'],['Kattegat','Baltic Sea'],['Skagerrak','North Sea'],
+    ['Gulf of Ob','Kara Sea'],['Khatanga Gulf','Laptev Sea'],['Strait of Tartary','Sea of Japan'],
+    ['Shelikhov Gulf','Sea of Okhotsk'],['Penzhina Bay','Shelikhov Gulf'],['Academy Bay','Sea of Okhotsk'],
+  ]) {
+    assert.equal(byName.get(name)?.parent,parent,name);
+    assert.equal(labels.filter(f=>f.properties.name===name).length,1,name);
+    assert.equal(seaRows.filter(r=>r.name===name).length,1,name);
+    assert.equal(seaRows.find(r=>r.name===name).parent,parent,name);
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates,selections.get(parent).geometry.coordinates))<1e-8, `${parent} leaves a gap in ${name}`);
+  }
+  assert(!byName.has('Shelikhova Gulf'),'restored gulf must not acquire a duplicate spelling');
+  assert.deepEqual(byName.get('Penzhina Bay').path,['Pacific Ocean','Sea of Okhotsk','Shelikhov Gulf','Penzhina Bay']);
+});
+
+test('new marine label anchors sit within their water polygons', () => {
+  const insideRing = ([x,y],ring) => {
+    let inside=false;
+    for(let i=0,j=ring.length-1;i<ring.length;j=i++) {
+      const a=ring[i],b=ring[j];
+      if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0]) inside=!inside;
+    }
+    return inside;
+  };
+  const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
+  const names=['Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
+  for(const name of names) {
+    const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
+    assert(features.filter(f=>f.properties.name===name).some(f=>contains(f.geometry,label)),`${name} label falls on land or outside its water`);
+  }
+  const kattegat=features.find(f=>f.properties.name==='Kattegat');
+  assert(!contains(kattegat.geometry,[11.0,55.5]),'Kattegat must not swallow the southern Great Belt');
 });

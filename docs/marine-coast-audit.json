@@ -465,6 +465,11 @@
     "maxShoreShiftDegrees": 0.02981826631441525
   },
   {
+    "name": "Shelikhov Gulf",
+    "coastalSegments": 152,
+    "maxShoreShiftDegrees": 0.059094590488426975
+  },
+  {
     "name": "Bo Hai",
     "coastalSegments": 95,
     "maxShoreShiftDegrees": 0.07628197024855099
@@ -503,6 +508,56 @@
     "name": "Korea Strait",
     "coastalSegments": 137,
     "maxShoreShiftDegrees": 0.14537892753077916
+  },
+  {
+    "name": "Skagerrak",
+    "coastalSegments": 68,
+    "maxShoreShiftDegrees": 0.026851652800354356
+  },
+  {
+    "name": "Ligurian Sea",
+    "coastalSegments": 10,
+    "maxShoreShiftDegrees": 0.013492118491542228
+  },
+  {
+    "name": "Alboran Sea",
+    "coastalSegments": 61,
+    "maxShoreShiftDegrees": 0.048922819833126394
+  },
+  {
+    "name": "Khatanga Gulf",
+    "coastalSegments": 81,
+    "maxShoreShiftDegrees": 0.07174298704128337
+  },
+  {
+    "name": "Gulf of Ob",
+    "coastalSegments": 183,
+    "maxShoreShiftDegrees": 0.07810767985928004
+  },
+  {
+    "name": "Kattegat",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Cantabrian Sea",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Strait of Tartary",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Penzhina Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Academy Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
   },
   {
     "name": "Gulf of Bangkok",
