@@ -1,6 +1,7 @@
 import type { Map as MapLibreMap, MapMouseEvent } from 'maplibre-gl';
-import type { Geometry } from 'geojson';
+import type { Feature, Geometry } from 'geojson';
 import type { KnowledgePoint } from '../types';
+import { oceanAtPoint } from './oceanLookup';
 import { setHighlightCodes, setFeatureHighlight } from './mapRegistry';
 
 export function setupInteractions(
@@ -47,28 +48,19 @@ export function setupInteractions(
     ocean: 'ocean', sea: 'sea', gulf: 'gulf', strait: 'strait', river: 'river',
   };
 
-  // Ocean fill is one world-spanning blob with no name, so name a click by the
-  // nearest ocean label point instead.
+  // Resolve unnamed coastal water from basin geometry, including nested seas.
   const oceanMetadata = new Map<string, { path: string[]; children: number }>();
-  const oceanLabels: { name: string; lng: number; lat: number }[] = [];
-  fetch('/geo/ocean-labels.geojson')
+  let oceanFeatures: Feature<Geometry>[] = [];
+  fetch('/geo/marine-selections.geojson')
     .then((r) => r.json())
     .then((d) => {
-      for (const f of d.features) {
-        const [lng, lat] = f.geometry.coordinates;
-        oceanMetadata.set(f.properties.name, { path: String(f.properties.water_path || f.properties.name).split('|'), children: Number(f.properties.water_children || 0) });
-        oceanLabels.push({ name: f.properties.name || f.properties.NAME, lng, lat });
+      oceanFeatures = d.features.filter((f: Feature) => f.properties?.water_depth === 0 && f.properties?.name.endsWith('Ocean'));
+      for (const f of oceanFeatures) {
+        const p = f.properties!;
+        oceanMetadata.set(p.name, { path: [p.name], children: Number(p.water_children || 0) });
       }
     })
     .catch(() => {});
-  const nearestOcean = (lng: number, lat: number) => {
-    let best = '', bestD = Infinity;
-    for (const o of oceanLabels) {
-      const d = (o.lng - lng) ** 2 + (o.lat - lat) ** 2;
-      if (d < bestD) { bestD = d; best = o.name; }
-    }
-    return best || 'Ocean';
-  };
 
   // Rough on-screen area of a feature's bounding box — used to pick the most
   // specific (smallest) sea when several overlap at the click point.
@@ -304,7 +296,7 @@ export function setupInteractions(
       });
     } else if (layerId === 'ocean-fill') {
       clearHighlights();
-      const name = nearestOcean(lng, lat);
+      const name = oceanAtPoint(oceanFeatures, lng, lat);
       setFeatureHighlight('sea', name);
       const meta = oceanMetadata.get(name);
       onSelectPoint({

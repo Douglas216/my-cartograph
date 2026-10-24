@@ -113,4 +113,13 @@ of the containing ocean's geographic extent. Raw marine geometry is cached in
 `data/raw/seas-raw.geojson`, so rebuilding does not permanently discard it.
 
 The table shows immediate parents, and selection cards show the containment path.
-Run `node --test scripts/check-marine.test.mjs scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs`.
+Run `node --experimental-strip-types --test scripts/check-marine.test.mjs scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs scripts/check-ocean-lookup.test.mjs`.
+
+
+Marine boundary lines use the same dissolved geometry as selection highlights,
+so an old parent edge cannot cut through an included bay. The northern Andaman
+coast is repaired before hierarchy generation. Martaban and the five added bays
+use generalized coastal limits clipped to the cached 10m coastline; these are
+atlas extents, not legal maritime boundaries. Ocean fallback clicks use basin
+containment and distance to water boundaries, with antimeridian handling, rather
+than distance to ocean label points.

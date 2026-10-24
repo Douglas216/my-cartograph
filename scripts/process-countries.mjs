@@ -29,7 +29,7 @@ const PERSONAL_MARINE_EXCLUDED = new Set([
 ]);
 const MARINE_OCEAN_GROUPS = {
     'Atlantic Ocean': ['Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
-    'Pacific Ocean': ['Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
+    'Pacific Ocean': ['Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
     'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
@@ -41,6 +41,8 @@ const MARINE_OCEAN_GROUPS = {
 // Containment only. Connections between transitional waters never expand a
 // selection into another ocean. No new bays are added by declaring a hierarchy.
 const MARINE_PARENT_OVERRIDES = {
+  'Gulf of Bangkok': 'Gulf of Thailand', 'Laizhou Bay': 'Bo Hai',
+  'Bohai Bay': 'Bo Hai', 'Liaodong Bay': 'Bo Hai', 'Hangzhou Bay': 'East China Sea',
   'Bo Hai': 'Yellow Sea', 'Gulf of Martaban': 'Andaman Sea',
   'Sea of Azov': 'Black Sea', // Black Sea connects to, rather than sits inside, the Mediterranean.
   'Adriatic Sea': 'Mediterranean Sea', 'Aegean Sea': 'Mediterranean Sea',
@@ -1101,14 +1103,30 @@ function buildSeaLabels() {
 // straight line. This makes adding nook-and-cranny bays NE omits (Delaware Bay,
 // etc.) a matter of a rough 5-point sketch, not hand-tracing a coastline. `labelAt`
 // pins the label point (the clipped polygon's centroid can drift on a curvy coast).
+// Bay mouths are generalized editorial limits, not maritime legal boundaries.
+// References: doi:10.1371/journal.pone.0050722 (Bohai's three bays),
+// doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
+// NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  { name: 'Gulf of Bangkok', featurecla: 'gulf', scalerank: 5, labelAt: [100.4, 13.0],
+    ring: [[99.9,12.55],[100.95,12.55],[101.3,13.9],[99.5,14.0],[99.9,12.55]] },
+  { name: 'Laizhou Bay', featurecla: 'bay', scalerank: 5, labelAt: [119.35,37.35],
+    ring: [[118.85,38.1],[120.35,37.75],[120.0,36.7],[118.4,36.7],[118.85,38.1]] },
+  { name: 'Bohai Bay', featurecla: 'bay', scalerank: 5, labelAt: [118.1,38.7],
+    ring: [[119.0,39.25],[118.85,38.1],[117.0,37.7],[116.8,39.7],[119.0,39.25]] },
+  { name: 'Liaodong Bay', featurecla: 'bay', scalerank: 5, labelAt: [121.0,40.15],
+    ring: [[119.5,39.7],[121.65,39.1],[122.6,40.5],[121.8,41.3],[119.5,41.0],[119.5,39.7]] },
+  { name: 'Hangzhou Bay', featurecla: 'bay', scalerank: 5, labelAt: [121.15,30.35],
+    ring: [[121.95,30.9],[121.95,29.95],[121.5,29.7],[120.2,29.9],[120.1,30.5],[121.6,31.15],[121.95,30.9]] },
   {
     name: 'Sea of Azov', featurecla: 'sea', scalerank: 4, labelAt: [37.0, 46.1],
     ring: [[34.6, 45.1], [36.8, 45.1], [39.7, 46.8], [39.4, 47.4], [36.8, 47.5], [34.7, 46.7], [34.6, 45.1]],
   },
   {
     name: 'Gulf of Martaban', featurecla: 'gulf', scalerank: 4, labelAt: [96.5, 16.0],
-    ring: [[95.1, 17.4], [98.0, 16.9], [98.1, 15.4], [96.9, 14.6], [95.4, 14.6], [94.8, 16.1], [95.1, 17.4]],
+    // One offshore mouth across the delta–Mon coast; other edges lie inland.
+    // Extend above the Sittaung estuary so the northern head is not cut off.
+    ring: [[95.15, 15.65], [97.85, 15.2], [98.6, 16.5], [98.0, 18.3], [95.0, 18.3], [94.7, 16.5], [95.15, 15.65]],
   },
   {
     name: 'Delaware Bay', featurecla: 'gulf', scalerank: 5, labelAt: [-75.15, 39.15],
@@ -1202,6 +1220,13 @@ function enrichSeas() {
   data.features = data.features.filter((f) => !f.properties.curated); // idempotent
   const land = readRaw('countries-10m-raw.geojson');
   const landBb = land.features.map((f) => (f.geometry ? plainBbox(f.geometry) : [0, 0, 0, 0]));
+  // NE closes the Andaman Sea across the Gulf of Martaban. Restore its
+  // northern coastal water before computing either hit targets or outlines.
+  const andaman = data.features.find(f => f.properties.name === 'Andaman Sea');
+  const northAndaman = clipRingToWater(
+    [[95.1,15.6],[95.0,18.3],[98.6,18.3],[98.6,14.6],[97.7,14.6],[95.1,15.6]], land, landBb);
+  if (!andaman || !northAndaman) throw new Error('Cannot repair northern Andaman Sea');
+  andaman.geometry = { type: 'MultiPolygon', coordinates: polygonClipping.union(andaman.geometry.coordinates, northAndaman.coordinates) };
   for (const s of SEA_ADD) {
     // `openInto`: name(s) of the adjacent sea/ocean this body opens into. Its
     // polygon is subtracted too, so the seaward edge coincides with that sea's

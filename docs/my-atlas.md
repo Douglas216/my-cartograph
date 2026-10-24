@@ -2836,7 +2836,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-117 records; 117 distinct catalog entries. Multiple geometry records can represent one feature.
+122 records; 122 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Adriatic Sea
 - Aegean Sea
@@ -2860,6 +2860,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Bismarck Sea
 - Black Sea
 - Bo Hai
+- Bohai Bay
 - Bristol Bay
 - Bristol Channel
 - Cape Cod Bay
@@ -2885,6 +2886,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Greenland Sea
 - Gulf of Aden
 - Gulf of Alaska
+- Gulf of Bangkok
 - Gulf of Bothnia
 - Gulf of Carpentaria
 - Gulf of Finland
@@ -2900,6 +2902,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Thailand
 - Gulf of Tomini
 - Gulf of Tonkin
+- Hangzhou Bay
 - Hudson Bay
 - Hudson Strait
 - INDIAN OCEAN
@@ -2914,7 +2917,9 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Kotzebue Sound
 - Labrador Sea
 - Laccadive Sea
+- Laizhou Bay
 - Laptev Sea
+- Liaodong Bay
 - Long Island Sound
 - Luzon Strait
 - Makassar Strait

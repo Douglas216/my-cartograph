@@ -19,7 +19,7 @@ test('all nine unlearned waters are absent from labels, hit targets, selection r
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 110);
+  assert.equal(seaRows.length, 115);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -58,4 +58,26 @@ test('cards and tables use the same immediate parent and active descendant count
     assert.equal(props.water_children, record.descendants.length);
     assert.deepEqual(props.water_path.split('|'), record.path);
   }
+});
+
+
+test('new coastal waters have matching map labels, catalog entries and containing waters', () => {
+  for (const [name, parent] of [['Gulf of Bangkok','Gulf of Thailand'], ['Laizhou Bay','Bo Hai'], ['Bohai Bay','Bo Hai'], ['Liaodong Bay','Bo Hai'], ['Hangzhou Bay','East China Sea']]) {
+    assert.equal(byName.get(name)?.parent, parent);
+    assert.equal(seaRows.find(r => r.name === name)?.parent, parent);
+    assert(read('sea-labels.geojson').features.some(f => f.properties.name === name));
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates, selections.get(parent).geometry.coordinates)) < 1e-8);
+  }
+});
+
+test('Martaban reaches the northern estuary and the Andaman boundary clears its interior', () => {
+  const box = (w,s,e,n) => [[[w,s],[e,s],[e,n],[w,n],[w,s]]];
+  const gulf = selections.get('Gulf of Martaban').geometry.coordinates;
+  const sea = selections.get('Andaman Sea').geometry.coordinates;
+  assert(area(clipping.intersection(gulf, box(96.82,17.35,96.9,17.46))) > 0.0001, 'northern estuary is clipped off');
+  assert(area(clipping.difference(box(96.2,15.5,97.2,16.0), sea)) < 1e-8, 'old diagonal boundary still cuts the gulf');
+  const land = JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson', import.meta.url)));
+  const myanmar = land.features.find(f => f.properties.ADM0_A3 === 'MMR');
+  // Four-decimal clipping rounds the shoreline: tolerate only tiny edge slivers.
+  assert(area(clipping.intersection(gulf, myanmar.geometry.coordinates)) < 0.001);
 });
