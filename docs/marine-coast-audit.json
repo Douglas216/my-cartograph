@@ -1,0 +1,577 @@
+[
+  {
+    "name": "Black Sea",
+    "coastalSegments": 239,
+    "maxShoreShiftDegrees": 0.04043174388742126
+  },
+  {
+    "name": "Philippine Sea",
+    "coastalSegments": 437,
+    "maxShoreShiftDegrees": 0.08574388107425557
+  },
+  {
+    "name": "Tasman Sea",
+    "coastalSegments": 474,
+    "maxShoreShiftDegrees": 0.11822205439765686
+  },
+  {
+    "name": "Bay of Bengal",
+    "coastalSegments": 362,
+    "maxShoreShiftDegrees": 0.07307404672659185
+  },
+  {
+    "name": "South China Sea",
+    "coastalSegments": 880,
+    "maxShoreShiftDegrees": 0.13279870873243016
+  },
+  {
+    "name": "Arabian Sea",
+    "coastalSegments": 248,
+    "maxShoreShiftDegrees": 0.037298817501352596
+  },
+  {
+    "name": "Beaufort Sea",
+    "coastalSegments": 251,
+    "maxShoreShiftDegrees": 0.049740428968801535
+  },
+  {
+    "name": "Caribbean Sea",
+    "coastalSegments": 856,
+    "maxShoreShiftDegrees": 0.06254348983707342
+  },
+  {
+    "name": "Gulf of Mexico",
+    "coastalSegments": 431,
+    "maxShoreShiftDegrees": 0.03987677232785395
+  },
+  {
+    "name": "Labrador Sea",
+    "coastalSegments": 447,
+    "maxShoreShiftDegrees": 0.057325659394378045
+  },
+  {
+    "name": "Hudson Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Baffin Bay",
+    "coastalSegments": 429,
+    "maxShoreShiftDegrees": 0.14911469339715783
+  },
+  {
+    "name": "Gulf of Alaska",
+    "coastalSegments": 580,
+    "maxShoreShiftDegrees": 0.06195292575951838
+  },
+  {
+    "name": "Red Sea",
+    "coastalSegments": 261,
+    "maxShoreShiftDegrees": 0.0478851248469562
+  },
+  {
+    "name": "Sea of Okhotsk",
+    "coastalSegments": 443,
+    "maxShoreShiftDegrees": 0.045835109075887295
+  },
+  {
+    "name": "Weddell Sea",
+    "coastalSegments": 619,
+    "maxShoreShiftDegrees": 0.13434195287824333
+  },
+  {
+    "name": "Persian Gulf",
+    "coastalSegments": 269,
+    "maxShoreShiftDegrees": 0.04287142108561326
+  },
+  {
+    "name": "Mediterranean Sea",
+    "coastalSegments": 585,
+    "maxShoreShiftDegrees": 0.047104794585237524
+  },
+  {
+    "name": "Ross Sea",
+    "coastalSegments": 467,
+    "maxShoreShiftDegrees": 0.07678528811420927
+  },
+  {
+    "name": "Coral Sea",
+    "coastalSegments": 526,
+    "maxShoreShiftDegrees": 0.059323796650239576
+  },
+  {
+    "name": "Sea of Japan",
+    "coastalSegments": 392,
+    "maxShoreShiftDegrees": 0.14537892753077916
+  },
+  {
+    "name": "Celebes Sea",
+    "coastalSegments": 235,
+    "maxShoreShiftDegrees": 0.049775676881376116
+  },
+  {
+    "name": "Sulu Sea",
+    "coastalSegments": 256,
+    "maxShoreShiftDegrees": 0.04335035035679705
+  },
+  {
+    "name": "Norwegian Sea",
+    "coastalSegments": 567,
+    "maxShoreShiftDegrees": 0.04893045826476609
+  },
+  {
+    "name": "Greenland Sea",
+    "coastalSegments": 928,
+    "maxShoreShiftDegrees": 0.08734936548484133
+  },
+  {
+    "name": "Banda Sea",
+    "coastalSegments": 522,
+    "maxShoreShiftDegrees": 0.14603609578799084
+  },
+  {
+    "name": "Luzon Strait",
+    "coastalSegments": 3,
+    "maxShoreShiftDegrees": 0.009125662464891889
+  },
+  {
+    "name": "Bay of Biscay",
+    "coastalSegments": 126,
+    "maxShoreShiftDegrees": 0.04066518735724022
+  },
+  {
+    "name": "Mozambique Channel",
+    "coastalSegments": 374,
+    "maxShoreShiftDegrees": 0.06635433719810815
+  },
+  {
+    "name": "Gulf of Guinea",
+    "coastalSegments": 139,
+    "maxShoreShiftDegrees": 0.044531613192331815
+  },
+  {
+    "name": "Scotia Sea",
+    "coastalSegments": 4,
+    "maxShoreShiftDegrees": 0.006332721861721552
+  },
+  {
+    "name": "Baltic Sea",
+    "coastalSegments": 286,
+    "maxShoreShiftDegrees": 0.08409138369874179
+  },
+  {
+    "name": "Barents Sea",
+    "coastalSegments": 954,
+    "maxShoreShiftDegrees": 0.14694335930895222
+  },
+  {
+    "name": "North Sea",
+    "coastalSegments": 384,
+    "maxShoreShiftDegrees": 0.14803126772408853
+  },
+  {
+    "name": "Irish Sea",
+    "coastalSegments": 173,
+    "maxShoreShiftDegrees": 0.04686698634332542
+  },
+  {
+    "name": "Java Sea",
+    "coastalSegments": 282,
+    "maxShoreShiftDegrees": 0.06870782989164968
+  },
+  {
+    "name": "Andaman Sea",
+    "coastalSegments": 662,
+    "maxShoreShiftDegrees": 0.050467703821357644
+  },
+  {
+    "name": "Yellow Sea",
+    "coastalSegments": 263,
+    "maxShoreShiftDegrees": 0.04855942879606196
+  },
+  {
+    "name": "East China Sea",
+    "coastalSegments": 261,
+    "maxShoreShiftDegrees": 0.08814896915356799
+  },
+  {
+    "name": "Chukchi Sea",
+    "coastalSegments": 256,
+    "maxShoreShiftDegrees": 0.06909835942564994
+  },
+  {
+    "name": "Bahía de Campeche",
+    "coastalSegments": 71,
+    "maxShoreShiftDegrees": 0.021781175992089282
+  },
+  {
+    "name": "Arafura Sea",
+    "coastalSegments": 327,
+    "maxShoreShiftDegrees": 0.047060296142292096
+  },
+  {
+    "name": "Timor Sea",
+    "coastalSegments": 154,
+    "maxShoreShiftDegrees": 0.03682513876416627
+  },
+  {
+    "name": "Gulf of Thailand",
+    "coastalSegments": 161,
+    "maxShoreShiftDegrees": 0.05644598241279869
+  },
+  {
+    "name": "Laccadive Sea",
+    "coastalSegments": 48,
+    "maxShoreShiftDegrees": 0.021053507615627846
+  },
+  {
+    "name": "Davis Strait",
+    "coastalSegments": 531,
+    "maxShoreShiftDegrees": 0.07802262056468094
+  },
+  {
+    "name": "Kara Sea",
+    "coastalSegments": 757,
+    "maxShoreShiftDegrees": 0.08673947801400501
+  },
+  {
+    "name": "Laptev Sea",
+    "coastalSegments": 404,
+    "maxShoreShiftDegrees": 0.07823454309318995
+  },
+  {
+    "name": "Drake Passage",
+    "coastalSegments": 21,
+    "maxShoreShiftDegrees": 0.01668367980354376
+  },
+  {
+    "name": "Bering Sea",
+    "coastalSegments": 801,
+    "maxShoreShiftDegrees": 0.06637040836361849
+  },
+  {
+    "name": "Sargasso Sea",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Great Australian Bight",
+    "coastalSegments": 207,
+    "maxShoreShiftDegrees": 0.05013073143292244
+  },
+  {
+    "name": "Gulf of Aden",
+    "coastalSegments": 104,
+    "maxShoreShiftDegrees": 0.04026490541533811
+  },
+  {
+    "name": "Gulf of Oman",
+    "coastalSegments": 58,
+    "maxShoreShiftDegrees": 0.03828937330047794
+  },
+  {
+    "name": "Tyrrhenian Sea",
+    "coastalSegments": 177,
+    "maxShoreShiftDegrees": 0.055959928516080386
+  },
+  {
+    "name": "White Sea",
+    "coastalSegments": 191,
+    "maxShoreShiftDegrees": 0.04968957957695868
+  },
+  {
+    "name": "James Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Carpentaria",
+    "coastalSegments": 141,
+    "maxShoreShiftDegrees": 0.04108325645415725
+  },
+  {
+    "name": "Golfo de California",
+    "coastalSegments": 240,
+    "maxShoreShiftDegrees": 0.074330335166517
+  },
+  {
+    "name": "Hudson Strait",
+    "coastalSegments": 320,
+    "maxShoreShiftDegrees": 0.08183067635638581
+  },
+  {
+    "name": "English Channel",
+    "coastalSegments": 133,
+    "maxShoreShiftDegrees": 0.0425464452216623
+  },
+  {
+    "name": "Gulf of Honduras",
+    "coastalSegments": 28,
+    "maxShoreShiftDegrees": 0.022845202070752593
+  },
+  {
+    "name": "Gulf of Bothnia",
+    "coastalSegments": 317,
+    "maxShoreShiftDegrees": 0.043954447556531835
+  },
+  {
+    "name": "Adriatic Sea",
+    "coastalSegments": 220,
+    "maxShoreShiftDegrees": 0.03618678777501372
+  },
+  {
+    "name": "Great Barrier Reef",
+    "coastalSegments": 149,
+    "maxShoreShiftDegrees": 0.08830812264451321
+  },
+  {
+    "name": "Bristol Channel",
+    "coastalSegments": 52,
+    "maxShoreShiftDegrees": 0.0425464452216623
+  },
+  {
+    "name": "Inner Seas",
+    "coastalSegments": 293,
+    "maxShoreShiftDegrees": 0.055299965191832556
+  },
+  {
+    "name": "Gulf of Finland",
+    "coastalSegments": 101,
+    "maxShoreShiftDegrees": 0.03674436936456979
+  },
+  {
+    "name": "Straits of Florida",
+    "coastalSegments": 36,
+    "maxShoreShiftDegrees": 0.030611705854824974
+  },
+  {
+    "name": "Bay of Plenty",
+    "coastalSegments": 25,
+    "maxShoreShiftDegrees": 0.030326866125602703
+  },
+  {
+    "name": "The North Western Passages",
+    "coastalSegments": 2846,
+    "maxShoreShiftDegrees": 0.14911469339715783
+  },
+  {
+    "name": "Ionian Sea",
+    "coastalSegments": 209,
+    "maxShoreShiftDegrees": 0.04405665137070665
+  },
+  {
+    "name": "Gulf of Saint Lawrence",
+    "coastalSegments": 427,
+    "maxShoreShiftDegrees": 0.037788809128763846
+  },
+  {
+    "name": "Molucca Sea",
+    "coastalSegments": 147,
+    "maxShoreShiftDegrees": 0.06384380020800508
+  },
+  {
+    "name": "Bismarck Sea",
+    "coastalSegments": 168,
+    "maxShoreShiftDegrees": 0.06249339053051715
+  },
+  {
+    "name": "Solomon Sea",
+    "coastalSegments": 446,
+    "maxShoreShiftDegrees": 0.10489772512747723
+  },
+  {
+    "name": "Gulf of Tonkin",
+    "coastalSegments": 121,
+    "maxShoreShiftDegrees": 0.0651990561143468
+  },
+  {
+    "name": "Bay of Fundy",
+    "coastalSegments": 84,
+    "maxShoreShiftDegrees": 0.03141345017101998
+  },
+  {
+    "name": "Río de la Plata",
+    "coastalSegments": 61,
+    "maxShoreShiftDegrees": 0.048071421014441465
+  },
+  {
+    "name": "Strait of Malacca",
+    "coastalSegments": 205,
+    "maxShoreShiftDegrees": 0.08368504843757665
+  },
+  {
+    "name": "Strait of Singapore",
+    "coastalSegments": 44,
+    "maxShoreShiftDegrees": 0.13279870873243016
+  },
+  {
+    "name": "Makassar Strait",
+    "coastalSegments": 165,
+    "maxShoreShiftDegrees": 0.049775676881376116
+  },
+  {
+    "name": "Ceram Sea",
+    "coastalSegments": 157,
+    "maxShoreShiftDegrees": 0.06384380020800508
+  },
+  {
+    "name": "Inner Sea",
+    "coastalSegments": 135,
+    "maxShoreShiftDegrees": 0.04079405543917834
+  },
+  {
+    "name": "Taiwan Strait",
+    "coastalSegments": 48,
+    "maxShoreShiftDegrees": 0.0343512595693415
+  },
+  {
+    "name": "Cook Inlet",
+    "coastalSegments": 128,
+    "maxShoreShiftDegrees": 0.042250410885573596
+  },
+  {
+    "name": "Bristol Bay",
+    "coastalSegments": 136,
+    "maxShoreShiftDegrees": 0.03908909103439812
+  },
+  {
+    "name": "Gulf of Maine",
+    "coastalSegments": 100,
+    "maxShoreShiftDegrees": 0.029763120090168346
+  },
+  {
+    "name": "Chesapeake Bay",
+    "coastalSegments": 192,
+    "maxShoreShiftDegrees": 0.03074959942128989
+  },
+  {
+    "name": "Strait of Gibraltar",
+    "coastalSegments": 23,
+    "maxShoreShiftDegrees": 0.024045821235760042
+  },
+  {
+    "name": "Balearic Sea",
+    "coastalSegments": 93,
+    "maxShoreShiftDegrees": 0.036377695817629584
+  },
+  {
+    "name": "Aegean Sea",
+    "coastalSegments": 398,
+    "maxShoreShiftDegrees": 0.04100276761811638
+  },
+  {
+    "name": "Gulf of Mannar",
+    "coastalSegments": 32,
+    "maxShoreShiftDegrees": 0.02981826631441525
+  },
+  {
+    "name": "Bo Hai",
+    "coastalSegments": 95,
+    "maxShoreShiftDegrees": 0.07628197024855099
+  },
+  {
+    "name": "Gulf of Kutch",
+    "coastalSegments": 32,
+    "maxShoreShiftDegrees": 0.034556820093583525
+  },
+  {
+    "name": "Golfo de Panamá",
+    "coastalSegments": 62,
+    "maxShoreShiftDegrees": 0.024972032443257932
+  },
+  {
+    "name": "Great Barrier Reef",
+    "coastalSegments": 9,
+    "maxShoreShiftDegrees": 0.012320592158808685
+  },
+  {
+    "name": "Amazon River",
+    "coastalSegments": 84,
+    "maxShoreShiftDegrees": 0.0662187495646252
+  },
+  {
+    "name": "Yangtze River",
+    "coastalSegments": 40,
+    "maxShoreShiftDegrees": 0.08814896915356799
+  },
+  {
+    "name": "Columbia River",
+    "coastalSegments": 20,
+    "maxShoreShiftDegrees": 0.02348125984814068
+  },
+  {
+    "name": "Korea Strait",
+    "coastalSegments": 137,
+    "maxShoreShiftDegrees": 0.14537892753077916
+  },
+  {
+    "name": "Gulf of Bangkok",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Laizhou Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Bohai Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Liaodong Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Hangzhou Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Sea of Azov",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Martaban",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Delaware Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Norton Sound",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Long Island Sound",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Cape Cod Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Tomini",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Kotzebue Sound",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "East Siberian Sea",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  }
+]

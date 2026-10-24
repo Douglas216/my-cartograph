@@ -1,3 +1,4 @@
+import { coastlineIndex, refitMarineCoast } from './lib/marine-coast.mjs';
 // Processes Natural Earth country data into the app's display model.
 //
 // Color policy ("UN members + observers + majority-recognition"):
@@ -1179,6 +1180,10 @@ const SEA_ADD = [
 
 // Plain (antimeridian-naive) bbox of a geometry — only used to reject far-away
 // land features before the expensive polygon difference, so looseness is fine.
+function roundMarineCoordinates(coords) {
+  return typeof coords[0] === 'number' ? coords.map(v=>Math.round(v*1e6)/1e6) : coords.map(roundMarineCoordinates);
+}
+
 function plainBbox(geom) {
   let w = Infinity, s = Infinity, e = -Infinity, n = -Infinity;
   const scan = (rings) => { for (const ring of rings) for (const [x, y] of ring) { if (x < w) w = x; if (x > e) e = x; if (y < s) s = y; if (y > n) n = y; } };
@@ -1211,7 +1216,7 @@ function clipRingToWater(ring, land, landBb, extra = []) {
   const area = (poly) => { const r = poly[0]; let a = 0; for (let i = 0; i < r.length - 1; i++) a += r[i][0] * r[i + 1][1] - r[i + 1][0] * r[i][1]; return Math.abs(a / 2); };
   const maxA = Math.max(...diff.map(area));
   diff = diff.filter((poly) => area(poly) >= 0.05 * maxA);
-  const r4 = (n) => Math.round(n * 1e4) / 1e4;
+  const r4 = (n) => Math.round(n * 1e6) / 1e6;
   return { type: 'MultiPolygon', coordinates: diff.map((poly) => poly.map((rg) => rg.map(([x, y]) => [r4(x), r4(y)]))) };
 }
 
@@ -1297,6 +1302,29 @@ function enrichSeas() {
     if (s.labelAt) { props.label_lon = s.labelAt[0]; props.label_lat = s.labelAt[1]; }
     data.features.push({ type: 'Feature', properties: props, geometry });
   }
+  // Apply the same detailed coastline to every marine hit target and outline.
+  // Caspian is an inland lake: the country land source covers its water, so it
+  // must retain its lake shoreline rather than be subtracted as ocean coast.
+  const coast = coastlineIndex(land);
+  const audit=[];
+  for (const feature of data.features) {
+    const name=feature.properties.name;
+    if (feature.properties.featurecla === 'ocean' || name === 'Caspian Sea' || PERSONAL_MARINE_EXCLUDED.has(name)) continue;
+    const alreadyFitted = feature.properties.curated || ['Hudson Bay','James Bay'].includes(name);
+    console.log(`  refit coast: ${name}`);
+    const result=alreadyFitted ? {geometry:feature.geometry,matched:0,maxShift:0} : refitMarineCoast(feature.geometry,coast,land);
+    feature.geometry=result.geometry;
+    audit.push({name,coastalSegments:result.matched,maxShoreShiftDegrees:result.maxShift});
+  }
+  // Keep the shared land/marine topology on one precision grid before the
+  // hierarchy unions, avoiding almost-coincident edges between nested waters.
+  for (const f of data.features) {
+    if (f.properties.featurecla === 'ocean' || f.properties.name === 'Caspian Sea') continue;
+    const coordinates=polygonClipping.union(roundMarineCoordinates(f.geometry.coordinates));
+    if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
+    f.geometry={type:'MultiPolygon',coordinates};
+  }
+  fs.writeFileSync(path.join(__dirname,'..','docs','marine-coast-audit.json'),JSON.stringify(audit,null,2)+'\n');
   writeGeo('seas.geojson', data);
   console.log(`  added ${SEA_ADD.length} curated seas, clipped to 10m coastline (${SEA_ADD.map((s) => s.name).join(', ')})`);
 }
@@ -2666,10 +2694,9 @@ function buildMarineHierarchy() {
     const children = descendants(record.name);
     // Keep the complete physical water extent, including unnamed/unlearned bays.
     // Only active names appear in the manifest, labels and table membership.
-    const shapes = [record, ...children].flatMap(r => r.geometries).filter(Boolean).map(g => g.coordinates);
+    const shapes = [record, ...children].flatMap(r => r.geometries).filter(Boolean).map(g => roundMarineCoordinates(g.coordinates));
     if (!shapes.length) throw new Error(`Missing marine geometry: ${record.name}`);
-    const geometry = shapes.length === 1 ? [record, ...children].flatMap(r => r.geometries).filter(Boolean)[0]
-      : { type: 'MultiPolygon', coordinates: polygonClipping.union(...shapes) };
+    const geometry = { type: 'MultiPolygon', coordinates: polygonClipping.union(...shapes) };
     const props = { name: record.name, ...propsFor(record.name) };
     selections.push({ type: 'Feature', properties: props, geometry });
     manifest.push({ name: record.name, parent: record.parent, path: record.path, ocean: record.ocean,

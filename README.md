@@ -123,3 +123,11 @@ use generalized coastal limits clipped to the cached 10m coastline; these are
 atlas extents, not legal maritime boundaries. Ocean fallback clicks use basin
 containment and distance to water boundaries, with antimeridian handling, rather
 than distance to ocean label points.
+
+
+Coastal waters now share the detailed land coastline. The build follows matching
+coastal vertices and removes land/islands, while retaining offshore limits and
+nested selections. See [the coastline audit](docs/marine-coast-audit.md).
+Run the regular regression checks with `scripts/check-coast-matching.test.mjs`
+included. The optional independent GEOS audit is
+`python3 scripts/audit-marine-coasts.py` (requires Shapely in the Python environment).
