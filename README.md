@@ -82,7 +82,7 @@ and the packed deployment subdivisions. There are no editorial tiers.
 The complete source geometry is retained in `data/raw/`; the displayed files in
 `public/geo/` contain only the selected features. On a fresh setup, run
 `bash scripts/download-geodata.sh` first to populate the source cache.
-Marine features and political country/territory coverage remain unrestricted.
+Country/territory coverage remains unrestricted. Marine membership follows the explicit personal exclusions in the build script.
 
 ## Atlas tables
 
@@ -101,3 +101,16 @@ the build script. Mountain range areas measure the generalized map footprint;
 unavailable measurements remain null rather than zero.
 
 Checks: `node --test scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs`.
+
+## Nested marine selections
+
+`PERSONAL_MARINE_EXCLUDED` controls labels, individual hit targets and catalog rows.
+`MARINE_PARENT_OVERRIDES` declares containment; ocean connections alone do not
+create containment. The build emits `marine-hierarchy.json` for metadata and
+`marine-selections.geojson` with dissolved parent-plus-descendant highlight shapes.
+Excluded names remain absent from the UI while their physical water remains part
+of the containing ocean's geographic extent. Raw marine geometry is cached in
+`data/raw/seas-raw.geojson`, so rebuilding does not permanently discard it.
+
+The table shows immediate parents, and selection cards show the containment path.
+Run `node --test scripts/check-marine.test.mjs scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs`.

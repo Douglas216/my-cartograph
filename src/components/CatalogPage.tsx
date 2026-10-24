@@ -21,8 +21,8 @@ const columns: Record<string, Column[]> = {
   lakes: [{ key: 'name', label: 'Lake' }, { key: 'area', label: 'Area · km²', numeric: true }, { key: 'volume', label: 'Volume · km³', numeric: true }, { key: 'countries', label: 'Countries on its shores' }],
   ranges: [{ key: 'name', label: 'Mountain range' }, { key: 'area', label: 'Mapped span · km²', numeric: true }, { key: 'countries', label: 'Countries' }],
   peaks: [{ key: 'name', label: 'Peak' }, { key: 'elevation', label: 'Elevation · m', numeric: true }, { key: 'countries', label: 'Countries' }],
-  oceans: [{ key: 'name', label: 'Ocean' }, { key: 'setting', label: 'Geographic setting' }],
-  seas: [{ key: 'name', label: 'Named water' }, { key: 'kind', label: 'Type' }, { key: 'ocean', label: 'Ocean / connection' }],
+  oceans: [{ key: 'name', label: 'Ocean' }, { key: 'setting', label: 'Geographic setting' }, { key: 'waters', label: 'Named waters', numeric: true }],
+  seas: [{ key: 'name', label: 'Named water' }, { key: 'kind', label: 'Type' }, { key: 'parent', label: 'Part of' }, { key: 'ocean', label: 'Ocean / connection' }],
 };
 const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 function flag(iso: Value | undefined) {

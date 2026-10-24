@@ -21,6 +21,40 @@ const RAW_DIR = path.join(__dirname, '..', 'data', 'raw');
 
 // Personal atlas membership: edit these readable lists as you learn new places.
 // Names here are the processed Natural Earth names; aliases preserve local reaches.
+// Personal marine membership. Removing a name hides its labels, hit target and
+// catalog row; its water still belongs to the containing ocean/sea's full extent.
+const PERSONAL_MARINE_EXCLUDED = new Set([
+  'Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Shelikhova Gulf',
+  'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion',
+]);
+const MARINE_OCEAN_GROUPS = {
+    'Atlantic Ocean': ['Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Pacific Ocean': ['Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
+    'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
+    'Arctic Ocean': ['Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
+    'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
+    'Atlantic / Southern oceans': ['Scotia Sea'],
+    'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
+    'Inland basin · no ocean outlet': ['Caspian Sea'],
+  };
+
+// Containment only. Connections between transitional waters never expand a
+// selection into another ocean. No new bays are added by declaring a hierarchy.
+const MARINE_PARENT_OVERRIDES = {
+  'Bo Hai': 'Yellow Sea', 'Gulf of Martaban': 'Andaman Sea',
+  'Sea of Azov': 'Black Sea', // Black Sea connects to, rather than sits inside, the Mediterranean.
+  'Adriatic Sea': 'Mediterranean Sea', 'Aegean Sea': 'Mediterranean Sea',
+  'Ionian Sea': 'Mediterranean Sea', 'Tyrrhenian Sea': 'Mediterranean Sea',
+  'Balearic Sea': 'Mediterranean Sea', 'Golfe du Lion': 'Mediterranean Sea',
+  'Gulf of Bothnia': 'Baltic Sea', 'Gulf of Finland': 'Baltic Sea',
+  'James Bay': 'Hudson Bay', 'Bahía de Campeche': 'Gulf of Mexico',
+  'Gulf of Tonkin': 'South China Sea', 'Gulf of Thailand': 'South China Sea',
+  'Bristol Bay': 'Bering Sea', 'Norton Sound': 'Bering Sea',
+  'Shelikhova Gulf': 'Sea of Okhotsk', 'Gulf of Oman': 'Arabian Sea',
+  'Gulf of Mannar': 'Laccadive Sea',
+  'Viscount Melville Sound': 'The North Western Passages',
+};
+
 const PERSONAL_RANGES = [
   'Atlas Mountains', 'Ural Mountains', 'Caucasus Mountains', 'Carpathian Mountains',
   'Alps', 'Apennines', 'Pyrenees', 'Altay Mountains', 'Tian Shan', 'Himalayas',
@@ -1045,6 +1079,9 @@ function buildSeaLabels() {
         name: f.properties.name,
         scalerank: f.properties.scalerank ?? 5,
         featurecla: f.properties.featurecla,
+        selection_name: f.properties.selection_name,
+        water_parent: f.properties.water_parent, water_path: f.properties.water_path,
+        water_depth: f.properties.water_depth, water_children: f.properties.water_children,
       },
     };
   });
@@ -1161,7 +1198,7 @@ function clipRingToWater(ring, land, landBb, extra = []) {
 }
 
 function enrichSeas() {
-  const data = readGeo('seas.geojson');
+  const data = readRaw('seas-raw.geojson');
   data.features = data.features.filter((f) => !f.properties.curated); // idempotent
   const land = readRaw('countries-10m-raw.geojson');
   const landBb = land.features.map((f) => (f.geometry ? plainBbox(f.geometry) : [0, 0, 0, 0]));
@@ -2294,6 +2331,9 @@ buildOceanLabels();
 console.log('Adding curated seas...');
 enrichSeas();
 
+console.log('Building marine hierarchy and selection extents...');
+buildMarineHierarchy();
+
 console.log('Building sea labels...');
 buildSeaLabels();
 
@@ -2391,7 +2431,7 @@ function applyPersonalSelection() {
     ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Lakes', 'lake-labels'],
     ['Mountain ranges', 'range-labels'], ['Peaks', 'peaks'], ['Oceans', 'ocean-labels'], ['Marine areas', 'sea-labels'],
   ];
-  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. Oceans and existing marine areas remain. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
+  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. All five oceans remain; named marine areas follow PERSONAL_MARINE_EXCLUDED. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
   for (const [title, file] of sections) {
     const features = readGeo(file + '.geojson').features;
     const rows = [...new Set(features.map(f => {
@@ -2443,17 +2483,6 @@ function buildCatalog() {
   };
   const countriesFor = (category, name) => (countryOverrides[`${category}:${name}`] ?? fact(category, name).countries ?? []).map(tidyCountry);
   const preferredLakeVolumes = { 'Tai Hu': 4.4, 'Lake Superior': 12100, 'Lake Michigan': 4920, 'Lake Huron': 3540, 'Lake Erie': 484, 'Lake Ontario': 1640 };
-  const marineGroups = {
-    'Atlantic Ocean': ['Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
-    'Pacific Ocean': ['Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
-    'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
-    'Arctic Ocean': ['Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
-    'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
-    'Atlantic / Southern oceans': ['Scotia Sea'],
-    'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
-    'Inland basin · no ocean outlet': ['Caspian Sea'],
-  };
-  const marineParents = new Map(Object.entries(marineGroups).flatMap(([parent, names]) => names.map(name => [name, parent])));
   const processedCountries = readGeo('countries-10m.geojson').features;
   const rawCountries = new Map(readRaw('countries-10m-raw.geojson').features.map(f => [f.properties.ADM0_A3, f.properties]));
   const rawCities = readRaw('cities-raw.geojson').features;
@@ -2494,11 +2523,11 @@ function buildCatalog() {
   const rangeRows = readGeo('ranges.geojson').features.map((f, i) => ({ id: `range-${i}`, name: f.properties.name, area: Math.round((f.geometry.type === 'Polygon' ? polygonArea(f.geometry.coordinates) : f.geometry.coordinates.reduce((n, poly) => n + polygonArea(poly), 0)) / 1000) * 1000, countries: countriesFor('ranges', f.properties.name), sourceUrl: url(fact('ranges', f.properties.name)) }));
   const peakRows = readGeo('peaks.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, elevation: f.properties.elevation, countries: countriesFor('peaks', f.properties.name), sourceUrl: url(fact('peaks', f.properties.name)) }));
   const oceanSettings = { 'Pacific Ocean': 'Between Asia & Oceania and the Americas', 'Atlantic Ocean': 'Between the Americas and Europe & Africa', 'Indian Ocean': 'Between Africa, Asia and Australia', 'Arctic Ocean': 'Around the North Pole, north of Eurasia and North America', 'Southern Ocean': 'Encircling Antarctica; conventionally south of 60° S' };
-  const oceanRows = readGeo('ocean-labels.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, setting: oceanSettings[f.properties.name], sourceUrl: 'https://oceanservice.noaa.gov/facts/howmanyoceans.html' }));
+  const oceanRows = readGeo('ocean-labels.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, setting: oceanSettings[f.properties.name], waters: f.properties.water_children, sourceUrl: 'https://oceanservice.noaa.gov/facts/howmanyoceans.html' }));
   const seaRows = [...new Map(readGeo('seas.geojson').features.filter(f => f.properties.featurecla !== 'ocean').map(f => [f.properties.name, f])).values()].map(f => {
     const p = f.properties;
-    if (!marineParents.has(p.name)) throw new Error(`Missing catalog ocean association: ${p.name}`);
-    return { id: p.name, name: p.name, kind: (p.featurecla ?? 'marine area').replace(/^./, c => c.toUpperCase()), ocean: marineParents.get(p.name), sourceUrl: p.wikidataid ? `https://www.wikidata.org/wiki/${p.wikidataid}` : undefined };
+    if (!p.water_ocean) throw new Error(`Missing catalog ocean association: ${p.name}`);
+    return { id: p.name, name: p.name, kind: (p.featurecla ?? 'marine area').replace(/^./, c => c.toUpperCase()), parent: p.water_parent || null, ocean: p.water_ocean, sourceUrl: p.wikidataid ? `https://www.wikidata.org/wiki/${p.wikidataid}` : undefined };
   });
   const sections = [
     { id: 'countries', title: 'Countries & territories', description: 'All political features on the map. Capitals from the reference snapshot; Natural Earth population estimates; the reference year appears below each figure. A dash means no capital is recorded in the source.', rows: countryRows },
@@ -2508,10 +2537,72 @@ function buildCatalog() {
     { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
     { id: 'peaks', title: 'Peaks', description: 'The ten highest independent summits, with elevations in metres above sea level. Border peaks list both countries; territorial claims are described on the map.', rows: peakRows },
     { id: 'oceans', title: 'The five oceans', description: 'The five named basins of one connected global ocean.', rows: oceanRows },
-    { id: 'seas', title: 'Seas & coastal waters', description: 'Named seas, bays, gulfs, straits and other marine features already on the map. Ocean associations include indirect connections; transitional waters list more than one ocean.', rows: seaRows },
+    { id: 'seas', title: 'Seas & coastal waters', description: 'Named seas, bays, gulfs, straits and other marine features already on the map. Part of shows the immediate containing water body. Ocean associations include indirect connections; transitional waters list more than one ocean.', rows: seaRows },
   ];
   for (const section of sections) section.rows.sort((a, b) => a.name.localeCompare(b.name));
   for (const section of sections) if (new Set(section.rows.map(row => row.id)).size !== section.rows.length) throw new Error(`Duplicate catalog rows: ${section.id}`);
   fs.writeFileSync(path.join(GEO_DIR, 'catalog.json'), JSON.stringify({ retrieved: reference.retrieved, sections }));
   console.log(`  catalog.json: ${sections.map(s => `${s.id}=${s.rows.length}`).join(', ')}`);
+}
+
+function buildMarineHierarchy() {
+  const full = readGeo('seas.geojson');
+  const oceanNames = new Set(OCEAN_LABELS.map(o => o.name));
+  const associations = new Map(Object.entries(MARINE_OCEAN_GROUPS).flatMap(([ocean, names]) => names.map(name => [name, ocean])));
+  const records = new Map([...oceanNames].map(name => [name, { name, parent: null, ocean: name, geometries: [] }]));
+  const canonicalOcean = name => {
+    for (const ocean of oceanNames) if (name.toLowerCase().includes(ocean.toLowerCase())) return ocean;
+    throw new Error(`Unknown ocean region: ${name}`);
+  };
+  for (const f of full.features) {
+    const name = f.properties.featurecla === 'ocean' ? canonicalOcean(f.properties.name) : f.properties.name;
+    if (!records.has(name)) {
+      const ocean = associations.get(name);
+      if (!ocean) throw new Error(`Missing ocean association: ${name}`);
+      records.set(name, { name, ocean, parent: MARINE_PARENT_OVERRIDES[name] ?? (oceanNames.has(ocean) ? ocean : null), geometries: [] });
+    }
+    records.get(name).geometries.push(f.geometry);
+  }
+  const pathFor = name => {
+    const path = [], visited = new Set();
+    for (let node = records.get(name); node; node = node.parent ? records.get(node.parent) : null) {
+      if (visited.has(node.name)) throw new Error(`Marine hierarchy cycle: ${name}`);
+      visited.add(node.name); path.unshift(node.name);
+      if (node.parent && !records.has(node.parent)) throw new Error(`Missing marine parent: ${node.parent}`);
+    }
+    return path;
+  };
+  const active = name => !PERSONAL_MARINE_EXCLUDED.has(name);
+  for (const record of records.values()) record.path = pathFor(record.name);
+  const descendants = name => [...records.values()].filter(r => r.path.includes(name) && r.name !== name);
+  const propsFor = name => {
+    const r = records.get(name);
+    return { selection_name: name, water_parent: r.parent ?? '', water_path: r.path.join('|'), water_depth: r.path.length - 1,
+      water_children: descendants(name).filter(r => active(r.name)).length, water_ocean: r.ocean };
+  };
+  const selections = [], manifest = [];
+  for (const record of records.values()) {
+    if (!active(record.name)) continue;
+    const children = descendants(record.name);
+    // Keep the complete physical water extent, including unnamed/unlearned bays.
+    // Only active names appear in the manifest, labels and table membership.
+    const shapes = [record, ...children].flatMap(r => r.geometries).filter(Boolean).map(g => g.coordinates);
+    if (!shapes.length) throw new Error(`Missing marine geometry: ${record.name}`);
+    const geometry = shapes.length === 1 ? [record, ...children].flatMap(r => r.geometries).filter(Boolean)[0]
+      : { type: 'MultiPolygon', coordinates: polygonClipping.union(...shapes) };
+    const props = { name: record.name, ...propsFor(record.name) };
+    selections.push({ type: 'Feature', properties: props, geometry });
+    manifest.push({ name: record.name, parent: record.parent, path: record.path, ocean: record.ocean,
+      descendants: children.filter(r => active(r.name)).map(r => r.name) });
+  }
+  full.features = full.features.filter(f => active(f.properties.name)).map(f => {
+    const name = f.properties.featurecla === 'ocean' ? canonicalOcean(f.properties.name) : f.properties.name;
+    return { ...f, properties: { ...f.properties, ...propsFor(name) } };
+  });
+  writeGeo('seas.geojson', full);
+  writeGeo('marine-selections.geojson', { type: 'FeatureCollection', features: selections });
+  writeGeo('marine-hierarchy.json', manifest);
+  const labels = readGeo('ocean-labels.geojson');
+  for (const f of labels.features) Object.assign(f.properties, propsFor(f.properties.name));
+  writeGeo('ocean-labels.geojson', labels);
 }

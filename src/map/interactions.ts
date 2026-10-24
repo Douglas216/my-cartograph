@@ -25,6 +25,8 @@ export function setupInteractions(
     'timezone-hit',
     'lake-fill',
     'range-fill',
+    'sea-label',
+    'ocean-label',
     'sea-hit',
     'country-fill-110',
     'country-fill-50',
@@ -47,12 +49,14 @@ export function setupInteractions(
 
   // Ocean fill is one world-spanning blob with no name, so name a click by the
   // nearest ocean label point instead.
+  const oceanMetadata = new Map<string, { path: string[]; children: number }>();
   const oceanLabels: { name: string; lng: number; lat: number }[] = [];
   fetch('/geo/ocean-labels.geojson')
     .then((r) => r.json())
     .then((d) => {
       for (const f of d.features) {
         const [lng, lat] = f.geometry.coordinates;
+        oceanMetadata.set(f.properties.name, { path: String(f.properties.water_path || f.properties.name).split('|'), children: Number(f.properties.water_children || 0) });
         oceanLabels.push({ name: f.properties.name || f.properties.NAME, lng, lat });
       }
     })
@@ -271,34 +275,43 @@ export function setupInteractions(
         nativeName: props.name_native || undefined,
         nativeLang: props.name_native_lang || undefined,
       });
-    } else if (layerId === 'sea-hit') {
+    } else if (layerId === 'sea-hit' || layerId === 'sea-label' || layerId === 'ocean-label') {
       // Several sea polygons can overlap; pick the most specific (smallest).
-      const seaFeatures = features.filter((f) => f.layer.id === 'sea-hit');
+      const seaFeatures = layerId === 'sea-hit' ? features.filter((f) => f.layer.id === 'sea-hit') : [];
       let sea = feature;
       let smallest = geomBboxArea(feature.geometry);
       for (const f of seaFeatures) {
         const a = geomBboxArea(f.geometry);
-        if (a < smallest) { smallest = a; sea = f; }
+        const depth = Number(f.properties.water_depth || 0);
+        const chosenDepth = Number(sea.properties.water_depth || 0);
+        if (depth > chosenDepth || (depth === chosenDepth && a < smallest)) { smallest = a; sea = f; }
       }
       const sp = sea.properties;
-      const cls = String(sp.featurecla || 'sea');
+      const cls = layerId === 'ocean-label' ? 'ocean' : String(sp.featurecla || 'sea');
+      const name = sp.selection_name || sp.name;
       const type = seaTypeByClass[cls] || 'sea';
       const label = seaTypeLabel[type] || 'sea';
       setHighlight([]);
-      setFeatureHighlight('sea', sp.name);
+      setFeatureHighlight('sea', name);
       onSelectPoint({
-        id: `sea-${sp.name}`,
+        id: `sea-${name}`,
         type,
-        name: sp.name || 'Sea',
+        name: name || 'Sea',
+        waterPath: String(sp.water_path || name).split('|'),
+        waterChildren: Number(sp.water_children || 0),
         coordinates: [lng, lat],
-        summary: `${sp.name || 'This body of water'} is a ${label}.`,
+        summary: `${name || 'This body of water'} is a ${label}.`,
       });
     } else if (layerId === 'ocean-fill') {
       clearHighlights();
       const name = nearestOcean(lng, lat);
+      setFeatureHighlight('sea', name);
+      const meta = oceanMetadata.get(name);
       onSelectPoint({
         id: `ocean-${name}`,
         type: 'ocean',
+        waterPath: meta?.path ?? [name],
+        waterChildren: meta?.children ?? 0,
         name,
         coordinates: [lng, lat],
         summary: `${name} is one of Earth's five oceans.`,

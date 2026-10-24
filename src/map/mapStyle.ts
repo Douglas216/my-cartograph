@@ -59,6 +59,10 @@ export const mapStyle: StyleSpecification = {
       type: 'geojson',
       data: '/geo/ocean-labels.geojson',
     },
+    'marine-selections': {
+      type: 'geojson',
+      data: '/geo/marine-selections.geojson',
+    },
     seas: {
       type: 'geojson',
       data: '/geo/seas.geojson',

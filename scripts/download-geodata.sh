@@ -43,6 +43,7 @@ echo "Downloading ocean polygons..."
 curl -sL "$BASE/ne_110m_ocean.geojson" -o "$GEO_DIR/oceans.geojson"
 
 echo "Downloading marine areas (seas, gulfs, straits)..."
-curl -sL "$BASE/ne_50m_geography_marine_polys.geojson" -o "$GEO_DIR/seas.geojson"
+curl -sL "$BASE/ne_50m_geography_marine_polys.geojson" -o "$RAW_DIR/seas-raw.geojson"
+cp "$RAW_DIR/seas-raw.geojson" "$GEO_DIR/seas.geojson"
 
 echo "All downloads complete!"

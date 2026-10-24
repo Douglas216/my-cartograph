@@ -20,6 +20,8 @@ export interface KnowledgePoint {
   country?: string;
   /** River headwater and mouth (curated). `type` says whether the mouth is an
    *  ocean/sea/lake or another river (e.g. Ucayali → Amazon). */
+  waterPath?: string[];
+  waterChildren?: number;
   riverSource?: { type: string; name: string };
   riverMouth?: { type: string; name: string };
   /** Lake dimensions + salinity (curated). */

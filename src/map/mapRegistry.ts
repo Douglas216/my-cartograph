@@ -32,7 +32,7 @@ const FEATURE_HIGHLIGHT_IDS: Record<string, string[]> = {
   range: ['range-highlight-fill', 'range-highlight-line'],
   lake: ['lake-highlight-glow', 'lake-highlight'],
   river: ['river-highlight-glow', 'river-highlight', 'river-highlight-flow'],
-  sea: ['sea-highlight-glow', 'sea-highlight'],
+  sea: ['sea-highlight-fill', 'sea-highlight-glow', 'sea-highlight'],
   timezone: ['timezone-highlight-glow', 'timezone-highlight'],
 };
 

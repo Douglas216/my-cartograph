@@ -104,6 +104,8 @@ export default function InfoCard() {
           )}
         </p>
       )}
+      {selectedPoint.waterPath && <p className="info-card-water-path">{selectedPoint.waterPath.join(' › ')}</p>}
+      {!!selectedPoint.waterChildren && <p className="info-card-water-members">Selection includes {selectedPoint.waterChildren} nested named {selectedPoint.waterChildren === 1 ? 'water body' : 'waters'}.</p>}
       <p className="info-card-summary">{selectedPoint.summary}</p>
       {(selectedPoint.riverSource || selectedPoint.riverMouth) && (
         <div className="info-card-stats">
