@@ -2336,6 +2336,7 @@ if (rawExists('timezones-raw.geojson')) {
 }
 
 applyPersonalSelection();
+buildCatalog();
 console.log('Done.');
 }
 
@@ -2413,5 +2414,104 @@ function applyPersonalSelection() {
 
 
 // Importing the geometry helpers for regression checks must not rebuild assets.
-export { orientRiverParts, riverOceanDistFn };
+export { orientRiverParts, riverOceanDistFn, PERSONAL_RIVERS, PERSONAL_LAKES, PERSONAL_RANGES, PERSONAL_PEAKS };
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+
+// Human-readable tables use the selected display data, never the unpruned library.
+function buildCatalog() {
+  const reference = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'catalog-reference.json'), 'utf8'));
+  const fact = (category, name) => reference.features[`${category}:${name}`] ?? {};
+  const url = item => item.id ? `https://www.wikidata.org/wiki/${item.id}` : undefined;
+  const tidyCountry = name => ({ "People's Republic of China": 'China', 'Czech Republic': 'Czechia' }[name] ?? name);
+  // Structured country statements sometimes describe basins or broader mountain
+  // systems. These explicit geographic overrides keep table membership meaningful.
+  const countryOverrides = {
+    'rivers:Danube': ['Germany', 'Austria', 'Slovakia', 'Hungary', 'Croatia', 'Serbia', 'Romania', 'Bulgaria', 'Moldova', 'Ukraine'],
+    'rivers:Nile': ['Uganda', 'South Sudan', 'Sudan', 'Egypt'],
+    'rivers:White Nile': ['Uganda', 'South Sudan', 'Sudan'],
+    'rivers:Congo': ['Democratic Republic of the Congo', 'Republic of the Congo', 'Angola'],
+    'rivers:Zambezi': ['Zambia', 'Angola', 'Namibia', 'Botswana', 'Zimbabwe', 'Mozambique'],
+    'rivers:Ganges': ['India', 'Bangladesh'],
+    'rivers:Brahmaputra': ['China', 'India', 'Bangladesh'],
+    'ranges:Ural Mountains': ['Russia', 'Kazakhstan'],
+    'ranges:Caucasus Mountains': ['Russia', 'Georgia', 'Azerbaijan', 'Armenia'],
+    'ranges:Alps': ['France', 'Monaco', 'Italy', 'Switzerland', 'Liechtenstein', 'Germany', 'Austria', 'Slovenia'],
+    'ranges:Himalayas': ['Pakistan', 'India', 'China', 'Nepal', 'Bhutan'],
+    'ranges:Karakoram Range': ['Pakistan', 'India', 'China'],
+    'ranges:Appalachian Mountains': ['Canada', 'United States'],
+    'peaks:K2': ['Pakistan', 'China'],
+  };
+  const countriesFor = (category, name) => (countryOverrides[`${category}:${name}`] ?? fact(category, name).countries ?? []).map(tidyCountry);
+  const preferredLakeVolumes = { 'Tai Hu': 4.4, 'Lake Superior': 12100, 'Lake Michigan': 4920, 'Lake Huron': 3540, 'Lake Erie': 484, 'Lake Ontario': 1640 };
+  const marineGroups = {
+    'Atlantic Ocean': ['Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Pacific Ocean': ['Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
+    'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
+    'Arctic Ocean': ['Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
+    'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
+    'Atlantic / Southern oceans': ['Scotia Sea'],
+    'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
+    'Inland basin · no ocean outlet': ['Caspian Sea'],
+  };
+  const marineParents = new Map(Object.entries(marineGroups).flatMap(([parent, names]) => names.map(name => [name, parent])));
+  const processedCountries = readGeo('countries-10m.geojson').features;
+  const rawCountries = new Map(readRaw('countries-10m-raw.geojson').features.map(f => [f.properties.ADM0_A3, f.properties]));
+  const rawCities = readRaw('cities-raw.geojson').features;
+  const isoFor = p => ({ TWN: 'TW', PSX: 'PS', KOS: 'XK' }[p.ADM0_A3] ?? (p.ISO_A2?.length === 2 ? p.ISO_A2 : null));
+  const countryNames = new Map(processedCountries.map(f => [isoFor(f.properties), f.properties.NAME_LONG || f.properties.NAME]));
+  const countryRows = [...new Map(processedCountries.map(f => [f.properties.ADM0_A3, f])).values()].map(f => {
+    const p = f.properties, raw = rawCountries.get(p.ADM0_A3), iso = isoFor(p);
+    const capitalData = fact('countries', p.ADM0_A3);
+    const capitalOverrides = { PSX: ['East Jerusalem (claimed)', 'Ramallah (administrative)'], NRU: ['Yaren (seat of government; no official capital)'] };
+    const capitals = capitalOverrides[p.ADM0_A3] ?? capitalData.capitals ?? rawCities.filter(c => c.properties.ADM0CAP === 1 && c.properties.ADM0NAME === raw?.ADMIN).map(c => c.properties.NAME);
+    return { id: p.ADM0_A3, name: p.NAME_LONG || p.NAME, iso2: iso, capital: [...new Set(capitals)].join(' · ') || null, population: p.POP_EST >= 0 ? Math.round(p.POP_EST) : null, populationYear: raw?.POP_YEAR > 0 ? raw.POP_YEAR : null, sourceUrl: url(capitalData) };
+  });
+  const cityRows = readGeo('cities.geojson').features.map((f, i) => ({ id: `city-${i}`, name: f.properties.NAME, country: countryNames.get(f.properties.ISO_A2) ?? f.properties.ADM0NAME, population: f.properties.POP_MAX > 0 ? f.properties.POP_MAX : null }));
+  const selectedRivers = readGeo('rivers.geojson').features;
+  const riverRows = Object.keys(PERSONAL_RIVERS).map(name => {
+    const p = selectedRivers.find(f => f.properties.label_name === name).properties;
+    const data = fact('rivers', name);
+    return { id: name, name, aliases: PERSONAL_RIVERS[name], countries: countriesFor('rivers', name), length: name === 'Tarim' ? 1321 : data.lengthKm?.value ?? null, lengthYear: data.lengthKm?.year ?? null, source: p.source_name, mouth: p.mouth_name, sourceUrl: url(data) };
+  });
+  const lakeRows = [...new Map(readGeo('lakes.geojson').features.map(f => [f.properties.name, f])).values()].map(f => {
+    const p = f.properties, data = fact('lakes', p.name);
+    const displayName = { 'Tai Hu': 'Taihu', 'Qinghai Hu': 'Qinghai Lake', 'Lago de Nicaragua': 'Lake Nicaragua', 'Lago de Managua': 'Lake Managua', 'Lago Titicaca': 'Lake Titicaca' }[p.name] ?? p.name;
+    return { id: p.name, name: displayName, area: data.areaKm2?.value ?? p.area_km2 ?? null, areaYear: data.areaKm2?.year ?? null, volume: preferredLakeVolumes[p.name] ?? data.volumeKm3?.value ?? null, volumeYear: data.volumeKm3?.year ?? null, countries: countriesFor('lakes', p.name), sourceUrl: p.name === 'Tai Hu' ? 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4730468/' : p.name in preferredLakeVolumes ? 'https://www.epa.gov/greatlakes/physical-features-great-lakes' : url(data) };
+  });
+  // Spherical polygon area: a transparent measurement of the generalized map
+  // footprint, not a claim about an exact geological boundary.
+  const ringArea = ring => {
+    let area = 0;
+    for (let i = 0; i < ring.length - 1; i++) {
+      let dLon = (ring[i + 1][0] - ring[i][0]) * Math.PI / 180;
+      if (dLon > Math.PI) dLon -= 2 * Math.PI;
+      if (dLon < -Math.PI) dLon += 2 * Math.PI;
+      area += dLon * (2 + Math.sin(ring[i][1] * Math.PI / 180) + Math.sin(ring[i + 1][1] * Math.PI / 180));
+    }
+    return Math.abs(area * 6371.0088 ** 2 / 2);
+  };
+  const polygonArea = rings => Math.max(0, ringArea(rings[0]) - rings.slice(1).reduce((n, ring) => n + ringArea(ring), 0));
+  const rangeRows = readGeo('ranges.geojson').features.map((f, i) => ({ id: `range-${i}`, name: f.properties.name, area: Math.round((f.geometry.type === 'Polygon' ? polygonArea(f.geometry.coordinates) : f.geometry.coordinates.reduce((n, poly) => n + polygonArea(poly), 0)) / 1000) * 1000, countries: countriesFor('ranges', f.properties.name), sourceUrl: url(fact('ranges', f.properties.name)) }));
+  const peakRows = readGeo('peaks.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, elevation: f.properties.elevation, countries: countriesFor('peaks', f.properties.name), sourceUrl: url(fact('peaks', f.properties.name)) }));
+  const oceanSettings = { 'Pacific Ocean': 'Between Asia & Oceania and the Americas', 'Atlantic Ocean': 'Between the Americas and Europe & Africa', 'Indian Ocean': 'Between Africa, Asia and Australia', 'Arctic Ocean': 'Around the North Pole, north of Eurasia and North America', 'Southern Ocean': 'Encircling Antarctica; conventionally south of 60° S' };
+  const oceanRows = readGeo('ocean-labels.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, setting: oceanSettings[f.properties.name], sourceUrl: 'https://oceanservice.noaa.gov/facts/howmanyoceans.html' }));
+  const seaRows = [...new Map(readGeo('seas.geojson').features.filter(f => f.properties.featurecla !== 'ocean').map(f => [f.properties.name, f])).values()].map(f => {
+    const p = f.properties;
+    if (!marineParents.has(p.name)) throw new Error(`Missing catalog ocean association: ${p.name}`);
+    return { id: p.name, name: p.name, kind: (p.featurecla ?? 'marine area').replace(/^./, c => c.toUpperCase()), ocean: marineParents.get(p.name), sourceUrl: p.wikidataid ? `https://www.wikidata.org/wiki/${p.wikidataid}` : undefined };
+  });
+  const sections = [
+    { id: 'countries', title: 'Countries & territories', description: 'All political features on the map. Capitals from the reference snapshot; Natural Earth population estimates; the reference year appears below each figure. A dash means no capital is recorded in the source.', rows: countryRows },
+    { id: 'cities', title: 'Cities', description: 'National capitals and cities with a source population of at least one million. Natural Earth estimates use differing urban definitions and reference dates; these are not current census counts.', rows: cityRows },
+    { id: 'rivers', title: 'Rivers', description: 'One row per river, including its locally named reaches. Lengths are approximate reference values; headwater conventions vary. Countries include border reaches, not every country in the drainage basin.', rows: riverRows },
+    { id: 'lakes', title: 'Lakes', description: 'Reference surface areas and volumes, not live water levels. Available measurement years appear below the figures. A dash means the measurement is not recorded; the Aral Sea is listed as its North and South remnants.', rows: lakeRows },
+    { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
+    { id: 'peaks', title: 'Peaks', description: 'The ten highest independent summits, with elevations in metres above sea level. Border peaks list both countries; territorial claims are described on the map.', rows: peakRows },
+    { id: 'oceans', title: 'The five oceans', description: 'The five named basins of one connected global ocean.', rows: oceanRows },
+    { id: 'seas', title: 'Seas & coastal waters', description: 'Named seas, bays, gulfs, straits and other marine features already on the map. Ocean associations include indirect connections; transitional waters list more than one ocean.', rows: seaRows },
+  ];
+  for (const section of sections) section.rows.sort((a, b) => a.name.localeCompare(b.name));
+  for (const section of sections) if (new Set(section.rows.map(row => row.id)).size !== section.rows.length) throw new Error(`Duplicate catalog rows: ${section.id}`);
+  fs.writeFileSync(path.join(GEO_DIR, 'catalog.json'), JSON.stringify({ retrieved: reference.retrieved, sections }));
+  console.log(`  catalog.json: ${sections.map(s => `${s.id}=${s.rows.length}`).join(', ')}`);
+}

@@ -1,0 +1,3207 @@
+{
+  "source": "Wikidata structured statements; linked per feature",
+  "retrieved": "2026-10-24",
+  "features": {
+    "rivers:Yukon": {
+      "id": "Q104437",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 3190.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Mackenzie": {
+      "id": "Q3411",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 1738.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Mississippi": {
+      "id": "Q1497",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 3766.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Missouri": {
+      "id": "Q5419",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 3726.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Ohio": {
+      "id": "Q4915",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 1579.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Colorado": {
+      "id": "Q1265",
+      "countries": [
+        "United States",
+        "Mexico"
+      ],
+      "lengthKm": {
+        "value": 2334.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Arkansas": {
+      "id": "Q8319",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 2364.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Tennessee": {
+      "id": "Q193737",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 1049.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Potomac": {
+      "id": "Q179444",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 665.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:St. Lawrence": {
+      "id": "Q134750",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 1197.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Athabasca": {
+      "id": "Q2216",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 1231.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Rio Grande": {
+      "id": "Q160636",
+      "countries": [
+        "United States",
+        "Mexico"
+      ],
+      "lengthKm": {
+        "value": 3051.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Amazon": {
+      "id": "Q3783",
+      "countries": [
+        "Peru",
+        "Colombia",
+        "Brazil"
+      ],
+      "lengthKm": {
+        "value": 6400.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Orinoco": {
+      "id": "Q131792",
+      "countries": [
+        "Venezuela",
+        "Colombia"
+      ],
+      "lengthKm": {
+        "value": 2140.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Paraná": {
+      "id": "Q127892",
+      "countries": [
+        "Argentina",
+        "Brazil",
+        "Paraguay"
+      ],
+      "lengthKm": {
+        "value": 4880.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Senegal": {
+      "id": "Q3569",
+      "countries": [
+        "Mauritania",
+        "Senegal",
+        "Mali"
+      ],
+      "lengthKm": {
+        "value": 1050.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Niger": {
+      "id": "Q3542",
+      "countries": [
+        "Benin",
+        "Guinea",
+        "Mali",
+        "Niger",
+        "Nigeria"
+      ],
+      "lengthKm": {
+        "value": 4180.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Volta": {
+      "id": "Q192415",
+      "countries": [
+        "Ghana",
+        "Burkina Faso"
+      ],
+      "lengthKm": {
+        "value": 1500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Nile": {
+      "id": "Q3392",
+      "countries": [
+        "Sudan",
+        "Egypt",
+        "Uganda",
+        "South Sudan",
+        "Burundi",
+        "Rwanda",
+        "Ethiopia"
+      ],
+      "lengthKm": {
+        "value": 6650.0,
+        "year": "2015"
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:White Nile": {
+      "id": "Q4814791",
+      "countries": [
+        "Rwanda",
+        "Democratic Republic of the Congo",
+        "Sudan",
+        "South Sudan",
+        "Tanzania",
+        "Uganda"
+      ],
+      "lengthKm": {
+        "value": 2620.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Blue Nile": {
+      "id": "Q882739",
+      "countries": [
+        "Ethiopia",
+        "Sudan"
+      ],
+      "lengthKm": {
+        "value": 1783.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Congo": {
+      "id": "Q3503",
+      "countries": [
+        "Angola",
+        "Democratic Republic of the Congo",
+        "Republic of the Congo",
+        "Zambia"
+      ],
+      "lengthKm": {
+        "value": 4700.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Orange": {
+      "id": "Q181475",
+      "countries": [
+        "Lesotho",
+        "Namibia",
+        "South Africa"
+      ],
+      "lengthKm": {
+        "value": 2200.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Limpopo": {
+      "id": "Q173017",
+      "countries": [
+        "Botswana",
+        "Mozambique",
+        "South Africa",
+        "Zimbabwe"
+      ],
+      "lengthKm": {
+        "value": 1750.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Zambezi": {
+      "id": "Q43106",
+      "countries": [
+        "Angola",
+        "Mozambique",
+        "Namibia",
+        "Zambia",
+        "Zimbabwe"
+      ],
+      "lengthKm": {
+        "value": 2574.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Euphrates": {
+      "id": "Q34589",
+      "countries": [
+        "Turkey",
+        "Syria",
+        "Iraq"
+      ],
+      "lengthKm": {
+        "value": 2800.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Tigris": {
+      "id": "Q35591",
+      "countries": [
+        "Iraq",
+        "Syria",
+        "Turkey"
+      ],
+      "lengthKm": {
+        "value": 1850.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Po": {
+      "id": "Q643",
+      "countries": [
+        "Italy"
+      ],
+      "lengthKm": {
+        "value": 652.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Tiber": {
+      "id": "Q13712",
+      "countries": [
+        "Italy"
+      ],
+      "lengthKm": {
+        "value": 405.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Rhine": {
+      "id": "Q584",
+      "countries": [
+        "Switzerland",
+        "Austria",
+        "Liechtenstein",
+        "Germany",
+        "France",
+        "Netherlands"
+      ],
+      "lengthKm": {
+        "value": 1232.7,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Rhône": {
+      "id": "Q602",
+      "countries": [
+        "Switzerland",
+        "France"
+      ],
+      "lengthKm": {
+        "value": 812.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Loire": {
+      "id": "Q1469",
+      "countries": [
+        "France"
+      ],
+      "lengthKm": {
+        "value": 1006.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Thames": {
+      "id": "Q19686",
+      "countries": [
+        "United Kingdom"
+      ],
+      "lengthKm": {
+        "value": 334.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Danube": {
+      "id": "Q1653",
+      "countries": [
+        "Germany",
+        "Austria",
+        "Slovakia",
+        "Hungary",
+        "Croatia",
+        "Serbia",
+        "Romania",
+        "Bulgaria",
+        "Moldova"
+      ],
+      "lengthKm": {
+        "value": 2850.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Dnieper": {
+      "id": "Q40855",
+      "countries": [
+        "Russia",
+        "Belarus",
+        "Ukraine"
+      ],
+      "lengthKm": {
+        "value": 2285.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Volga": {
+      "id": "Q626",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 3530.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Ural": {
+      "id": "Q80240",
+      "countries": [
+        "Kazakhstan",
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 2428.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Ob": {
+      "id": "Q973",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 3650.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Lena": {
+      "id": "Q46841",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 4294.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Yenisey": {
+      "id": "Q78707",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 3487.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Amur": {
+      "id": "Q6862",
+      "countries": [
+        "Russia",
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 2824.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Songhua": {
+      "id": "Q210326",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 1434.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Yalu": {
+      "id": "Q55498",
+      "countries": [
+        "People's Republic of China",
+        "North Korea"
+      ],
+      "lengthKm": {
+        "value": 813.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Yellow River": {
+      "id": "Q7355",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 5464.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Yangtze": {
+      "id": "Q5413",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 6300.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Pearl River": {
+      "id": "Q201463",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 2400.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Tarim": {
+      "id": "Q237901",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 2030.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Syr Darya": {
+      "id": "Q483159",
+      "countries": [
+        "Kazakhstan",
+        "Uzbekistan",
+        "Tajikistan",
+        "Kyrgyzstan"
+      ],
+      "lengthKm": {
+        "value": 2212.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Amu Darya": {
+      "id": "Q8493",
+      "countries": [
+        "Turkmenistan",
+        "Tajikistan",
+        "Afghanistan",
+        "Uzbekistan"
+      ],
+      "lengthKm": {
+        "value": 2620.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Helmand": {
+      "id": "Q8510",
+      "countries": [
+        "Afghanistan",
+        "Iran"
+      ],
+      "lengthKm": {
+        "value": 1150.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Indus": {
+      "id": "Q7348",
+      "countries": [
+        "Pakistan",
+        "People's Republic of China",
+        "India"
+      ],
+      "lengthKm": {
+        "value": 3180.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Ganges": {
+      "id": "Q5089",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 2525.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Brahmaputra": {
+      "id": "Q45403",
+      "countries": [
+        "India",
+        "People's Republic of China",
+        "Bangladesh",
+        "Nepal"
+      ],
+      "lengthKm": {
+        "value": 2900.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Irrawaddy": {
+      "id": "Q26076",
+      "countries": [
+        "Myanmar"
+      ],
+      "lengthKm": {
+        "value": 2170.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Mekong": {
+      "id": "Q41179",
+      "countries": [
+        "People's Republic of China",
+        "Myanmar",
+        "Thailand",
+        "Laos",
+        "Cambodia",
+        "Vietnam"
+      ],
+      "lengthKm": {
+        "value": 4350.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Salween": {
+      "id": "Q26422",
+      "countries": [
+        "People's Republic of China",
+        "Thailand",
+        "Myanmar"
+      ],
+      "lengthKm": {
+        "value": 2815.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Murray": {
+      "id": "Q183078",
+      "countries": [
+        "Australia"
+      ],
+      "lengthKm": {
+        "value": 2508.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Narmada": {
+      "id": "Q234004",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 1315.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Godavari": {
+      "id": "Q191314",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 1465.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "rivers:Krishna": {
+      "id": "Q193499",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 1400.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Atlas Mountains": {
+      "id": "Q130135",
+      "countries": [
+        "Morocco",
+        "Algeria",
+        "Tunisia"
+      ],
+      "lengthKm": {
+        "value": 2550.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Ural Mountains": {
+      "id": "Q35600",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 2500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Caucasus Mountains": {
+      "id": "Q5477",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 1200.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 477165.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Carpathian Mountains": {
+      "id": "Q1288",
+      "countries": [
+        "Serbia",
+        "Ukraine",
+        "Austria",
+        "Czech Republic",
+        "Slovakia",
+        "Poland",
+        "Hungary",
+        "Romania"
+      ],
+      "lengthKm": {
+        "value": 1700.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Alps": {
+      "id": "Q1286",
+      "countries": [
+        "Germany",
+        "Austria",
+        "Switzerland",
+        "France",
+        "Italy",
+        "Slovenia",
+        "Monaco",
+        "Liechtenstein",
+        "Hungary"
+      ],
+      "lengthKm": {
+        "value": 1200.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 190000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Apennines": {
+      "id": "Q1285",
+      "countries": [
+        "Italy",
+        "San Marino"
+      ],
+      "lengthKm": {
+        "value": 1200.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Pyrenees": {
+      "id": "Q12431",
+      "countries": [
+        "Spain",
+        "France",
+        "Andorra"
+      ],
+      "lengthKm": {
+        "value": 491.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 19000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Altay Mountains": {
+      "id": "Q5955",
+      "countries": [
+        "Kazakhstan",
+        "Russia",
+        "Mongolia",
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 2000.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Tian Shan": {
+      "id": "Q5474",
+      "countries": [
+        "Kyrgyzstan",
+        "Kazakhstan",
+        "People's Republic of China",
+        "Uzbekistan"
+      ],
+      "lengthKm": {
+        "value": 2500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Himalayas": {
+      "id": "Q5451",
+      "countries": [
+        "Nepal",
+        "Myanmar",
+        "People's Republic of China",
+        "Pakistan",
+        "India",
+        "Afghanistan",
+        "Bhutan"
+      ],
+      "lengthKm": {
+        "value": 2400.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 600000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Karakoram Range": {
+      "id": "Q5469",
+      "countries": [
+        "People's Republic of China",
+        "Tajikistan",
+        "India",
+        "Afghanistan",
+        "Pakistan"
+      ],
+      "lengthKm": {
+        "value": 500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Western Ghats": {
+      "id": "Q4527",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 1600.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 160000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Eastern Ghats": {
+      "id": "Q465055",
+      "countries": [
+        "India"
+      ],
+      "lengthKm": {
+        "value": 1500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Great Dividing Range": {
+      "id": "Q192583",
+      "countries": [
+        "Australia"
+      ],
+      "lengthKm": {
+        "value": 3500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Southern Alps": {
+      "id": "Q206650",
+      "countries": [
+        "New Zealand"
+      ],
+      "lengthKm": {
+        "value": 500.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Rocky Mountains": {
+      "id": "Q5463",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 3000.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Appalachian Mountains": {
+      "id": "Q93332",
+      "countries": [
+        "United States",
+        "Canada",
+        "France"
+      ],
+      "lengthKm": {
+        "value": 2400.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Sierra Nevada": {
+      "id": "Q26777",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 644.0,
+        "year": null
+      },
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "ranges:Cascade Range": {
+      "id": "Q4558",
+      "countries": [
+        "United States",
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 1100.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 150000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "ranges:Andes": {
+      "id": "Q5456",
+      "countries": [
+        "Bolivia",
+        "Chile",
+        "Colombia",
+        "Ecuador",
+        "Peru",
+        "Venezuela",
+        "Argentina"
+      ],
+      "lengthKm": {
+        "value": 7000.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 3300000.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "peaks:Mount Everest": {
+      "id": "Q513",
+      "countries": [
+        "Nepal",
+        "People's Republic of China"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:K2": {
+      "id": "Q43512",
+      "countries": [
+        "Pakistan"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Kangchenjunga": {
+      "id": "Q82019",
+      "countries": [
+        "India",
+        "Nepal"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Lhotse": {
+      "id": "Q168702",
+      "countries": [
+        "Nepal",
+        "People's Republic of China"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Makalu": {
+      "id": "Q169986",
+      "countries": [
+        "Nepal",
+        "People's Republic of China"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Cho Oyu": {
+      "id": "Q170089",
+      "countries": [
+        "Nepal",
+        "People's Republic of China"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Dhaulagiri I": {
+      "id": "Q165440",
+      "countries": [
+        "Nepal"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Manaslu": {
+      "id": "Q170070",
+      "countries": [
+        "Nepal"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Nanga Parbat": {
+      "id": "Q130736",
+      "countries": [
+        "Pakistan"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "peaks:Annapurna I": {
+      "id": "Q16466024",
+      "countries": [
+        "Nepal"
+      ],
+      "lengthKm": null,
+      "areaKm2": null,
+      "volumeKm3": null
+    },
+    "lakes:Lake Ladoga": {
+      "id": "Q15288",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 219.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 17700.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 838.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Erie": {
+      "id": "Q5492",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 388.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 25744.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "lakes:Lake Malawi": {
+      "id": "Q5532",
+      "countries": [
+        "Malawi",
+        "Mozambique",
+        "Tanzania"
+      ],
+      "lengthKm": {
+        "value": 570.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 29600.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 8400.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Victoria": {
+      "id": "Q5505",
+      "countries": [
+        "Tanzania",
+        "Uganda",
+        "Kenya"
+      ],
+      "lengthKm": {
+        "value": 337.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 68100.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 2750.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Baikal": {
+      "id": "Q5513",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 636.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 31722.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 23615.39,
+        "year": null
+      }
+    },
+    "lakes:Lake Winnipeg": {
+      "id": "Q3272",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 416.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 24400.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 294.0,
+        "year": null
+      }
+    },
+    "lakes:Great Slave Lake": {
+      "id": "Q5539",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 480.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 27209.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 1580.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Ontario": {
+      "id": "Q1062",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 311.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 18529.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "lakes:Great Bear Lake": {
+      "id": "Q5525",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 400.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 31153.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 2236.0,
+        "year": null
+      }
+    },
+    "lakes:Lago de Nicaragua": {
+      "id": "Q173862",
+      "countries": [
+        "Nicaragua"
+      ],
+      "lengthKm": {
+        "value": 148.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 8264.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 108.0,
+        "year": null
+      }
+    },
+    "lakes:Lago Titicaca": {
+      "id": "Q35342",
+      "countries": [
+        "Peru",
+        "Bolivia"
+      ],
+      "lengthKm": {
+        "value": 204.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 8372.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 893.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Onega": {
+      "id": "Q166162",
+      "countries": [
+        "Russia"
+      ],
+      "lengthKm": {
+        "value": 248.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 9800.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 285.0,
+        "year": null
+      }
+    },
+    "lakes:Great Salt Lake": {
+      "id": "Q178741",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 120.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 4400.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 18.92,
+        "year": null
+      }
+    },
+    "lakes:Lake Michigan": {
+      "id": "Q1169",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 494.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 57750.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "lakes:Lake Superior": {
+      "id": "Q1066",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 563.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 82350.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 12100.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Huron": {
+      "id": "Q1383",
+      "countries": [
+        "Canada",
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 332.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 59600.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "lakes:Lake Athabasca": {
+      "id": "Q272463",
+      "countries": [
+        "Canada"
+      ],
+      "lengthKm": {
+        "value": 283.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 7850.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 204.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Tahoe": {
+      "id": "Q169962",
+      "countries": [
+        "United States"
+      ],
+      "lengthKm": {
+        "value": 35.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 502.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 150.0,
+        "year": null
+      }
+    },
+    "lakes:Qinghai Hu": {
+      "id": "Q201294",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": {
+        "value": 108.1,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 4400.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 71.6,
+        "year": null
+      }
+    },
+    "lakes:Dead Sea": {
+      "id": "Q23883",
+      "countries": [
+        "Jordan",
+        "Israel",
+        "Palestine"
+      ],
+      "lengthKm": {
+        "value": 67.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 605.0,
+        "year": "2016"
+      },
+      "volumeKm3": {
+        "value": 148.0,
+        "year": null
+      }
+    },
+    "lakes:Tai Hu": {
+      "id": "Q140712",
+      "countries": [
+        "People's Republic of China"
+      ],
+      "lengthKm": null,
+      "areaKm2": {
+        "value": 2250.0,
+        "year": null
+      },
+      "volumeKm3": null
+    },
+    "lakes:Lake Geneva": {
+      "id": "Q6403",
+      "countries": [
+        "Switzerland",
+        "France"
+      ],
+      "lengthKm": {
+        "value": 73.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 581.3,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 89.0,
+        "year": null
+      }
+    },
+    "lakes:Lago de Managua": {
+      "id": "Q272380",
+      "countries": [
+        "Nicaragua"
+      ],
+      "lengthKm": {
+        "value": 58.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 1042.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 8.0,
+        "year": null
+      }
+    },
+    "lakes:South Aral Sea": {
+      "id": "Q276776",
+      "countries": [
+        "Kazakhstan",
+        "Uzbekistan"
+      ],
+      "lengthKm": null,
+      "areaKm2": {
+        "value": 10780.0,
+        "year": "2015"
+      },
+      "volumeKm3": null
+    },
+    "lakes:North Aral Sea": {
+      "id": "Q3358037",
+      "countries": [
+        "Kazakhstan"
+      ],
+      "lengthKm": null,
+      "areaKm2": {
+        "value": 3300.0,
+        "year": "2008"
+      },
+      "volumeKm3": {
+        "value": 27.0,
+        "year": "2007"
+      }
+    },
+    "lakes:Lake Balkhash": {
+      "id": "Q134485",
+      "countries": [
+        "Kazakhstan"
+      ],
+      "lengthKm": {
+        "value": 620.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 18200.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 106.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Tanganyika": {
+      "id": "Q5511",
+      "countries": [
+        "Tanzania",
+        "Democratic Republic of the Congo",
+        "Burundi",
+        "Zambia"
+      ],
+      "lengthKm": {
+        "value": 673.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 32900.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 18900.0,
+        "year": null
+      }
+    },
+    "lakes:Lake Maracaibo": {
+      "id": "Q182137",
+      "countries": [
+        "Venezuela"
+      ],
+      "lengthKm": {
+        "value": 99.0,
+        "year": null
+      },
+      "areaKm2": {
+        "value": 13210.0,
+        "year": null
+      },
+      "volumeKm3": {
+        "value": 280.0,
+        "year": null
+      }
+    },
+    "countries:IDN": {
+      "id": "Q252",
+      "capitals": [
+        "Jakarta"
+      ]
+    },
+    "countries:MYS": {
+      "id": "Q833",
+      "capitals": [
+        "Kuala Lumpur"
+      ]
+    },
+    "countries:CHL": {
+      "id": "Q298",
+      "capitals": [
+        "Santiago"
+      ]
+    },
+    "countries:BOL": {
+      "id": "Q750",
+      "capitals": [
+        "Sucre",
+        "La Paz"
+      ]
+    },
+    "countries:PER": {
+      "id": "Q419",
+      "capitals": [
+        "Lima"
+      ]
+    },
+    "countries:ARG": {
+      "id": "Q414",
+      "capitals": [
+        "Buenos Aires"
+      ]
+    },
+    "countries:ESB": {
+      "id": "Q9206745",
+      "capitals": []
+    },
+    "countries:CYP": {
+      "id": "Q229",
+      "capitals": [
+        "Nicosia"
+      ]
+    },
+    "countries:IND": {
+      "id": "Q668",
+      "capitals": [
+        "New Delhi"
+      ]
+    },
+    "countries:CHN": {
+      "id": "Q148",
+      "capitals": [
+        "Beijing"
+      ]
+    },
+    "countries:ISR": {
+      "id": "Q801",
+      "capitals": [
+        "Jerusalem"
+      ]
+    },
+    "countries:PSX": {
+      "id": "Q23792",
+      "capitals": []
+    },
+    "countries:LBN": {
+      "id": "Q822",
+      "capitals": [
+        "Beirut"
+      ]
+    },
+    "countries:ETH": {
+      "id": "Q115",
+      "capitals": [
+        "Addis Ababa"
+      ]
+    },
+    "countries:SDS": {
+      "id": "Q958",
+      "capitals": [
+        "Juba"
+      ]
+    },
+    "countries:SOM": {
+      "id": "Q1045",
+      "capitals": [
+        "Mogadishu"
+      ]
+    },
+    "countries:KEN": {
+      "id": "Q114",
+      "capitals": [
+        "Nairobi"
+      ]
+    },
+    "countries:MWI": {
+      "id": "Q1020",
+      "capitals": [
+        "Lilongwe"
+      ]
+    },
+    "countries:TZA": {
+      "id": "Q924",
+      "capitals": [
+        "Dodoma"
+      ]
+    },
+    "countries:SYR": {
+      "id": "Q858",
+      "capitals": [
+        "Damascus"
+      ]
+    },
+    "countries:SOL": {
+      "id": "Q34754",
+      "capitals": [
+        "Hargeisa"
+      ]
+    },
+    "countries:FRA": {
+      "id": "Q142",
+      "capitals": [
+        "Paris"
+      ]
+    },
+    "countries:SUR": {
+      "id": "Q730",
+      "capitals": [
+        "Paramaribo"
+      ]
+    },
+    "countries:GUY": {
+      "id": "Q734",
+      "capitals": [
+        "Georgetown"
+      ]
+    },
+    "countries:KOR": {
+      "id": "Q884",
+      "capitals": [
+        "Seoul"
+      ]
+    },
+    "countries:PRK": {
+      "id": "Q423",
+      "capitals": [
+        "Pyongyang"
+      ]
+    },
+    "countries:MAR": {
+      "id": "Q1028",
+      "capitals": [
+        "Rabat"
+      ]
+    },
+    "countries:SAH": {
+      "id": "Q6250",
+      "capitals": []
+    },
+    "countries:CRI": {
+      "id": "Q800",
+      "capitals": [
+        "San José"
+      ]
+    },
+    "countries:NIC": {
+      "id": "Q811",
+      "capitals": [
+        "Managua"
+      ]
+    },
+    "countries:COG": {
+      "id": "Q971",
+      "capitals": [
+        "Brazzaville"
+      ]
+    },
+    "countries:COD": {
+      "id": "Q974",
+      "capitals": [
+        "Kinshasa"
+      ]
+    },
+    "countries:BTN": {
+      "id": "Q917",
+      "capitals": [
+        "Thimphu"
+      ]
+    },
+    "countries:UKR": {
+      "id": "Q212",
+      "capitals": [
+        "Kyiv"
+      ]
+    },
+    "countries:BLR": {
+      "id": "Q184",
+      "capitals": [
+        "Minsk"
+      ]
+    },
+    "countries:NAM": {
+      "id": "Q1030",
+      "capitals": [
+        "Windhoek"
+      ]
+    },
+    "countries:ZAF": {
+      "id": "Q258",
+      "capitals": [
+        "Pretoria",
+        "Bloemfontein",
+        "Cape Town"
+      ]
+    },
+    "countries:MAF": {
+      "id": "Q126125",
+      "capitals": [
+        "Marigot"
+      ]
+    },
+    "countries:SXM": {
+      "id": "Q26273",
+      "capitals": [
+        "Philipsburg"
+      ]
+    },
+    "countries:OMN": {
+      "id": "Q842",
+      "capitals": [
+        "Muscat"
+      ]
+    },
+    "countries:UZB": {
+      "id": "Q265",
+      "capitals": [
+        "Tashkent"
+      ]
+    },
+    "countries:KAZ": {
+      "id": "Q232",
+      "capitals": [
+        "Astana"
+      ]
+    },
+    "countries:TJK": {
+      "id": "Q863",
+      "capitals": [
+        "Dushanbe"
+      ]
+    },
+    "countries:LTU": {
+      "id": "Q37",
+      "capitals": [
+        "Vilnius"
+      ]
+    },
+    "countries:BRA": {
+      "id": "Q155",
+      "capitals": [
+        "Brasília"
+      ]
+    },
+    "countries:URY": {
+      "id": "Q77",
+      "capitals": [
+        "Montevideo"
+      ]
+    },
+    "countries:MNG": {
+      "id": "Q711",
+      "capitals": [
+        "Ulaanbaatar"
+      ]
+    },
+    "countries:RUS": {
+      "id": "Q159",
+      "capitals": [
+        "Moscow"
+      ]
+    },
+    "countries:CZE": {
+      "id": "Q213",
+      "capitals": [
+        "Prague"
+      ]
+    },
+    "countries:DEU": {
+      "id": "Q183",
+      "capitals": [
+        "Berlin",
+        "Berlin"
+      ]
+    },
+    "countries:EST": {
+      "id": "Q191",
+      "capitals": [
+        "Tallinn"
+      ]
+    },
+    "countries:LVA": {
+      "id": "Q211",
+      "capitals": [
+        "Riga"
+      ]
+    },
+    "countries:NOR": {
+      "id": "Q20",
+      "capitals": [
+        "Oslo"
+      ]
+    },
+    "countries:SWE": {
+      "id": "Q34",
+      "capitals": [
+        "Stockholm"
+      ]
+    },
+    "countries:FIN": {
+      "id": "Q33",
+      "capitals": [
+        "Helsinki"
+      ]
+    },
+    "countries:VNM": {
+      "id": "Q881",
+      "capitals": [
+        "Hanoi"
+      ]
+    },
+    "countries:KHM": {
+      "id": "Q424",
+      "capitals": [
+        "Phnom Penh"
+      ]
+    },
+    "countries:LUX": {
+      "id": "Q32",
+      "capitals": [
+        "Luxembourg"
+      ]
+    },
+    "countries:ARE": {
+      "id": "Q878",
+      "capitals": [
+        "Abu Dhabi"
+      ]
+    },
+    "countries:BEL": {
+      "id": "Q31",
+      "capitals": [
+        "Brussels"
+      ]
+    },
+    "countries:GEO": {
+      "id": "Q230",
+      "capitals": [
+        "Tbilisi"
+      ]
+    },
+    "countries:MKD": {
+      "id": "Q221",
+      "capitals": [
+        "Skopje"
+      ]
+    },
+    "countries:ALB": {
+      "id": "Q222",
+      "capitals": [
+        "Tirana"
+      ]
+    },
+    "countries:AZE": {
+      "id": "Q227",
+      "capitals": [
+        "Baku"
+      ]
+    },
+    "countries:KOS": {
+      "id": "Q1246",
+      "capitals": [
+        "Pristina"
+      ]
+    },
+    "countries:TUR": {
+      "id": "Q43",
+      "capitals": [
+        "Ankara"
+      ]
+    },
+    "countries:ESP": {
+      "id": "Q29",
+      "capitals": [
+        "Madrid"
+      ]
+    },
+    "countries:LAO": {
+      "id": "Q819",
+      "capitals": [
+        "Vientiane"
+      ]
+    },
+    "countries:KGZ": {
+      "id": "Q813",
+      "capitals": [
+        "Bishkek"
+      ]
+    },
+    "countries:ARM": {
+      "id": "Q399",
+      "capitals": [
+        "Yerevan"
+      ]
+    },
+    "countries:DNK": {
+      "id": "Q35",
+      "capitals": [
+        "Copenhagen"
+      ]
+    },
+    "countries:LBY": {
+      "id": "Q1016",
+      "capitals": [
+        "Tripoli"
+      ]
+    },
+    "countries:TUN": {
+      "id": "Q948",
+      "capitals": [
+        "Tunis"
+      ]
+    },
+    "countries:ROU": {
+      "id": "Q218",
+      "capitals": [
+        "Bucharest"
+      ]
+    },
+    "countries:HUN": {
+      "id": "Q28",
+      "capitals": [
+        "Budapest"
+      ]
+    },
+    "countries:SVK": {
+      "id": "Q214",
+      "capitals": [
+        "Bratislava"
+      ]
+    },
+    "countries:POL": {
+      "id": "Q36",
+      "capitals": [
+        "Warsaw"
+      ]
+    },
+    "countries:IRL": {
+      "id": "Q27",
+      "capitals": [
+        "Dublin"
+      ]
+    },
+    "countries:GBR": {
+      "id": "Q145",
+      "capitals": [
+        "London"
+      ]
+    },
+    "countries:GRC": {
+      "id": "Q41",
+      "capitals": [
+        "Athens"
+      ]
+    },
+    "countries:ZMB": {
+      "id": "Q953",
+      "capitals": [
+        "Lusaka"
+      ]
+    },
+    "countries:SLE": {
+      "id": "Q1044",
+      "capitals": [
+        "Freetown"
+      ]
+    },
+    "countries:GIN": {
+      "id": "Q1006",
+      "capitals": [
+        "Conakry"
+      ]
+    },
+    "countries:LBR": {
+      "id": "Q1014",
+      "capitals": [
+        "Monrovia"
+      ]
+    },
+    "countries:CAF": {
+      "id": "Q929",
+      "capitals": [
+        "Bangui"
+      ]
+    },
+    "countries:SDN": {
+      "id": "Q1049",
+      "capitals": [
+        "Khartoum"
+      ]
+    },
+    "countries:DJI": {
+      "id": "Q977",
+      "capitals": [
+        "Djibouti"
+      ]
+    },
+    "countries:ERI": {
+      "id": "Q986",
+      "capitals": [
+        "Asmara"
+      ]
+    },
+    "countries:AUT": {
+      "id": "Q40",
+      "capitals": [
+        "Vienna"
+      ]
+    },
+    "countries:IRQ": {
+      "id": "Q796",
+      "capitals": [
+        "Baghdad"
+      ]
+    },
+    "countries:ITA": {
+      "id": "Q38",
+      "capitals": [
+        "Rome"
+      ]
+    },
+    "countries:CHE": {
+      "id": "Q39",
+      "capitals": [
+        "Bern"
+      ]
+    },
+    "countries:IRN": {
+      "id": "Q794",
+      "capitals": [
+        "Tehran"
+      ]
+    },
+    "countries:NLD": {
+      "id": "Q55",
+      "capitals": [
+        "Amsterdam"
+      ]
+    },
+    "countries:LIE": {
+      "id": "Q347",
+      "capitals": [
+        "Vaduz"
+      ]
+    },
+    "countries:CIV": {
+      "id": "Q1008",
+      "capitals": [
+        "Yamoussoukro"
+      ]
+    },
+    "countries:SRB": {
+      "id": "Q403",
+      "capitals": [
+        "Belgrade"
+      ]
+    },
+    "countries:MLI": {
+      "id": "Q912",
+      "capitals": [
+        "Bamako"
+      ]
+    },
+    "countries:SEN": {
+      "id": "Q1041",
+      "capitals": [
+        "Dakar"
+      ]
+    },
+    "countries:NGA": {
+      "id": "Q1033",
+      "capitals": [
+        "Abuja"
+      ]
+    },
+    "countries:BEN": {
+      "id": "Q962",
+      "capitals": [
+        "Porto-Novo"
+      ]
+    },
+    "countries:AGO": {
+      "id": "Q916",
+      "capitals": [
+        "Luanda"
+      ]
+    },
+    "countries:HRV": {
+      "id": "Q224",
+      "capitals": [
+        "Zagreb"
+      ]
+    },
+    "countries:SVN": {
+      "id": "Q215",
+      "capitals": [
+        "Ljubljana"
+      ]
+    },
+    "countries:QAT": {
+      "id": "Q846",
+      "capitals": [
+        "Doha"
+      ]
+    },
+    "countries:SAU": {
+      "id": "Q851",
+      "capitals": [
+        "Riyadh"
+      ]
+    },
+    "countries:BWA": {
+      "id": "Q963",
+      "capitals": [
+        "Gaborone"
+      ]
+    },
+    "countries:ZWE": {
+      "id": "Q954",
+      "capitals": [
+        "Harare"
+      ]
+    },
+    "countries:PAK": {
+      "id": "Q843",
+      "capitals": [
+        "Islamabad"
+      ]
+    },
+    "countries:BGR": {
+      "id": "Q219",
+      "capitals": [
+        "Sofia"
+      ]
+    },
+    "countries:THA": {
+      "id": "Q869",
+      "capitals": [
+        "Bangkok"
+      ]
+    },
+    "countries:SMR": {
+      "id": "Q238",
+      "capitals": [
+        "San Marino"
+      ]
+    },
+    "countries:HTI": {
+      "id": "Q790",
+      "capitals": [
+        "Port-au-Prince"
+      ]
+    },
+    "countries:DOM": {
+      "id": "Q786",
+      "capitals": [
+        "Santo Domingo"
+      ]
+    },
+    "countries:TCD": {
+      "id": "Q657",
+      "capitals": [
+        "N'Djamena"
+      ]
+    },
+    "countries:KWT": {
+      "id": "Q817",
+      "capitals": [
+        "Kuwait City"
+      ]
+    },
+    "countries:SLV": {
+      "id": "Q792",
+      "capitals": [
+        "San Salvador"
+      ]
+    },
+    "countries:GTM": {
+      "id": "Q774",
+      "capitals": [
+        "Guatemala City"
+      ]
+    },
+    "countries:TLS": {
+      "id": "Q574",
+      "capitals": [
+        "Dili"
+      ]
+    },
+    "countries:BRN": {
+      "id": "Q921",
+      "capitals": [
+        "Bandar Seri Begawan"
+      ]
+    },
+    "countries:MCO": {
+      "id": "Q235",
+      "capitals": [
+        "Monaco"
+      ]
+    },
+    "countries:DZA": {
+      "id": "Q262",
+      "capitals": [
+        "Algiers"
+      ]
+    },
+    "countries:MOZ": {
+      "id": "Q1029",
+      "capitals": [
+        "Maputo"
+      ]
+    },
+    "countries:SWZ": {
+      "id": "Q1050",
+      "capitals": [
+        "Lobamba",
+        "Mbabane"
+      ]
+    },
+    "countries:BDI": {
+      "id": "Q967",
+      "capitals": [
+        "Gitega"
+      ]
+    },
+    "countries:RWA": {
+      "id": "Q1037",
+      "capitals": [
+        "Kigali"
+      ]
+    },
+    "countries:MMR": {
+      "id": "Q836",
+      "capitals": [
+        "Naypyidaw"
+      ]
+    },
+    "countries:BGD": {
+      "id": "Q902",
+      "capitals": [
+        "Dhaka"
+      ]
+    },
+    "countries:AND": {
+      "id": "Q228",
+      "capitals": [
+        "Andorra la Vella"
+      ]
+    },
+    "countries:AFG": {
+      "id": "Q889",
+      "capitals": [
+        "Kabul"
+      ]
+    },
+    "countries:MNE": {
+      "id": "Q236",
+      "capitals": [
+        "Podgorica"
+      ]
+    },
+    "countries:BIH": {
+      "id": "Q225",
+      "capitals": [
+        "Sarajevo"
+      ]
+    },
+    "countries:UGA": {
+      "id": "Q1036",
+      "capitals": [
+        "Kampala"
+      ]
+    },
+    "countries:USG": {
+      "id": "Q762570",
+      "capitals": []
+    },
+    "countries:CUB": {
+      "id": "Q241",
+      "capitals": [
+        "Havana"
+      ]
+    },
+    "countries:HND": {
+      "id": "Q783",
+      "capitals": [
+        "Tegucigalpa"
+      ]
+    },
+    "countries:ECU": {
+      "id": "Q736",
+      "capitals": [
+        "Quito"
+      ]
+    },
+    "countries:COL": {
+      "id": "Q739",
+      "capitals": [
+        "Bogotá"
+      ]
+    },
+    "countries:PRY": {
+      "id": "Q733",
+      "capitals": [
+        "Asunción"
+      ]
+    },
+    "countries:BRI": {
+      "id": "Q2093778",
+      "capitals": []
+    },
+    "countries:PRT": {
+      "id": "Q45",
+      "capitals": [
+        "Lisbon"
+      ]
+    },
+    "countries:MDA": {
+      "id": "Q217",
+      "capitals": [
+        "Chișinău"
+      ]
+    },
+    "countries:TKM": {
+      "id": "Q874",
+      "capitals": [
+        "Ashgabat"
+      ]
+    },
+    "countries:JOR": {
+      "id": "Q810",
+      "capitals": [
+        "Amman"
+      ]
+    },
+    "countries:NPL": {
+      "id": "Q837",
+      "capitals": [
+        "Kathmandu"
+      ]
+    },
+    "countries:LSO": {
+      "id": "Q1013",
+      "capitals": [
+        "Maseru"
+      ]
+    },
+    "countries:CMR": {
+      "id": "Q1009",
+      "capitals": [
+        "Yaoundé"
+      ]
+    },
+    "countries:GAB": {
+      "id": "Q1000",
+      "capitals": [
+        "Libreville"
+      ]
+    },
+    "countries:NER": {
+      "id": "Q1032",
+      "capitals": [
+        "Niamey"
+      ]
+    },
+    "countries:BFA": {
+      "id": "Q965",
+      "capitals": [
+        "Ouagadougou"
+      ]
+    },
+    "countries:TGO": {
+      "id": "Q945",
+      "capitals": [
+        "Lomé"
+      ]
+    },
+    "countries:GHA": {
+      "id": "Q117",
+      "capitals": [
+        "Accra"
+      ]
+    },
+    "countries:GNB": {
+      "id": "Q1007",
+      "capitals": [
+        "Bissau"
+      ]
+    },
+    "countries:GIB": {
+      "id": "Q1410",
+      "capitals": [
+        "Gibraltar"
+      ]
+    },
+    "countries:USA": {
+      "id": "Q30",
+      "capitals": [
+        "Washington, D.C."
+      ]
+    },
+    "countries:CAN": {
+      "id": "Q16",
+      "capitals": [
+        "Ottawa"
+      ]
+    },
+    "countries:MEX": {
+      "id": "Q96",
+      "capitals": [
+        "Mexico City"
+      ]
+    },
+    "countries:BLZ": {
+      "id": "Q242",
+      "capitals": [
+        "Belmopan"
+      ]
+    },
+    "countries:PAN": {
+      "id": "Q804",
+      "capitals": [
+        "Panama City"
+      ]
+    },
+    "countries:VEN": {
+      "id": "Q717",
+      "capitals": [
+        "Caracas"
+      ]
+    },
+    "countries:PNG": {
+      "id": "Q691",
+      "capitals": [
+        "Port Moresby"
+      ]
+    },
+    "countries:EGY": {
+      "id": "Q79",
+      "capitals": [
+        "Cairo"
+      ]
+    },
+    "countries:YEM": {
+      "id": "Q805",
+      "capitals": [
+        "Sanaa",
+        "Aden"
+      ]
+    },
+    "countries:MRT": {
+      "id": "Q1025",
+      "capitals": [
+        "Nouakchott"
+      ]
+    },
+    "countries:GNQ": {
+      "id": "Q983",
+      "capitals": [
+        "Ciudad de la Paz"
+      ]
+    },
+    "countries:GMB": {
+      "id": "Q1005",
+      "capitals": [
+        "Banjul"
+      ]
+    },
+    "countries:HKG": {
+      "id": "Q8646",
+      "capitals": []
+    },
+    "countries:VAT": {
+      "id": "Q237",
+      "capitals": [
+        "Vatican City"
+      ]
+    },
+    "countries:CYN": {
+      "id": "Q23681",
+      "capitals": [
+        "North Nicosia"
+      ]
+    },
+    "countries:CNM": {
+      "id": "Q116970",
+      "capitals": []
+    },
+    "countries:KAS": {
+      "id": "Q333946",
+      "capitals": []
+    },
+    "countries:KAB": {
+      "id": "Q165413",
+      "capitals": []
+    },
+    "countries:WSB": {
+      "id": "Q9143535",
+      "capitals": []
+    },
+    "countries:SPI": {
+      "id": "Q1031467",
+      "capitals": []
+    },
+    "countries:BRT": {
+      "id": "Q620634",
+      "capitals": []
+    },
+    "countries:ATA": {
+      "id": "Q51",
+      "capitals": []
+    },
+    "countries:AUS": {
+      "id": "Q408",
+      "capitals": [
+        "Canberra"
+      ]
+    },
+    "countries:GRL": {
+      "id": "Q223",
+      "capitals": [
+        "Nuuk"
+      ]
+    },
+    "countries:FJI": {
+      "id": "Q712",
+      "capitals": [
+        "Suva"
+      ]
+    },
+    "countries:NZL": {
+      "id": "Q664",
+      "capitals": [
+        "Wellington"
+      ]
+    },
+    "countries:NCL": {
+      "id": "Q33788",
+      "capitals": [
+        "Nouméa"
+      ]
+    },
+    "countries:MDG": {
+      "id": "Q1019",
+      "capitals": [
+        "Antananarivo"
+      ]
+    },
+    "countries:PHL": {
+      "id": "Q928",
+      "capitals": [
+        "Manila"
+      ]
+    },
+    "countries:LKA": {
+      "id": "Q854",
+      "capitals": [
+        "Sri Jayawardenepura Kotte",
+        "Colombo"
+      ]
+    },
+    "countries:CUW": {
+      "id": "Q25279",
+      "capitals": [
+        "Willemstad"
+      ]
+    },
+    "countries:ABW": {
+      "id": "Q21203",
+      "capitals": [
+        "Oranjestad"
+      ]
+    },
+    "countries:BHS": {
+      "id": "Q778",
+      "capitals": [
+        "Nassau"
+      ]
+    },
+    "countries:TCA": {
+      "id": "Q18221",
+      "capitals": [
+        "Cockburn Town"
+      ]
+    },
+    "countries:TWN": {
+      "id": "Q865",
+      "capitals": [
+        "Taipei"
+      ]
+    },
+    "countries:JPN": {
+      "id": "Q17",
+      "capitals": [
+        "Tokyo"
+      ]
+    },
+    "countries:SPM": {
+      "id": "Q34617",
+      "capitals": [
+        "Saint-Pierre"
+      ]
+    },
+    "countries:ISL": {
+      "id": "Q189",
+      "capitals": [
+        "Reykjavík"
+      ]
+    },
+    "countries:PCN": {
+      "id": "Q35672",
+      "capitals": [
+        "Adamstown"
+      ]
+    },
+    "countries:PYF": {
+      "id": "Q30971",
+      "capitals": [
+        "Papeete"
+      ]
+    },
+    "countries:ATF": {
+      "id": "Q129003",
+      "capitals": [
+        "Port-aux-Français"
+      ]
+    },
+    "countries:SYC": {
+      "id": "Q1042",
+      "capitals": [
+        "Victoria"
+      ]
+    },
+    "countries:KIR": {
+      "id": "Q710",
+      "capitals": [
+        "South Tarawa"
+      ]
+    },
+    "countries:MHL": {
+      "id": "Q709",
+      "capitals": [
+        "Majuro"
+      ]
+    },
+    "countries:TTO": {
+      "id": "Q754",
+      "capitals": [
+        "Port of Spain"
+      ]
+    },
+    "countries:GRD": {
+      "id": "Q769",
+      "capitals": [
+        "St. George's"
+      ]
+    },
+    "countries:VCT": {
+      "id": "Q757",
+      "capitals": [
+        "Kingstown"
+      ]
+    },
+    "countries:BRB": {
+      "id": "Q244",
+      "capitals": [
+        "Bridgetown"
+      ]
+    },
+    "countries:LCA": {
+      "id": "Q760",
+      "capitals": [
+        "Castries"
+      ]
+    },
+    "countries:DMA": {
+      "id": "Q784",
+      "capitals": [
+        "Roseau"
+      ]
+    },
+    "countries:UMI": {
+      "id": "Q16645",
+      "capitals": []
+    },
+    "countries:MSR": {
+      "id": "Q13353",
+      "capitals": [
+        "Plymouth",
+        "Brades"
+      ]
+    },
+    "countries:ATG": {
+      "id": "Q781",
+      "capitals": []
+    },
+    "countries:KNA": {
+      "id": "Q763",
+      "capitals": [
+        "Basseterre"
+      ]
+    },
+    "countries:VIR": {
+      "id": "Q11703",
+      "capitals": [
+        "Charlotte Amalie"
+      ]
+    },
+    "countries:BLM": {
+      "id": "Q25362",
+      "capitals": [
+        "Gustavia"
+      ]
+    },
+    "countries:PRI": {
+      "id": "Q1183",
+      "capitals": [
+        "San Juan"
+      ]
+    },
+    "countries:AIA": {
+      "id": "Q25228",
+      "capitals": [
+        "The Valley"
+      ]
+    },
+    "countries:VGB": {
+      "id": "Q25305",
+      "capitals": [
+        "Road Town"
+      ]
+    },
+    "countries:JAM": {
+      "id": "Q766",
+      "capitals": [
+        "Kingston"
+      ]
+    },
+    "countries:CYM": {
+      "id": "Q5785",
+      "capitals": [
+        "George Town"
+      ]
+    },
+    "countries:BMU": {
+      "id": "Q23635",
+      "capitals": [
+        "Hamilton"
+      ]
+    },
+    "countries:HMD": {
+      "id": "Q131198",
+      "capitals": []
+    },
+    "countries:SHN": {
+      "id": "Q34497",
+      "capitals": []
+    },
+    "countries:MUS": {
+      "id": "Q1027",
+      "capitals": [
+        "Port Louis"
+      ]
+    },
+    "countries:COM": {
+      "id": "Q970",
+      "capitals": [
+        "Moroni"
+      ]
+    },
+    "countries:STP": {
+      "id": "Q1039",
+      "capitals": [
+        "São Tomé"
+      ]
+    },
+    "countries:CPV": {
+      "id": "Q1011",
+      "capitals": [
+        "Praia"
+      ]
+    },
+    "countries:MLT": {
+      "id": "Q233",
+      "capitals": [
+        "Valletta"
+      ]
+    },
+    "countries:JEY": {
+      "id": "Q785",
+      "capitals": [
+        "Saint Helier"
+      ]
+    },
+    "countries:GGY": {
+      "id": "Q25230",
+      "capitals": [
+        "Saint Peter Port"
+      ]
+    },
+    "countries:IMN": {
+      "id": "Q9676",
+      "capitals": [
+        "Douglas"
+      ]
+    },
+    "countries:ALD": {
+      "id": "Q5689",
+      "capitals": [
+        "Mariehamn"
+      ]
+    },
+    "countries:FRO": {
+      "id": "Q4628",
+      "capitals": [
+        "Tórshavn"
+      ]
+    },
+    "countries:IOA": {
+      "id": "Q4824275",
+      "capitals": []
+    },
+    "countries:IOT": {
+      "id": "Q43448",
+      "capitals": [
+        "Diego Garcia"
+      ]
+    },
+    "countries:SGP": {
+      "id": "Q334",
+      "capitals": [
+        "Singapore"
+      ]
+    },
+    "countries:NFK": {
+      "id": "Q31057",
+      "capitals": [
+        "Kingston"
+      ]
+    },
+    "countries:COK": {
+      "id": "Q26988",
+      "capitals": [
+        "Avarua"
+      ]
+    },
+    "countries:TON": {
+      "id": "Q678",
+      "capitals": [
+        "Nukuʻalofa"
+      ]
+    },
+    "countries:WLF": {
+      "id": "Q35555",
+      "capitals": [
+        "Mata-Utu"
+      ]
+    },
+    "countries:WSM": {
+      "id": "Q683",
+      "capitals": [
+        "Apia"
+      ]
+    },
+    "countries:SLB": {
+      "id": "Q685",
+      "capitals": [
+        "Honiara"
+      ]
+    },
+    "countries:TUV": {
+      "id": "Q672",
+      "capitals": [
+        "Funafuti"
+      ]
+    },
+    "countries:MDV": {
+      "id": "Q826",
+      "capitals": [
+        "Malé"
+      ]
+    },
+    "countries:NRU": {
+      "id": "Q697",
+      "capitals": [
+        "Yaren District"
+      ]
+    },
+    "countries:FSM": {
+      "id": "Q702",
+      "capitals": [
+        "Palikir"
+      ]
+    },
+    "countries:SGS": {
+      "id": "Q35086",
+      "capitals": [
+        "King Edward Point"
+      ]
+    },
+    "countries:FLK": {
+      "id": "Q9648",
+      "capitals": [
+        "Stanley"
+      ]
+    },
+    "countries:VUT": {
+      "id": "Q686",
+      "capitals": [
+        "Port Vila"
+      ]
+    },
+    "countries:NIU": {
+      "id": "Q34020",
+      "capitals": [
+        "Alofi"
+      ]
+    },
+    "countries:ASM": {
+      "id": "Q16641",
+      "capitals": [
+        "Pago Pago"
+      ]
+    },
+    "countries:PLW": {
+      "id": "Q695",
+      "capitals": [
+        "Ngerulmud"
+      ]
+    },
+    "countries:GUM": {
+      "id": "Q16635",
+      "capitals": [
+        "Hagåtña"
+      ]
+    },
+    "countries:MNP": {
+      "id": "Q16644",
+      "capitals": [
+        "Saipan"
+      ]
+    },
+    "countries:BHR": {
+      "id": "Q398",
+      "capitals": [
+        "Manama"
+      ]
+    },
+    "countries:CSI": {
+      "id": "Q172216",
+      "capitals": []
+    },
+    "countries:PGA": {
+      "id": "Q43296",
+      "capitals": []
+    },
+    "countries:CLP": {
+      "id": "Q161258",
+      "capitals": []
+    },
+    "countries:MAC": {
+      "id": "Q14773",
+      "capitals": []
+    },
+    "countries:ATC": {
+      "id": "Q133888",
+      "capitals": []
+    },
+    "countries:BJN": {
+      "id": "Q1257783",
+      "capitals": []
+    },
+    "countries:SER": {
+      "id": "Q1169008",
+      "capitals": []
+    },
+    "countries:SCR": {
+      "id": "Q628716",
+      "capitals": []
+    }
+  }
+}
