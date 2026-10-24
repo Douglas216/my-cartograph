@@ -259,6 +259,7 @@ export function setupInteractions(
       }
       const note = props.system_note as string | undefined;
       if (note) summary += ` ${note}`;
+      if (systemName && props.name !== props.label_name) summary += ` Selected reach: ${props.name}.`;
       onSelectPoint({
         id: `river-${systemName || props.name}`,
         type: 'river',

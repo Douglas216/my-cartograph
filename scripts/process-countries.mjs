@@ -54,7 +54,7 @@ const PERSONAL_LAKES = [
   'Great Slave Lake', 'Great Bear Lake', 'Lake Athabasca', 'Lake Winnipeg',
   'Great Salt Lake', 'Lake Tahoe', 'Lago de Nicaragua', 'Lago de Managua',
   'Lago Titicaca', 'Lake Maracaibo', 'Lake Ladoga', 'Lake Onega', 'Lake Balkhash',
-  'Lake Baikal', 'Tai Hu', 'Qinghai Hu', 'Dead Sea', 'Lake Malawi', 'Lake Tanganyika', 'Lake Victoria', 'Lake Geneva',
+  'Lake Baikal', 'Tai Hu', 'Qinghai Hu', 'Dead Sea', 'North Aral Sea', 'South Aral Sea', 'Lake Malawi', 'Lake Tanganyika', 'Lake Victoria', 'Lake Geneva',
 ];
 const PERSONAL_ASIA_EXCLUDED = new Set(['YE', 'OM', 'LB', 'SY', 'AF', 'IQ', 'GE', 'AM', 'AZ', 'JO', 'QA', 'AE', 'PS', 'TR', 'CY']);
 const PERSONAL_OTHER_ADMIN = new Set(['GB', 'ES', 'FR', 'IT', 'DE', 'BY', 'KM', 'CV', 'EG', 'SD', 'ET', 'ZA', 'CM', 'AU', 'PG']);
@@ -1950,12 +1950,26 @@ function applyRiverInfo(rivers) {
 
 // Rivers that change name along their course. Natural Earth stores each named
 // reach as a separate feature (Lancang→Mekong, Maquan→Yarlung→Dihang→Brahmaputra),
-// which read as unrelated rivers. Rather than relabel the map (the LOCAL names are
-// what atlases actually print, and are correct), we keep those labels but unify the
-// river on CLICK: any reach reports the whole system's name, its source→mouth, a
-// note on where the name changes, and lights up EVERY member reach as one river.
+// which read as unrelated rivers. Overview labels use the familiar system name;
+// detailed labels preserve the local reach name beside it. Any reach reports the
+// whole system on click and highlights EVERY member reach as one river.
 // Keyed by system; `members` are NE's exact reach names, source→mouth order.
 const RIVER_SYSTEM = {
+  Salween: {
+    name: 'Salween', members: ['Nu', 'Salween'],
+    // https://www.internationalrivers.org/where-we-work/asia/salween/
+    note: 'Known as the Nu in China and Thanlwin in Myanmar, these reaches form the same Salween River.',
+  },
+  Yangtze: {
+    name: 'Yangtze', members: ['Tuotuo', 'Tongtian', 'Jinsha', 'Chang Jiang', 'Yangtze'],
+    // https://www.edb.gov.hk/attachment/en/curriculum-development/kla/pshe/national-geography/national-geography-resource-portal/Info_Sheet_12-rivers-eng.pdf
+    note: 'The Yangtze is also known as Chang Jiang. Tuotuo, Tongtian and Jinsha name successive upper reaches; the map preserves these local names as parts of the same river.',
+  },
+  Irrawaddy: {
+    name: 'Irrawaddy / Ayeyarwady', members: ['Ayeyarwady', 'Irrawaddy Delta'],
+    // https://eros.usgs.gov/earthshots/ayeyarwady-delta-myanmar
+    note: 'Irrawaddy and Ayeyarwady are alternative names for the same river. The Irrawaddy Delta features are its downstream distributary channels, rather than a separate river.',
+  },
   Mekong: {
     name: 'Lancang / Mekong',
     members: ['Za', 'Lancang', 'Mekong'],
@@ -1977,17 +1991,38 @@ const RIVER_SYSTEM = {
 // name-change note, and the system-wide source/mouth (overriding per-reach info).
 function applyRiverSystem(rivers) {
   const byName = {};
-  for (const sys of Object.values(RIVER_SYSTEM)) for (const m of sys.members) byName[m] = sys;
+  for (const [canonical, aliases] of Object.entries(PERSONAL_RIVERS)) {
+    const curated = RIVER_SYSTEM[canonical];
+    const facts = aliases.map(name => RIVER_INFO[name]).find(Boolean);
+    const sys = {
+      ...facts,
+      name: canonical,
+      members: aliases,
+      note: aliases.length > 1 ? `Mapped reach names for this river: ${aliases.join(', ')}.` : '',
+      ...curated,
+      label: canonical,
+    };
+    for (const member of sys.members) byName[member] = sys;
+  }
   for (const f of rivers.features) {
     const sys = byName[f.properties.name];
     if (!sys) continue;
-    f.properties.system_name = sys.name;
-    f.properties.system_members = sys.members.join('|');
-    f.properties.system_note = sys.note;
-    f.properties.source_type = sys.source.type;
-    f.properties.source_name = sys.source.name;
-    f.properties.mouth_type = sys.mouth.type;
-    f.properties.mouth_name = sys.mouth.name;
+    const p = f.properties;
+    p.system_name = sys.name;
+    p.system_members = sys.members.join('|');
+    p.system_note = sys.note;
+    // Compact identity at overview zoom; local name + identity when zoomed in.
+    // Keep p.name intact for matching geometry, clicking and highlighting.
+    p.label_name = sys.label;
+    p.reach_label = p.name === sys.label ? p.name : `${p.name} (${sys.label})`;
+    if (sys.source) {
+      p.source_type = sys.source.type;
+      p.source_name = sys.source.name;
+    }
+    if (sys.mouth) {
+      p.mouth_type = sys.mouth.type;
+      p.mouth_name = sys.mouth.name;
+    }
   }
 }
 
@@ -2246,7 +2281,7 @@ function applyPersonalSelection() {
     ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Lakes', 'lake-labels'],
     ['Mountain ranges', 'range-labels'], ['Peaks', 'peaks'], ['Oceans', 'ocean-labels'], ['Marine areas', 'sea-labels'],
   ];
-  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. Oceans and existing marine areas remain. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
+  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. Oceans and existing marine areas remain. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
   for (const [title, file] of sections) {
     const features = readGeo(file + '.geojson').features;
     const rows = [...new Set(features.map(f => {
