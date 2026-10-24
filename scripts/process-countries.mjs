@@ -1621,6 +1621,33 @@ function largestRing(geometry) {
 // via the Mississippi), and the Missouri's Montana headwaters read closer to the
 // sea than its St. Louis confluence — so "nearest ocean" picks the source and
 // inverts the whole river. A coordinate pins the true mouth instead.
+// Approximate downstream reference points (lon/lat), never nearest-coast guesses.
+// Interior tributaries end at their confluence; endorheic rivers at their inland sink.
+// Aliases are pooled before orientation so a name change cannot reverse the flow.
+const PERSONAL_RIVER_BY_REACH = new Map(Object.entries(PERSONAL_RIVERS).flatMap(([name, members]) => members.map(member => [member, name])));
+const RIVER_MOUTH_COORDS = {
+  Yukon: [-164.6, 62.6], Mackenzie: [-135.5, 69.3], Mississippi: [-89.3, 29.0],
+  Missouri: [-90.1, 38.8], Ohio: [-89.1, 37.0], Colorado: [-114.9, 31.8],
+  Arkansas: [-91.1, 33.8], Tennessee: [-88.6, 37.1], Potomac: [-76.3, 38.0],
+  'St. Lawrence': [-64.5, 49.1], Athabasca: [-110.8, 58.7], 'Rio Grande': [-97.1, 25.96],
+  Amazon: [-50.0, -0.5], Orinoco: [-61.5, 8.6], Paraná: [-58.4, -34.0],
+  Senegal: [-16.5, 15.9], Niger: [6.3, 4.3], Volta: [0.7, 5.8], Nile: [31.5, 31.4],
+  'White Nile': [32.5, 15.6], 'Blue Nile': [32.5, 15.6], Congo: [12.4, -6.1],
+  Orange: [16.45, -28.6], Limpopo: [33.6, -25.2], Zambezi: [36.4, -18.6],
+  Euphrates: [47.44, 30.97], Tigris: [47.44, 30.97], Po: [12.5, 44.95],
+  Tiber: [12.23, 41.74], Rhine: [4.1, 51.95], Rhône: [4.85, 43.3],
+  Loire: [-2.2, 47.25], Thames: [0.7, 51.5], Danube: [29.7, 45.15],
+  Dnieper: [32.3, 46.5], Volga: [48.6, 46.0], Ural: [51.8, 46.9],
+  Ob: [71.5, 66.5], Lena: [126.7, 72.4], Yenisey: [82.5, 71.8],
+  Amur: [140.7, 53.1], Songhua: [132.5, 47.7], Yalu: [124.3, 39.85],
+  'Yellow River': [119.0, 37.75], Yangtze: [121.85, 31.4], 'Pearl River': [113.6, 22.2],
+  Tarim: [88.32, 39.47], 'Syr Darya': [61.0, 46.2], 'Amu Darya': [59.5, 44.0],
+  Helmand: [61.2, 31.1], Indus: [67.4, 24.0], Ganges: [90.5, 22.0],
+  Brahmaputra: [89.75, 23.85], Irrawaddy: [95.1, 15.75], Mekong: [106.6, 9.5],
+  Salween: [97.6, 16.5], Murray: [138.9, -35.55], Narmada: [72.6, 21.6],
+  Godavari: [82.3, 16.7], Krishna: [80.9, 15.75],
+};
+
 const RIVER_REVERSE = new Map([
   ['Nile', null], ['Tigris', null], ['Dicle', null], ['Tocantins', null],
   ['Don', null], ['Zambezi', null], ['Irtysh', null], ['Al Furat', null],
@@ -1769,7 +1796,7 @@ function clusterEndpoints(entries) {
 function orientRiverParts(rivers, distOcean) {
   const groups = new Map(); // name -> [{fi, pi, line}]
   rivers.features.forEach((f, fi) => {
-    const name = f.properties.name;
+    const name = PERSONAL_RIVER_BY_REACH.get(f.properties.name) ?? f.properties.name;
     if (!name) return; // unnamed rivers: no curation possible, leave as NE shipped them
     const g = f.geometry;
     const lines = g.type === 'LineString' ? [g.coordinates] : g.type === 'MultiLineString' ? g.coordinates : [];
@@ -1783,20 +1810,28 @@ function orientRiverParts(rivers, distOcean) {
   const toReverse = []; // {fi, pi}
   for (const [name, entries] of groups) {
     const coord = clusterEndpoints(entries); // sets e.ka / e.kb as cluster ids
-    const deg = new Map(), adj = new Map();
-    const bump = (k) => { deg.set(k, (deg.get(k) || 0) + 1); if (!adj.has(k)) adj.set(k, new Set()); };
+    const adj = new Map();
+    const add = (a, b, length) => {
+      if (!adj.has(a)) adj.set(a, new Map());
+      const previous = adj.get(a).get(b) ?? Infinity;
+      adj.get(a).set(b, Math.min(previous, length));
+    };
     for (const e of entries) {
-      bump(e.ka); bump(e.kb);
-      if (e.ka !== e.kb) { adj.get(e.ka).add(e.kb); adj.get(e.kb).add(e.ka); }
+      let length = 0;
+      for (let i = 1; i < e.line.length; i++) length += riverSegKm(e.line[i - 1], e.line[i]);
+      add(e.ka, e.kb, Math.max(length, 0.001));
+      add(e.kb, e.ka, Math.max(length, 0.001));
     }
-    const allTermini = [...deg.keys()].filter((k) => deg.get(k) === 1);
-    if (allTermini.length < 2) continue; // pure loop / single dangling node — nothing to orient
-
-    const td = allTermini.map((k) => ({ k, d: distOcean(coord.get(k)) })).sort((a, b) => a.d - b.d);
-    const curated = RIVER_REVERSE.has(name);
-    const mouthHint = curated ? RIVER_REVERSE.get(name) : null;
+    // Count distinct neighbours, not duplicate NE digitizations of the same edge.
+    const deg = new Map([...adj].map(([key, neighbours]) => [key, neighbours.size]));
+    const allTermini = [...deg.keys()].filter(k => deg.get(k) === 1);
+    const curated = !!RIVER_MOUTH_COORDS[name] || RIVER_REVERSE.has(name);
+    const mouthHint = RIVER_MOUTH_COORDS[name] ?? RIVER_REVERSE.get(name) ?? null;
+    if (!curated && allTermini.length < 2) continue;
+    const td = (allTermini.length ? allTermini : [...deg.keys()])
+      .map(k => ({ k, d: distOcean(coord.get(k)) })).sort((a, b) => a.d - b.d);
     const gradient = td[td.length - 1].d - td[0].d > 150 && td[td.length - 1].d > td[0].d * 1.4;
-    if (!curated && !gradient) continue; // not confident enough to touch this river at all
+    if (!curated && !gradient) continue;
 
     // Orient PER CONNECTED COMPONENT. NE frequently ships a river as two or more
     // overlapping digitizations that never share a node (the Volga is 16 parts in
@@ -1812,26 +1847,45 @@ function orientRiverParts(rivers, distOcean) {
       if (seen.has(startNode)) continue;
       const nodes = [startNode]; seen.add(startNode);
       for (let i = 0; i < nodes.length; i++) {
-        for (const m of adj.get(nodes[i])) if (!seen.has(m)) { seen.add(m); nodes.push(m); }
+        for (const m of adj.get(nodes[i]).keys()) if (!seen.has(m)) { seen.add(m); nodes.push(m); }
       }
       // component mouth = its own terminus nearest the reference (hint or ocean);
       // a pure-cycle component (no terminus) falls back to its nearest-ref node.
       const choices = nodes.filter((k) => deg.get(k) === 1);
       const cmouth = (choices.length ? choices : nodes)
         .map((k) => ({ k, d: ref(k) })).sort((a, b) => a.d - b.d)[0].k;
-      depth.set(cmouth, 0);
-      const q = [cmouth];
-      while (q.length) {
-        const n = q.shift();
-        for (const m of adj.get(n)) if (!depth.has(m)) { depth.set(m, depth.get(n) + 1); q.push(m); }
+      // Weighted distance avoids tied hop counts on unequal-length braids.
+      // Seed all coastal outlets of a delta, so sibling distributaries do not
+      // incorrectly flow back inland toward one arbitrarily chosen outlet.
+      const canonicalFacts = PERSONAL_RIVER_INFO[name];
+      const aliases = PERSONAL_RIVERS[name] ?? [];
+      const mouthType = RIVER_SYSTEM[name]?.mouth?.type ?? canonicalFacts?.[2]
+        ?? aliases.map(alias => RIVER_INFO[alias]?.mouth?.type).find(Boolean);
+      const coastal = ['ocean', 'sea', 'gulf', 'bay', 'estuary'].includes(mouthType);
+      const outlets = coastal && mouthHint ? choices.filter(k => ref(k) < 180 && distOcean(coord.get(k)) < 20) : [];
+      const roots = outlets.length ? outlets : [cmouth];
+      for (const key of nodes) depth.set(key, Infinity);
+      for (const key of roots) depth.set(key, 0);
+      const pending = new Set(nodes);
+      while (pending.size) {
+        let nearest;
+        for (const key of pending) if (nearest == null || depth.get(key) < depth.get(nearest)) nearest = key;
+        pending.delete(nearest);
+        for (const [next, length] of adj.get(nearest)) {
+          if (depth.get(nearest) + length < depth.get(next)) depth.set(next, depth.get(nearest) + length);
+        }
       }
     }
 
     let down = 0, up = 0;
     const upParts = [];
     for (const e of entries) {
-      const da = depth.get(e.ka), db = depth.get(e.kb);
-      if (da == null || db == null || da === db) continue;
+      let da = depth.get(e.ka), db = depth.get(e.kb);
+      if (da == null || db == null) continue;
+      if (Math.abs(da - db) < 1e-8) {
+        da = ref(e.ka); db = ref(e.kb);
+        if (Math.abs(da - db) < 1e-8) continue;
+      }
       let L = 0;
       for (let i = 1; i < e.line.length; i++) L += riverSegKm(e.line[i - 1], e.line[i]);
       if (da > db) down += L; else { up += L; upParts.push(e); } // da>db: start farther from its mouth => flows toward it => correct
@@ -1899,6 +1953,44 @@ const RIVER_INFO = {
 };
 
 // Lakes: area (km²), max depth (m), salinity category, optional salinity (g/L).
+// Named-river sources, rather than a claim to identify every remotest headwater.
+// Inland sinks have flow qualifications; water need not reach them year-round.
+// Supporting references are included in docs/river-facts-sources.md.
+const PERSONAL_RIVER_INFO = {
+  Yukon: ['lake', 'Marsh Lake (headwaters in the Coast Mountains)', 'sea', 'Bering Sea'],
+  Mackenzie: ['lake', 'Great Slave Lake', 'sea', 'Beaufort Sea'],
+  Ohio: ['confluence', 'the Allegheny–Monongahela confluence at Pittsburgh', 'river', 'Mississippi'],
+  Arkansas: ['mountain', 'the Sawatch Range near Leadville, Colorado', 'river', 'Mississippi'],
+  Tennessee: ['confluence', 'the French Broad–Holston confluence near Knoxville', 'river', 'Ohio'],
+  Potomac: ['mountain', 'the Potomac Highlands (North Branch at Fairfax Stone)', 'bay', 'Chesapeake Bay'],
+  'St. Lawrence': ['lake', 'Lake Ontario', 'gulf', 'Gulf of St. Lawrence'],
+  Athabasca: ['glacier', 'the Columbia Icefield in the Canadian Rockies', 'lake', 'Lake Athabasca'],
+  'Rio Grande': ['mountain', 'the San Juan Mountains, Colorado', 'gulf', 'Gulf of Mexico'],
+  Senegal: ['confluence', 'the Bafing–Bakoye confluence at Bafoulabé', 'ocean', 'Atlantic Ocean'],
+  Volta: ['confluence', 'the Black Volta–White Volta confluence (now within Lake Volta)', 'gulf', 'Gulf of Guinea'],
+  'White Nile': ['confluence', 'Lake No, where the Bahr el Jebel meets the Bahr el Ghazal', 'river', 'Nile at Khartoum'],
+  'Blue Nile': ['lake', 'Lake Tana in the Ethiopian Highlands', 'river', 'Nile at Khartoum'],
+  Orange: ['mountain', 'the Drakensberg in Lesotho, where it is called the Senqu', 'ocean', 'Atlantic Ocean'],
+  Limpopo: ['confluence', 'the Marico–Crocodile confluence', 'ocean', 'Indian Ocean'],
+  Po: ['mountain', 'Monte Viso in the Cottian Alps', 'sea', 'Adriatic Sea'],
+  Tiber: ['mountain', 'Monte Fumaiolo in the Apennines', 'sea', 'Tyrrhenian Sea'],
+  Rhône: ['glacier', 'the Rhône Glacier in the Swiss Alps', 'sea', 'Mediterranean Sea'],
+  Loire: ['mountain', 'Mont Gerbier de Jonc in the Massif Central', 'ocean', 'Atlantic Ocean'],
+  Thames: ['spring', 'Thames Head in the Cotswolds (conventional source)', 'sea', 'North Sea'],
+  Dnieper: ['mountain', 'the Valdai Hills in Russia', 'estuary', 'Dnieper–Bug Estuary, Black Sea'],
+  Ural: ['mountain', 'the southern Ural Mountains', 'sea', 'Caspian Sea'],
+  Songhua: ['mountain', 'the Changbai Mountains', 'river', 'Amur'],
+  Yalu: ['mountain', 'the Changbai / Paektu mountain region', 'sea', 'Yellow Sea'],
+  'Pearl River': ['river system', 'the Xi, Bei and Dong river basins (western headwaters in Yunnan)', 'sea', 'South China Sea'],
+  Tarim: ['confluence', 'the Aksu–Yarkand confluence near Aral, Xinjiang', 'lake', 'Taitema Lake (flow-dependent inland terminus; historically Lop Nur)'],
+  Helmand: ['mountain', 'the Hindu Kush west of Kabul', 'wetland', 'the Hamun lakes and wetlands in the Sistan Basin (flow-dependent)'],
+  Irrawaddy: ['confluence', 'the Mali–Nmai confluence near Myitkyina', 'sea', 'Andaman Sea via the Irrawaddy Delta'],
+  Salween: ['mountain', 'the Tibetan Plateau', 'sea', 'Andaman Sea'],
+  Narmada: ['spring', 'Amarkantak in the Maikala Hills', 'gulf', 'Gulf of Khambhat, Arabian Sea'],
+  Godavari: ['mountain', 'the Brahmagiri Hills near Trimbakeshwar in the Western Ghats', 'bay', 'Bay of Bengal'],
+  Krishna: ['mountain', 'the Western Ghats near Mahabaleshwar', 'bay', 'Bay of Bengal'],
+};
+
 const LAKE_INFO = {
   'Lake Baikal': { areaKm2: 31722, maxDepthM: 1642, salinity: 'freshwater' },
   'Lake Superior': { areaKm2: 82100, maxDepthM: 406, salinity: 'freshwater' },
@@ -1993,7 +2085,11 @@ function applyRiverSystem(rivers) {
   const byName = {};
   for (const [canonical, aliases] of Object.entries(PERSONAL_RIVERS)) {
     const curated = RIVER_SYSTEM[canonical];
-    const facts = aliases.map(name => RIVER_INFO[name]).find(Boolean);
+    const extra = PERSONAL_RIVER_INFO[canonical];
+    const facts = extra ? { source: { type: extra[0], name: extra[1] }, mouth: { type: extra[2], name: extra[3] } }
+      : aliases.map(name => RIVER_INFO[name]).find(Boolean);
+    if (!(curated?.source ?? facts?.source) || !(curated?.mouth ?? facts?.mouth)) throw new Error(`Missing river facts: ${canonical}`);
+    if (!RIVER_MOUTH_COORDS[canonical]) throw new Error(`Missing downstream reference: ${canonical}`);
     const sys = {
       ...facts,
       name: canonical,
@@ -2071,6 +2167,15 @@ function processRivers() {
   if (rawExists('rivers-10m-raw.geojson')) {
     rivers.features.push(...readRaw('rivers-10m-raw.geojson').features.filter(f => ['Tevere', 'Yalu', 'Pearl'].includes(f.properties.name)));
   }
+  // NE groups the North American and Argentine Colorado rivers into one
+  // multipart feature. Select individual parts, never discard that whole feature.
+  rivers.features = rivers.features.flatMap(f => {
+    if (f.properties.name !== 'Colorado') return [f];
+    const lines = f.geometry.type === 'LineString' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const selected = lines.filter(line => line.every(([, lat]) => lat > 0));
+    if (!selected.length) return [];
+    return [{ ...f, geometry: { type: 'MultiLineString', coordinates: selected } }];
+  });
   // Fill NE's gaps with curated centerlines (see RIVER_ADD), before orientation
   // so they share their name-group's mouth and stay consistent with any NE stubs.
   for (const add of RIVER_ADD) {
@@ -2096,6 +2201,7 @@ function processRivers() {
     else { g.coordinates[pi].reverse(); }
     touchedFeatures.add(fi);
   }
+  if (orientRiverParts(rivers, distOcean).length) throw new Error('River orientation failed its downstream consistency check');
   console.log(`  reversed ${toReverse.length} backwards-digitized river parts across ${touchedFeatures.size} features`);
   applyRiverInfo(rivers);
   applyRiverSystem(rivers);
@@ -2135,25 +2241,26 @@ function rawExists(name) {
   return fs.existsSync(path.join(RAW_DIR, name));
 }
 
-// Keep the full lake library separate from the selected display file.
-// download-geodata.sh refreshes this raw cache when explicitly run.
-if (!rawExists('lakes-raw.geojson')) throw new Error('Missing full lake library: run bash scripts/download-geodata.sh first');
-fs.copyFileSync(path.join(RAW_DIR, 'lakes-raw.geojson'), path.join(GEO_DIR, 'lakes.geojson'));
+function main() {
+  // Keep the full lake library separate from the selected display file.
+  // download-geodata.sh refreshes this raw cache when explicitly run.
+  if (!rawExists('lakes-raw.geojson')) throw new Error('Missing full lake library: run bash scripts/download-geodata.sh first');
+  fs.copyFileSync(path.join(RAW_DIR, 'lakes-raw.geojson'), path.join(GEO_DIR, 'lakes.geojson'));
 
-// Raw files in data/raw are a persistent cache — never deleted here.
-// Run scripts/download-geodata.sh to (re)fetch missing ones.
-const tiers = [
-  ['countries-110m-raw.geojson', 'countries-110m.geojson'],
-  ['countries-50m-raw.geojson', 'countries-50m.geojson'],
-  ['countries-10m-raw.geojson', 'countries-10m.geojson'],
-];
-for (const [raw, out] of tiers) {
-  if (rawExists(raw)) {
-    console.log(`Processing ${out}...`);
-    processCountryTier(raw, out);
-  } else {
-    console.log(`Skipping ${out} (no ${raw})`);
-  }
+  // Raw files in data/raw are a persistent cache — never deleted here.
+  // Run scripts/download-geodata.sh to (re)fetch missing ones.
+  const tiers = [
+    ['countries-110m-raw.geojson', 'countries-110m.geojson'],
+    ['countries-50m-raw.geojson', 'countries-50m.geojson'],
+    ['countries-10m-raw.geojson', 'countries-10m.geojson'],
+  ];
+  for (const [raw, out] of tiers) {
+    if (rawExists(raw)) {
+      console.log(`Processing ${out}...`);
+      processCountryTier(raw, out);
+    } else {
+      console.log(`Skipping ${out} (no ${raw})`);
+    }
 }
 
 if (rawExists('cities-raw.geojson')) {
@@ -2230,6 +2337,8 @@ if (rawExists('timezones-raw.geojson')) {
 
 applyPersonalSelection();
 console.log('Done.');
+}
+
 
 function applyPersonalSelection() {
   const countries = readRaw('countries-10m-raw.geojson').features;
@@ -2258,7 +2367,7 @@ function applyPersonalSelection() {
   filterFile('admin1-labels', f => keepAdmin(f.properties.iso_a2));
   filterFile('cities', f => f.properties.ADM0CAP === 1 || f.properties.POP_MAX >= 1000000);
   const riverNames = new Set(Object.values(PERSONAL_RIVERS).flat());
-  filterFile('rivers', f => riverNames.has(f.properties.name) && (f.properties.name !== 'Colorado' || countryBbox(f.geometry)[1] > 0));
+  filterFile('rivers', f => riverNames.has(f.properties.name));
   const lakeNames = new Set(PERSONAL_LAKES);
   for (const file of ['lakes', 'lake-labels']) filterFile(file, f => lakeNames.has(f.properties.name));
   const rangeNames = new Set(PERSONAL_RANGES);
@@ -2291,8 +2400,18 @@ function applyPersonalSelection() {
     md += `\n## ${title}\n\n${features.length} records; ${rows.length} distinct catalog entries. Multiple geometry records can represent one feature.\n\n` + rows.map(x => '- ' + x).join('\n') + '\n';
   }
   const riverFeatures = readGeo('rivers.geojson').features;
+  md += '\n## River sources and mouths\n\nSources describe the named river or its stated headwaters. Inland termini may be seasonal or regulated. See [research references](river-facts-sources.md).\n\n| River | Source | Mouth / terminus |\n|---|---|---|\n';
+  for (const name of Object.keys(PERSONAL_RIVERS)) {
+    const p = riverFeatures.find(f => f.properties.label_name === name)?.properties;
+    if (!p?.source_name || !p?.mouth_name) throw new Error(`Incomplete river card: ${name}`);
+    md += `| ${name} | ${p.source_name} | ${p.mouth_name} |\n`;
+  }
   const missing = Object.entries(PERSONAL_RIVERS).filter(([, aliases]) => !riverFeatures.some(f => aliases.includes(f.properties.name))).map(([name]) => name);
   if (missing.length) throw new Error('Selected rivers missing geometry: ' + missing.join(', '));
   fs.writeFileSync(path.join(__dirname, '..', 'docs', 'my-atlas.md'), md);
 }
 
+
+// Importing the geometry helpers for regression checks must not rebuild assets.
+export { orientRiverParts, riverOceanDistFn };
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();

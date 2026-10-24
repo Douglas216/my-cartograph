@@ -2660,7 +2660,7 @@ All countries/territories remain. Oceans and existing marine areas remain. Citie
 
 ## Rivers (local reach names)
 
-128 records; 88 distinct catalog entries. Multiple geometry records can represent one feature.
+129 records; 88 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Abay
 - Al Furat
@@ -2964,3 +2964,70 @@ All countries/territories remain. Oceans and existing marine areas remain. Citie
 - White Sea
 - Yangtze River
 - Yellow Sea
+
+## River sources and mouths
+
+Sources describe the named river or its stated headwaters. Inland termini may be seasonal or regulated. See [research references](river-facts-sources.md).
+
+| River | Source | Mouth / terminus |
+|---|---|---|
+| Yukon | Marsh Lake (headwaters in the Coast Mountains) | Bering Sea |
+| Mackenzie | Great Slave Lake | Beaufort Sea |
+| Mississippi | Lake Itasca | Gulf of Mexico |
+| Missouri | the Rocky Mountains (Three Forks) | Mississippi |
+| Ohio | the Allegheny–Monongahela confluence at Pittsburgh | Mississippi |
+| Colorado | the Rocky Mountains | Gulf of California |
+| Arkansas | the Sawatch Range near Leadville, Colorado | Mississippi |
+| Tennessee | the French Broad–Holston confluence near Knoxville | Ohio |
+| Potomac | the Potomac Highlands (North Branch at Fairfax Stone) | Chesapeake Bay |
+| St. Lawrence | Lake Ontario | Gulf of St. Lawrence |
+| Athabasca | the Columbia Icefield in the Canadian Rockies | Lake Athabasca |
+| Rio Grande | the San Juan Mountains, Colorado | Gulf of Mexico |
+| Amazon | the Peruvian Andes (Nevado Mismi) | Atlantic Ocean |
+| Orinoco | the Parima Mountains | Atlantic Ocean |
+| Paraná | the Paranaíba–Rio Grande confluence | Río de la Plata |
+| Senegal | the Bafing–Bakoye confluence at Bafoulabé | Atlantic Ocean |
+| Niger | the Guinea Highlands | Gulf of Guinea |
+| Volta | the Black Volta–White Volta confluence (now within Lake Volta) | Gulf of Guinea |
+| Nile | Lake Victoria | Mediterranean Sea |
+| White Nile | Lake No, where the Bahr el Jebel meets the Bahr el Ghazal | Nile at Khartoum |
+| Blue Nile | Lake Tana in the Ethiopian Highlands | Nile at Khartoum |
+| Congo | the East African Rift highlands | Atlantic Ocean |
+| Orange | the Drakensberg in Lesotho, where it is called the Senqu | Atlantic Ocean |
+| Limpopo | the Marico–Crocodile confluence | Indian Ocean |
+| Zambezi | the Kalene Hills, Zambia | Indian Ocean |
+| Euphrates | the Armenian Highlands (Murat–Karasu) | Shatt al-Arab |
+| Tigris | Lake Hazar, Taurus Mountains | Shatt al-Arab |
+| Po | Monte Viso in the Cottian Alps | Adriatic Sea |
+| Tiber | Monte Fumaiolo in the Apennines | Tyrrhenian Sea |
+| Rhine | the Swiss Alps | North Sea |
+| Rhône | the Rhône Glacier in the Swiss Alps | Mediterranean Sea |
+| Loire | Mont Gerbier de Jonc in the Massif Central | Atlantic Ocean |
+| Thames | Thames Head in the Cotswolds (conventional source) | North Sea |
+| Danube | the Black Forest (Brigach–Breg) | Black Sea |
+| Dnieper | the Valdai Hills in Russia | Dnieper–Bug Estuary, Black Sea |
+| Volga | the Valdai Hills | Caspian Sea |
+| Ural | the southern Ural Mountains | Caspian Sea |
+| Ob | the Altai Mountains (Biya–Katun) | Gulf of Ob |
+| Lena | the Baikal Mountains | Laptev Sea |
+| Yenisey | the Sayan Mountains near Kyzyl | Kara Sea |
+| Amur | the Shilka–Argun confluence | Sea of Okhotsk |
+| Songhua | the Changbai Mountains | Amur |
+| Yalu | the Changbai / Paektu mountain region | Yellow Sea |
+| Yellow River | the Bayan Har Mountains, Tibetan Plateau | Bohai Sea |
+| Yangtze | the Tanggula Mountains, Tibetan Plateau | East China Sea |
+| Pearl River | the Xi, Bei and Dong river basins (western headwaters in Yunnan) | South China Sea |
+| Tarim | the Aksu–Yarkand confluence near Aral, Xinjiang | Taitema Lake (flow-dependent inland terminus; historically Lop Nur) |
+| Syr Darya | the Tian Shan | the Aral Sea |
+| Amu Darya | the Pamir Mountains (Panj–Vakhsh) | the Aral Sea |
+| Helmand | the Hindu Kush west of Kabul | the Hamun lakes and wetlands in the Sistan Basin (flow-dependent) |
+| Indus | the Tibetan Plateau near Lake Manasarovar | Arabian Sea |
+| Ganges | the Gangotri Glacier, Himalayas | Bay of Bengal |
+| Brahmaputra | the Angsi Glacier, Tibet | Bay of Bengal |
+| Irrawaddy | the Mali–Nmai confluence near Myitkyina | Andaman Sea via the Irrawaddy Delta |
+| Mekong | the Tibetan Plateau | South China Sea |
+| Salween | the Tibetan Plateau | Andaman Sea |
+| Murray | the Australian Alps | Southern Ocean |
+| Narmada | Amarkantak in the Maikala Hills | Gulf of Khambhat, Arabian Sea |
+| Godavari | the Brahmagiri Hills near Trimbakeshwar in the Western Ghats | Bay of Bengal |
+| Krishna | the Western Ghats near Mahabaleshwar | Bay of Bengal |
