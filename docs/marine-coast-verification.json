@@ -544,6 +544,36 @@
       "landOverlapSquareDegrees": 1.735621137940338e-07
     },
     {
+      "name": "Sea of Crete",
+      "valid": true,
+      "landOverlapSquareDegrees": 2.4991682742502928e-08
+    },
+    {
+      "name": "Bosporus",
+      "valid": true,
+      "landOverlapSquareDegrees": 7.360620668535655e-10
+    },
+    {
+      "name": "Dardanelles",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Sea of Marmara",
+      "valid": true,
+      "landOverlapSquareDegrees": 4.990441338223093e-10
+    },
+    {
+      "name": "Gulf of C\u00e1diz",
+      "valid": true,
+      "landOverlapSquareDegrees": 7.580477199946687e-10
+    },
+    {
+      "name": "Kerch Strait",
+      "valid": true,
+      "landOverlapSquareDegrees": 3.338270272106276e-09
+    },
+    {
       "name": "Kattegat",
       "valid": true,
       "landOverlapSquareDegrees": 5.049076214708886e-08
@@ -1128,7 +1158,7 @@
     {
       "name": "Aegean Sea",
       "valid": true,
-      "parentGapSquareDegrees": 0.0
+      "parentGapSquareDegrees": 1.286666357693788e-17
     },
     {
       "name": "Gulf of Mannar",
@@ -1197,6 +1227,36 @@
     },
     {
       "name": "Gulf of Ob",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Sea of Crete",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Bosporus",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Dardanelles",
+      "valid": true,
+      "parentGapSquareDegrees": 8.107982203983905e-19
+    },
+    {
+      "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of C\u00e1diz",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Kerch Strait",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

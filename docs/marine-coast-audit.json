@@ -535,6 +535,36 @@
     "maxShoreShiftDegrees": 0.07810767985928004
   },
   {
+    "name": "Sea of Crete",
+    "coastalSegments": 150,
+    "maxShoreShiftDegrees": 0.03168178875300671
+  },
+  {
+    "name": "Bosporus",
+    "coastalSegments": 9,
+    "maxShoreShiftDegrees": 0.036653291584792067
+  },
+  {
+    "name": "Dardanelles",
+    "coastalSegments": 9,
+    "maxShoreShiftDegrees": 0.018120507102328227
+  },
+  {
+    "name": "Sea of Marmara",
+    "coastalSegments": 54,
+    "maxShoreShiftDegrees": 0.028855575824831448
+  },
+  {
+    "name": "Gulf of Cádiz",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Kerch Strait",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
     "name": "Kattegat",
     "coastalSegments": 0,
     "maxShoreShiftDegrees": 0

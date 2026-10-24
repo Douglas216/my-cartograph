@@ -105,8 +105,10 @@ Checks: `node --test scripts/check-catalog.test.mjs scripts/check-rivers.test.mj
 ## Nested marine selections
 
 `PERSONAL_MARINE_EXCLUDED` controls labels, individual hit targets and catalog rows.
-`MARINE_PARENT_OVERRIDES` declares containment; ocean connections alone do not
-create containment. The build emits `marine-hierarchy.json` for metadata and
+`MARINE_PARENT_OVERRIDES` declares the curated selection hierarchy; connections
+alone do not create parent links. The owner’s Atlantic–Mediterranean grouping
+places Black Sea beneath Mediterranean Sea, with Dardanelles, Sea of Marmara and
+Bosporus as sibling entries. The build emits `marine-hierarchy.json` for metadata and
 `marine-selections.geojson` with dissolved parent-plus-descendant highlight shapes.
 Excluded names remain absent from the UI while their physical water remains part
 of the containing ocean's geographic extent. Raw marine geometry is cached in

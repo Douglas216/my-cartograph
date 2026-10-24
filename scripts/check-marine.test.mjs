@@ -19,7 +19,7 @@ test('all eight unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 126);
+  assert.equal(seaRows.length, 132);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -27,7 +27,7 @@ test('ocean and sea selections follow containment, including nested descendants'
   assert.deepEqual(byName.get('Bo Hai').path, ['Pacific Ocean', 'Yellow Sea', 'Bo Hai']);
   assert.deepEqual(byName.get('Gulf of Martaban').path, ['Indian Ocean', 'Andaman Sea', 'Gulf of Martaban']);
   assert(byName.get('Andaman Sea').descendants.includes('Gulf of Martaban'));
-  assert(!byName.get('Mediterranean Sea').descendants.includes('Black Sea'));
+  assert(byName.get('Mediterranean Sea').descendants.includes('Black Sea'));
   assert(!byName.get('Pacific Ocean').descendants.includes('Caspian Sea'));
   assert(!byName.get('Pacific Ocean').descendants.includes('Drake Passage'));
 });
@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -138,4 +138,22 @@ test('new marine label anchors sit within their water polygons', () => {
   }
   const kattegat=features.find(f=>f.properties.name==='Kattegat');
   assert(!contains(kattegat.geometry,[11.0,55.5]),'Kattegat must not swallow the southern Great Belt');
+});
+
+
+test('Atlantic–Mediterranean selection structure exactly follows the requested parent links', () => {
+  for (const [name,parent] of [
+    ['Gulf of Cádiz','Atlantic Ocean'],['Strait of Gibraltar','Atlantic Ocean'],['Mediterranean Sea','Atlantic Ocean'],
+    ['Alboran Sea','Mediterranean Sea'],['Aegean Sea','Mediterranean Sea'],['Sea of Crete','Aegean Sea'],
+    ['Dardanelles','Mediterranean Sea'],['Sea of Marmara','Mediterranean Sea'],['Bosporus','Mediterranean Sea'],
+    ['Black Sea','Mediterranean Sea'],['Kerch Strait','Black Sea'],['Sea of Azov','Black Sea'],
+  ]) {
+    assert.equal(byName.get(name)?.parent,parent,name);
+    assert.equal(seaRows.find(r=>r.name===name)?.parent,parent,name);
+    assert.equal(read('sea-labels.geojson').features.filter(f=>f.properties.name===name).length,1,name);
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates,selections.get(parent).geometry.coordinates))<1e-8, `${parent} excludes ${name}`);
+  }
+  assert.deepEqual(byName.get('Kerch Strait').path,['Atlantic Ocean','Mediterranean Sea','Black Sea','Kerch Strait']);
+  assert(!byName.get('Aegean Sea').descendants.includes('Dardanelles'));
+  assert(!byName.get('Sea of Marmara').descendants.includes('Bosporus'));
 });
