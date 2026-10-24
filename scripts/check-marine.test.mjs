@@ -81,3 +81,22 @@ test('Martaban reaches the northern estuary and the Andaman boundary clears its 
   // Four-decimal clipping rounds the shoreline: tolerate only tiny edge slivers.
   assert(area(clipping.intersection(gulf, myanmar.geometry.coordinates)) < 0.001);
 });
+
+test('Hudson and James Bay fit the detailed coast, exclude islands and retain their mouth limits', () => {
+  const land = JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson', import.meta.url)));
+  const canada = land.features.find(f => f.properties.ADM0_A3 === 'CAN').geometry.coordinates;
+  const raw = JSON.parse(fs.readFileSync(new URL('../data/raw/seas-raw.geojson', import.meta.url)));
+  const bays = read('seas.geojson');
+  for (const name of ['Hudson Bay','James Bay']) {
+    const before=raw.features.find(f=>f.properties.name===name).geometry;
+    const after=bays.features.find(f=>f.properties.name===name).geometry;
+    assert(area(clipping.intersection(after.coordinates,canada)) < 1e-8, `${name} overlaps mainland or islands`);
+    assert(area(clipping.difference(after.coordinates,before.coordinates)) > 0.01, `${name} still leaves coastal water unfilled`);
+  }
+  const james=bays.features.find(f=>f.properties.name==='James Bay').geometry;
+  const a=[-82.18844,54.839185], b=[-79.652135,54.700537];
+  for (const [x,y] of james.coordinates.flat(2)) {
+    assert((b[0]-a[0])*(y-a[1])-(b[1]-a[1])*(x-a[0]) < 1e-8, 'James Bay extends past its original mouth');
+  }
+  assert(area(clipping.difference(selections.get('James Bay').geometry.coordinates,selections.get('Hudson Bay').geometry.coordinates)) < 1e-8);
+});

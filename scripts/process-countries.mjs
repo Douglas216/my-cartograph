@@ -1215,11 +1215,66 @@ function clipRingToWater(ring, land, landBb, extra = []) {
   return { type: 'MultiPolygon', coordinates: diff.map((poly) => poly.map((rg) => rg.map(([x, y]) => [r4(x), r4(y)]))) };
 }
 
+// Refit generalized bay coasts to the exact land source used at close zoom.
+// A narrow envelope captures coastal discrepancies without replacing offshore
+// limits. Long straight segments are the bay mouths and remain unbuffered.
+function refitBayCoast(geometry, land, landBb) {
+  const polygons = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
+  const pieces = polygons.map(poly => [poly[0]]); // island holes come from the detailed land below
+  for (const poly of polygons) {
+    const ring = poly[0];
+    for (let i = 0; i < ring.length - 1; i++) {
+      const [a,b] = [ring[i],ring[i+1]];
+      if (Math.hypot(a[0]-b[0],a[1]-b[1]) > 0.35) continue;
+      const pad = 0.12;
+      const w = Math.min(a[0],b[0])-pad, e = Math.max(a[0],b[0])+pad;
+      const south = Math.min(a[1],b[1])-pad, north = Math.max(a[1],b[1])+pad;
+      pieces.push([[[w,south],[e,south],[e,north],[w,north],[w,south]]]);
+    }
+  }
+  let envelope = polygonClipping.union(...pieces);
+  // Keep the original mouth lines exactly: without these half-plane clips,
+  // the shoreline envelope leaves small square ears beside their endpoints.
+  for (const poly of polygons) {
+    const ring = poly[0];
+    const signedArea = ring.slice(1).reduce((sum,b,i) => sum + ring[i][0]*b[1]-b[0]*ring[i][1],0);
+    for (let i=0; i<ring.length-1; i++) {
+      const a=ring[i], b=ring[i+1];
+      if (Math.hypot(a[0]-b[0],a[1]-b[1]) <= 1) continue;
+      const side = p => Math.sign(signedArea)*((b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]));
+      const [w,s,e,n] = plainBbox({type:'MultiPolygon',coordinates:envelope});
+      const box=[[w-1,s-1],[e+1,s-1],[e+1,n+1],[w-1,n+1]];
+      const clipped=[];
+      for (let j=0;j<box.length;j++) {
+        const from=box[j], to=box[(j+1)%box.length], d1=side(from), d2=side(to);
+        if (d1>=0) clipped.push(from);
+        if ((d1>=0)!==(d2>=0)) {
+          const t=d1/(d1-d2);
+          clipped.push([from[0]+t*(to[0]-from[0]),from[1]+t*(to[1]-from[1])]);
+        }
+      }
+      clipped.push(clipped[0]);
+      envelope=polygonClipping.intersection(envelope,[clipped]);
+    }
+  }
+  const [w,south,e,north] = plainBbox({type:'MultiPolygon',coordinates:envelope});
+  const clippers = land.features.filter((f,i) => {
+    const [lw,ls,le,ln] = landBb[i];
+    return f.geometry && le >= w && lw <= e && ln >= south && ls <= north;
+  }).map(f => f.geometry.coordinates);
+  return {type:'MultiPolygon',coordinates:polygonClipping.difference(envelope,...clippers)};
+}
+
 function enrichSeas() {
   const data = readRaw('seas-raw.geojson');
   data.features = data.features.filter((f) => !f.properties.curated); // idempotent
   const land = readRaw('countries-10m-raw.geojson');
   const landBb = land.features.map((f) => (f.geometry ? plainBbox(f.geometry) : [0, 0, 0, 0]));
+  for (const name of ['Hudson Bay', 'James Bay']) {
+    const bay = data.features.find(f => f.properties.name === name);
+    if (!bay) throw new Error(`Missing bay to refit: ${name}`);
+    bay.geometry = refitBayCoast(bay.geometry, land, landBb);
+  }
   // NE closes the Andaman Sea across the Gulf of Martaban. Restore its
   // northern coastal water before computing either hit targets or outlines.
   const andaman = data.features.find(f => f.properties.name === 'Andaman Sea');
