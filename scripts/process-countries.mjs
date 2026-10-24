@@ -11,12 +11,65 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import polygonClipping from 'polygon-clipping';
+import { gzipSync } from 'node:zlib';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const GEO_DIR = path.join(__dirname, '..', 'public', 'geo');
 // Raw Natural Earth downloads live here as a local cache (not served/built),
 // so the pipeline can re-run without re-downloading.
 const RAW_DIR = path.join(__dirname, '..', 'data', 'raw');
+
+// Personal atlas membership: edit these readable lists as you learn new places.
+// Names here are the processed Natural Earth names; aliases preserve local reaches.
+const PERSONAL_RANGES = [
+  'Atlas Mountains', 'Ural Mountains', 'Caucasus Mountains', 'Carpathian Mountains',
+  'Alps', 'Apennines', 'Pyrenees', 'Altay Mountains', 'Tian Shan', 'Himalayas',
+  'Karakoram Range', 'Western Ghats', 'Eastern Ghats', 'Great Dividing Range',
+  'Southern Alps', 'Rocky Mountains', 'Appalachian Mountains', 'Sierra Nevada', 'Cascade Range', 'Andes',
+];
+const PERSONAL_RIVERS = {
+  Yukon: ['Yukon'], Mackenzie: ['Mackenzie'], Mississippi: ['Mississippi'],
+  Missouri: ['Missouri'], Ohio: ['Ohio'], Colorado: ['Colorado'], Arkansas: ['Arkansas'],
+  Tennessee: ['Tennessee'], Potomac: ['Potomac', 'S. Branch Potomac'],
+  'St. Lawrence': ['St. Lawrence'], Athabasca: ['Athabasca'], 'Rio Grande': ['Rio Grande'],
+  Amazon: ['Amazonas'], Orinoco: ['Orinoco'], Paraná: ['Paraná'], Senegal: ['Sénégal'],
+  Niger: ['Niger'], Volta: ['Volta'], Nile: ['Nile', 'Victoria Nile', 'Albert Nile', 'Bahr el Jebel'],
+  'White Nile': ['El Bahr el Abyad'], 'Blue Nile': ['Abay', 'El Bahr el Azraq'],
+  Congo: ['Congo', 'Lualaba'], Orange: ['Orange'], Limpopo: ['Limpopo'], Zambezi: ['Zambezi'],
+  Euphrates: ['Euphrates', 'Al Furat', 'Firat'], Tigris: ['Tigris', 'Dicle'],
+  Po: ['Po'], Tiber: ['Tevere'], Rhine: ['Rhine', 'Rhein', 'Rhin'], Rhône: ['Rhône'],
+  Loire: ['Loire'], Thames: ['Thames'], Danube: ['Danube', 'Donau'],
+  Dnieper: ['Dnepre', 'Dnipro'], Volga: ['Volga'], Ural: ['Ural'], Ob: ['Ob'], Lena: ['Lena'],
+  Yenisey: ['Yenisey'], Amur: ['Amur', 'Heilong Jiang'], Songhua: ['Songhua'], Yalu: ['Yalu'],
+  'Yellow River': ['Huang'], Yangtze: ['Yangtze', 'Chang Jiang', 'Jinsha', 'Tongtian', 'Tuotuo'],
+  'Pearl River': ['Pearl', 'Xi', 'Xun'], Tarim: ['Tarim'], 'Syr Darya': ['Syr Darya'],
+  'Amu Darya': ['Amu  Darya'], Helmand: ['Helmand'], Indus: ['Indus', 'Shiquan'],
+  Ganges: ['Ganges'], Brahmaputra: ['Maquan', 'Yarlung', 'Dihang', 'Brahmaputra'],
+  Irrawaddy: ['Ayeyarwady', 'Irrawaddy Delta'], Mekong: ['Za', 'Lancang', 'Mekong'],
+  Salween: ['Nu', 'Salween'], Murray: ['Murray'], Narmada: ['Narmada'],
+  Godavari: ['Godävari'], Krishna: ['Krishna'],
+};
+const PERSONAL_LAKES = [
+  'Lake Superior', 'Lake Michigan', 'Lake Huron', 'Lake Erie', 'Lake Ontario',
+  'Great Slave Lake', 'Great Bear Lake', 'Lake Athabasca', 'Lake Winnipeg',
+  'Great Salt Lake', 'Lake Tahoe', 'Lago de Nicaragua', 'Lago de Managua',
+  'Lago Titicaca', 'Lake Maracaibo', 'Lake Ladoga', 'Lake Onega', 'Lake Balkhash',
+  'Lake Baikal', 'Tai Hu', 'Qinghai Hu', 'Dead Sea', 'Lake Malawi', 'Lake Tanganyika', 'Lake Victoria', 'Lake Geneva',
+];
+const PERSONAL_ASIA_EXCLUDED = new Set(['YE', 'OM', 'LB', 'SY', 'AF', 'IQ', 'GE', 'AM', 'AZ', 'JO', 'QA', 'AE', 'PS', 'TR', 'CY']);
+const PERSONAL_OTHER_ADMIN = new Set(['GB', 'ES', 'FR', 'IT', 'DE', 'BY', 'KM', 'CV', 'EG', 'SD', 'ET', 'ZA', 'CM', 'AU', 'PG']);
+// Independent summits, ranked by elevation above sea level (not prominence).
+// References: https://ntb.gov.np/things-to-do/mountaineering and
+// https://www.geonames.org/NP/highest-mountains-in-nepal.html
+// Coordinates are approximate summit locations; elevations are metres.
+const PERSONAL_PEAKS = [
+  ['Mount Everest', 8848.86, 86.925, 27.9881], ['K2', 8611, 76.5133, 35.8814],
+  ['Kangchenjunga', 8586, 88.1475, 27.7025], ['Lhotse', 8516, 86.9331, 27.9617],
+  ['Makalu', 8485, 87.0889, 27.8897], ['Cho Oyu', 8188, 86.6608, 28.0942],
+  ['Dhaulagiri I', 8167, 83.4878, 28.6983], ['Manaslu', 8163, 84.5597, 28.55],
+  ['Nanga Parbat', 8126, 74.5892, 35.2372], ['Annapurna I', 8091, 83.8203, 28.5958],
+];
+
 
 const DISPUTED_TO_PARENT = {
   TWN: 'CHN', // Taiwan -> China
@@ -509,26 +562,11 @@ function dissolveByKey(features, cfg) {
 function processAdmin1() {
   const data = readRaw('admin1-raw.geojson');
 
-  // Exclude territories/dependencies (Taiwan, Curaçao, Hong Kong…): any entity
-  // that carries a STATUS_NOTE in the processed countries file is not a
-  // sovereign state, so its internal subdivisions are out of scope.
-  const countries = readGeo('countries-10m.geojson');
-  // A code is only a territory code if no sovereign feature shares it —
-  // Clipperton carries ISO_A2 "FR" (no code of its own), which must not
-  // knock out France itself.
-  const sovereignIso2 = new Set(
-    countries.features
-      .filter((f) => !f.properties.STATUS_NOTE && f.properties.ISO_A2)
-      .map((f) => f.properties.ISO_A2),
-  );
-  const territoryIso2 = new Set(
-    countries.features
-      .filter((f) => f.properties.STATUS_NOTE && f.properties.ISO_A2 && !sovereignIso2.has(f.properties.ISO_A2))
-      .map((f) => f.properties.ISO_A2),
-  );
-  const kept = data.features.filter((f) => {
+  // Personal membership is applied after inset generation. Include territories
+  // here too: knowing a region includes its available subdivision geometry.
+  const kept = data.features.filter(f => {
     const iso = f.properties.iso_a2;
-    return iso && iso.length === 2 && !territoryIso2.has(iso);
+    return iso && iso.length === 2;
   });
 
   const byIso = new Map();
@@ -1994,6 +2032,10 @@ function enrichLakes() {
 
 function processRivers() {
   const rivers = readRaw('rivers-raw.geojson');
+  // Selected rivers absent at 50m resolution, taken from NE's detailed source.
+  if (rawExists('rivers-10m-raw.geojson')) {
+    rivers.features.push(...readRaw('rivers-10m-raw.geojson').features.filter(f => ['Tevere', 'Yalu', 'Pearl'].includes(f.properties.name)));
+  }
   // Fill NE's gaps with curated centerlines (see RIVER_ADD), before orientation
   // so they share their name-group's mouth and stay consistent with any NE stubs.
   for (const add of RIVER_ADD) {
@@ -2058,6 +2100,11 @@ function rawExists(name) {
   return fs.existsSync(path.join(RAW_DIR, name));
 }
 
+// Keep the full lake library separate from the selected display file.
+// download-geodata.sh refreshes this raw cache when explicitly run.
+if (!rawExists('lakes-raw.geojson')) throw new Error('Missing full lake library: run bash scripts/download-geodata.sh first');
+fs.copyFileSync(path.join(RAW_DIR, 'lakes-raw.geojson'), path.join(GEO_DIR, 'lakes.geojson'));
+
 // Raw files in data/raw are a persistent cache — never deleted here.
 // Run scripts/download-geodata.sh to (re)fetch missing ones.
 const tiers = [
@@ -2108,6 +2155,17 @@ enrichSeas();
 console.log('Building sea labels...');
 buildSeaLabels();
 
+// Lake Maracaibo is an inlet omitted by NE's lake inventory. Extract the water
+// from the actual 10m coastline; fail rather than inventing a lake polygon.
+{
+  const lakes = readGeo('lakes.geojson');
+  const land = readRaw('countries-10m-raw.geojson');
+  const geometry = clipRingToWater([[-72.8, 8.7], [-70.8, 8.7], [-70.8, 10.95], [-72.8, 10.95], [-72.8, 8.7]], land, land.features.map(f => f.geometry ? plainBbox(f.geometry) : [0, 0, 0, 0]));
+  if (!geometry) throw new Error('Lake Maracaibo coastline extraction failed');
+  lakes.features = lakes.features.filter(f => f.properties.name !== 'Lake Maracaibo');
+  lakes.features.push({ type: 'Feature', geometry, properties: { name: 'Lake Maracaibo', featurecla: 'Lake', scalerank: 1 } });
+  writeGeo('lakes.geojson', lakes);
+}
 console.log('Building lake labels...');
 buildLakeLabels();
 
@@ -2135,4 +2193,71 @@ if (rawExists('timezones-raw.geojson')) {
   console.log('Skipping time zones (no timezones-raw.geojson)');
 }
 
+applyPersonalSelection();
 console.log('Done.');
+
+function applyPersonalSelection() {
+  const countries = readRaw('countries-10m-raw.geojson').features;
+  const continents = new Map(countries.map(f => [ISO2_FIXUP[f.properties.ADM0_A3] ?? f.properties.ISO_A2, f.properties.CONTINENT]));
+  // NE uses country ISO 'CN-TW' but subdivision ISO 'TW', among other variants.
+  const continentByA3 = new Map(countries.map(f => [f.properties.ADM0_A3, f.properties.CONTINENT]));
+  for (const f of readRaw('admin1-raw.geojson').features) {
+    const continent = continentByA3.get(f.properties.adm0_a3);
+    if (continent && !continents.has(f.properties.iso_a2)) continents.set(f.properties.iso_a2, continent);
+  }
+  const keepAdmin = iso => {
+    const continent = continents.get(iso);
+    return ['North America', 'South America'].includes(continent)
+      || (continent === 'Asia' && !PERSONAL_ASIA_EXCLUDED.has(iso))
+      || PERSONAL_OTHER_ADMIN.has(iso);
+  };
+  const filterFile = (name, predicate) => {
+    const data = readGeo(name + '.geojson');
+    data.features = data.features.filter(predicate);
+    writeGeo(name + '.geojson', data);
+    return data.features;
+  };
+  filterFile('admin1', f => keepAdmin(f.properties.iso_a2));
+  // Production restores this ignored GeoJSON from its tracked compressed copy.
+  fs.writeFileSync(path.join(__dirname, '..', 'data', 'packed', 'admin1.geojson.gz'), gzipSync(fs.readFileSync(path.join(GEO_DIR, 'admin1.geojson'))));
+  filterFile('admin1-labels', f => keepAdmin(f.properties.iso_a2));
+  filterFile('cities', f => f.properties.ADM0CAP === 1 || f.properties.POP_MAX >= 1000000);
+  const riverNames = new Set(Object.values(PERSONAL_RIVERS).flat());
+  filterFile('rivers', f => riverNames.has(f.properties.name) && (f.properties.name !== 'Colorado' || countryBbox(f.geometry)[1] > 0));
+  const lakeNames = new Set(PERSONAL_LAKES);
+  for (const file of ['lakes', 'lake-labels']) filterFile(file, f => lakeNames.has(f.properties.name));
+  const rangeNames = new Set(PERSONAL_RANGES);
+  // Sierra Nevada here means the US range, rather than Spain's namesake.
+  for (const file of ['ranges', 'range-labels']) filterFile(file, f => rangeNames.has(f.properties.name) && (f.properties.name !== 'Sierra Nevada' || countryBbox(f.geometry)[0] < -100));
+  // Verify both geometry and labels have exactly the requested membership.
+  for (const [file, names] of [['ranges', PERSONAL_RANGES], ['range-labels', PERSONAL_RANGES], ['lakes', PERSONAL_LAKES], ['lake-labels', PERSONAL_LAKES]]) {
+    const actual = new Set(readGeo(file + '.geojson').features.map(f => f.properties.name));
+    const missing = names.filter(name => !actual.has(name));
+    if (missing.length) throw new Error(`${file}: missing selections: ${missing.join(', ')}`);
+  }
+  const oldPeaks = readGeo('peaks.geojson').features;
+  writeGeo('peaks.geojson', { type: 'FeatureCollection', features: PERSONAL_PEAKS.map(([name, elevation, lon, lat], i) => ({
+    type: 'Feature', geometry: { type: 'Point', coordinates: [lon, lat] },
+    properties: { ...(oldPeaks.find(f => f.properties.name === name)?.properties ?? {}), name, elevation, scalerank: 1, elevation_rank: i + 1 },
+  })) });
+  // Generate the human-readable inventory from the exact display files.
+  const sections = [
+    ['Countries and territories', 'countries-labels'], ['Subdivisions', 'admin1-labels'],
+    ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Lakes', 'lake-labels'],
+    ['Mountain ranges', 'range-labels'], ['Peaks', 'peaks'], ['Oceans', 'ocean-labels'], ['Marine areas', 'sea-labels'],
+  ];
+  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. Oceans and existing marine areas remain. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
+  for (const [title, file] of sections) {
+    const features = readGeo(file + '.geojson').features;
+    const rows = [...new Set(features.map(f => {
+      const p = f.properties;
+      return [p.name ?? p.NAME, p.admin ?? p.ADM0NAME ?? '', p.elevation != null ? `${p.elevation} m` : ''].filter(Boolean).join(' — ');
+    }).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    md += `\n## ${title}\n\n${features.length} records; ${rows.length} distinct catalog entries. Multiple geometry records can represent one feature.\n\n` + rows.map(x => '- ' + x).join('\n') + '\n';
+  }
+  const riverFeatures = readGeo('rivers.geojson').features;
+  const missing = Object.entries(PERSONAL_RIVERS).filter(([, aliases]) => !riverFeatures.some(f => aliases.includes(f.properties.name))).map(([name]) => name);
+  if (missing.length) throw new Error('Selected rivers missing geometry: ' + missing.join(', '));
+  fs.writeFileSync(path.join(__dirname, '..', 'docs', 'my-atlas.md'), md);
+}
+

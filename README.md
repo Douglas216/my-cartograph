@@ -71,3 +71,15 @@ export default defineConfig([
   },
 ])
 ```
+
+## Personal atlas membership
+
+[My atlas catalog](docs/my-atlas.md) lists the current map contents by category.
+Edit the `PERSONAL_*` selections in `scripts/process-countries.mjs`, then run
+`node scripts/process-countries.mjs` to regenerate map geometry, labels, the catalog,
+and the packed deployment subdivisions. There are no editorial tiers.
+
+The complete source geometry is retained in `data/raw/`; the displayed files in
+`public/geo/` contain only the selected features. On a fresh setup, run
+`bash scripts/download-geodata.sh` first to populate the source cache.
+Marine features and political country/territory coverage remain unrestricted.

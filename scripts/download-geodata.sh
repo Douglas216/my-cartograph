@@ -29,12 +29,15 @@ fetch_raw ne_50m_geography_regions_elevation_points.geojson elevation-points-raw
 # Rivers are processed (flow-orientation) by process-countries.mjs, so they go to
 # data/raw; the 50m ocean is the coastline reference that decides each river's mouth.
 fetch_raw ne_50m_rivers_lake_centerlines.geojson rivers-raw.geojson
+fetch_raw ne_10m_rivers_lake_centerlines.geojson rivers-10m-raw.geojson
+fetch_raw ne_10m_lakes.geojson lakes-10m-raw.geojson
 fetch_raw ne_50m_ocean.geojson ocean-50m-raw.geojson
 # Time zones — polygons per UTC offset; processed into boundary lines by the script.
 fetch_raw ne_10m_time_zones.geojson timezones-raw.geojson
 
 echo "Downloading lakes..."
-curl -sL "$BASE/ne_50m_lakes.geojson" -o "$GEO_DIR/lakes.geojson"
+curl -sL "$BASE/ne_50m_lakes.geojson" -o "$RAW_DIR/lakes-raw.geojson"
+cp "$RAW_DIR/lakes-raw.geojson" "$GEO_DIR/lakes.geojson"
 
 echo "Downloading ocean polygons..."
 curl -sL "$BASE/ne_110m_ocean.geojson" -o "$GEO_DIR/oceans.geojson"

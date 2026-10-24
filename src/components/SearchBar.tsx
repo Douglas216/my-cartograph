@@ -32,7 +32,7 @@ export default function SearchBar({ onFlyTo }: Props) {
         }
       }
       for (const f of cities.features) {
-        if (f.properties.POP_MAX > 100000) {
+        if (f.properties.ADM0CAP === 1 || f.properties.POP_MAX >= 1000000) {
           items.push({
             name: `${f.properties.NAME}, ${f.properties.ADM0NAME}`,
             type: 'city',
