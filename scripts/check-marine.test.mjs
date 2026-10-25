@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -182,4 +182,24 @@ test('Gibraltar stays between its two entrance lines without offshore sketch cor
     assert(cross([-5.344444,36.110556],[-5.282222,35.898056],point)<=1e-6,'Gibraltar spills east of Europa–Almina into Alboran');
     assert(cross([-6.033333,36.183333],[-5.923333,35.793333],point)>=-1e-6,'Gibraltar spills west of Trafalgar–Spartel');
   }
+});
+
+
+test('Azov and Kerch are non-overlapping siblings directly under Black Sea', () => {
+  const raw=read('seas.geojson').features;
+  for(const name of ['Sea of Azov','Kerch Strait']) {
+    assert.equal(byName.get(name).parent,'Black Sea');
+    assert.equal(seaRows.find(r=>r.name===name).parent,'Black Sea');
+    assert.deepEqual(byName.get(name).path,['Atlantic Ocean','Mediterranean Sea','Black Sea',name]);
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates,selections.get('Black Sea').geometry.coordinates))<1e-8);
+  }
+  const azov=selections.get('Sea of Azov').geometry.coordinates;
+  assert.equal(azov.length,1,'Azov retains detached Black Sea mask fragments');
+  const kerch=selections.get('Kerch Strait').geometry.coordinates;
+  assert(area(clipping.intersection(azov,kerch))<1e-8,'selection highlights still overlap');
+  const azovHit=raw.find(f=>f.properties.name==='Sea of Azov').geometry.coordinates;
+  const kerchHit=raw.find(f=>f.properties.name==='Kerch Strait').geometry.coordinates;
+  assert(area(clipping.intersection(azovHit,kerchHit))<1e-8,'click surfaces still overlap');
+  const line=read('marine-hierarchy.json').filter(r=>['Sea of Azov','Kerch Strait'].includes(r.name));
+  assert.equal(line.length,2);
 });

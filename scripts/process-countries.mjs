@@ -1394,6 +1394,17 @@ function enrichSeas() {
     if (!coordinates.length) throw new Error(`Gibraltar separation erased ${name}`);
     neighbour.geometry={type:'MultiPolygon',coordinates};
   }
+  // Sibling selections under Black Sea: Kerch owns its strait water, while
+  // Azov ends at the same entrance boundary, with no shared fill or hit area.
+  const kerch=data.features.find(f=>f.properties.name==='Kerch Strait');
+  const azov=data.features.find(f=>f.properties.name==='Sea of Azov');
+  const azovCoordinates=polygonClipping.difference(azov.geometry.coordinates,kerch.geometry.coordinates);
+  if (!azovCoordinates.length) throw new Error('Kerch separation erased Sea of Azov');
+  // Removing the strait disconnects a few legacy mask fragments in the
+  // Black Sea. Retain the main continuous Azov water body, including its holes.
+  const polygonArea=poly=>Math.abs(poly[0].slice(1).reduce((sum,b,i)=>sum+poly[0][i][0]*b[1]-b[0]*poly[0][i][1],0));
+  const azovMain=azovCoordinates.reduce((largest,poly)=>polygonArea(poly)>polygonArea(largest)?poly:largest);
+  azov.geometry={type:'MultiPolygon',coordinates:[azovMain]};
   fs.writeFileSync(path.join(__dirname,'..','docs','marine-coast-audit.json'),JSON.stringify(audit,null,2)+'\n');
   writeGeo('seas.geojson', data);
   console.log(`  added ${SEA_ADD.length} curated seas, clipped to 10m coastline (${SEA_ADD.map((s) => s.name).join(', ')})`);

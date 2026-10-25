@@ -71,3 +71,9 @@ Atlantic Ocean. The table retains the same 132 names and shows Atlantic Ocean
 as its immediate parent.
 
 Reference: [NOAA Strait of Gibraltar limits](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/4).
+
+
+Sea of Azov and Kerch Strait are direct siblings under Black Sea. Kerch owns
+its complete strait footprint; that same footprint is subtracted from Azov.
+Their click surfaces and selection highlights do not overlap, and the Black Sea
+selection includes both.
