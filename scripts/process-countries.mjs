@@ -617,6 +617,8 @@ function processCountryTier(rawName, outName) {
         ISO_A3: p.ISO_A3,
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
+        // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
+        COAST_DETAIL: adm0 === 'IND',
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,

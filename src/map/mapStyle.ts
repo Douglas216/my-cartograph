@@ -18,6 +18,7 @@ export const mapStyle: StyleSpecification = {
     'countries-10m': {
       type: 'geojson',
       data: '/geo/countries-10m.geojson',
+      tolerance: 0, // Preserve the shared land/water shoreline vertices.
       generateId: true,
     },
     admin1: {
@@ -62,10 +63,12 @@ export const mapStyle: StyleSpecification = {
     'marine-selections': {
       type: 'geojson',
       data: '/geo/marine-selections.geojson',
+      tolerance: 0, // Preserve the shared land/water shoreline vertices.
     },
     seas: {
       type: 'geojson',
       data: '/geo/seas.geojson',
+      tolerance: 0, // Preserve the shared land/water shoreline vertices.
     },
     'sea-labels': {
       type: 'geojson',

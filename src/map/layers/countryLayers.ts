@@ -147,7 +147,7 @@ export const countryHighlightLayers: LayerSpecification[] = tiers.map((t) => ({
 
 // Fills, borders and click-highlight. The country label is exported separately
 // (countryLabel) so the layer stack can place it above the inland-water layers.
-export const countryLayers = [
+const baseCountryLayers: LayerSpecification[] = [
   countryFill110,
   countryFill50,
   countryFill10,
@@ -157,3 +157,31 @@ export const countryLayers = [
   ...countryGlowLayers,
   ...countryHighlightLayers,
 ];
+
+
+// Gujarat's coast-fitted gulfs are visible from z3. Keep India's land at
+// that same resolution, including borders and selection, rather than drawing
+// detailed water against the generalized 110m/50m land outline.
+const countryConstraints = new Map<string, FilterSpecification>();
+export function countryLayerFilter(id: string, selection: FilterSpecification): FilterSpecification {
+  const constraint = countryConstraints.get(id);
+  return constraint ? ['all', constraint, selection] as FilterSpecification : selection;
+}
+export const countryLayers: LayerSpecification[] = baseCountryLayers.flatMap(layer => {
+  const tier = layer.id.split('-').at(-1);
+  if (tier !== '110' && tier !== '50') return [layer];
+  const outside = ['!=', ['get', 'COAST_DETAIL'], true] as FilterSpecification;
+  const inside = ['==', ['get', 'COAST_DETAIL'], true] as FilterSpecification;
+  const constrain = (item: LayerSpecification, constraint: FilterSpecification): LayerSpecification => {
+    countryConstraints.set(item.id, constraint);
+    return { ...item, filter: 'filter' in item && item.filter ? ['all', constraint, item.filter] : constraint } as LayerSpecification;
+  };
+  const ordinary = constrain(layer, outside);
+  const detail = constrain({ ...layer, id: `${layer.id}-india-detail`, source: 'countries-10m',
+    minzoom: tier === '110' ? 3 : 4, maxzoom: tier === '110' ? 4 : 5 } as LayerSpecification, inside);
+  return tier === '110'
+    ? [ordinary, constrain({ ...layer, id: `${layer.id}-india-coarse`, maxzoom: 3 } as LayerSpecification, inside), detail]
+    : [ordinary, detail];
+});
+export const countryFillLayerIds = countryLayers.filter(l => l.id.startsWith('country-fill-')).map(l => l.id);
+export const countrySelectionLayerIds = countryLayers.filter(l => /^country-(glow|highlight)-/.test(l.id)).map(l => l.id);

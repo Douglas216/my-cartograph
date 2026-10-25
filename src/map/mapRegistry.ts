@@ -1,11 +1,12 @@
+import { countryLayerFilter, countrySelectionLayerIds } from './layers/countryLayers';
 import type { Map } from 'maplibre-gl';
 
 // Singleton holder for the live map instance. Kept in its own module so that
 // HMR updates to MapContainer don't orphan the reference held by consumers.
 export const mapRegistry: { map: Map | null } = { map: null };
 
-const HIGHLIGHT_IDS = ['country-highlight-110', 'country-highlight-50', 'country-highlight-10'];
-const GLOW_IDS = ['country-glow-110', 'country-glow-50', 'country-glow-10'];
+const HIGHLIGHT_IDS = countrySelectionLayerIds.filter(id => id.startsWith('country-highlight-'));
+const GLOW_IDS = countrySelectionLayerIds.filter(id => id.startsWith('country-glow-'));
 
 // Outline (navy) + underglow (gold) for a set of countries by ADM0_A3 code.
 // One code = the ordinary click-highlight; many codes = the "full extent"
@@ -15,7 +16,7 @@ export function setHighlightCodes(codes: string[]) {
   if (!map) return;
   const filter = ['in', ['get', 'ADM0_A3'], ['literal', codes]] as never;
   for (const id of [...HIGHLIGHT_IDS, ...GLOW_IDS]) {
-    if (map.getLayer(id)) map.setFilter(id, filter);
+    if (map.getLayer(id)) map.setFilter(id, countryLayerFilter(id, filter));
   }
   for (const id of HIGHLIGHT_IDS) {
     if (map.getLayer(id)) map.setPaintProperty(id, 'line-opacity', codes.length ? 1 : 0);

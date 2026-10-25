@@ -1,3 +1,4 @@
+import { countryFillLayerIds } from './layers/countryLayers';
 import type { Map as MapLibreMap, MapMouseEvent } from 'maplibre-gl';
 import type { Feature, Geometry } from 'geojson';
 import type { KnowledgePoint } from '../types';
@@ -29,15 +30,13 @@ export function setupInteractions(
     'sea-label',
     'ocean-label',
     'sea-hit',
-    'country-fill-110',
-    'country-fill-50',
-    'country-fill-10',
+    ...countryFillLayerIds,
     'ocean-fill',
   ];
   const priority = new Map(interactiveLayers.map((id, i) => [id, i]));
 
   const cityLayerIds = new Set(['city-circle', 'capital-star']);
-  const countryFillIds = ['country-fill-110', 'country-fill-50', 'country-fill-10'];
+  const countryFillIds = countryFillLayerIds;
 
   // Natural Earth sea polygons carry a featurecla; map it to an InfoCard type.
   const seaTypeByClass: Record<string, KnowledgePoint['type']> = {

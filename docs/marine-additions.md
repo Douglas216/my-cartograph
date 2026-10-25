@@ -95,3 +95,8 @@ outline; island holes are retained. See [Ramsar’s bay description](https://rsi
 ## Gujarat gulfs
 
 Gulf of Khambhat (Cambay) and Gulf of Kutch are individual children of Arabian Sea, within Indian Ocean. Khambhat is newly curated; Kutch replaces the generalized source outline with the detailed Indian coastline. Both use a coastline arc with one straight seaward entrance closure, retaining islands as land holes. Khambhat uses the Gopnath–Daman entrance convention; these are editorial map limits, not legal boundaries. Reference: [NCCR Gulf of Khambhat profile](https://nccr.gov.in/sites/default/files/GulfofKhambhat.PDF). Generated map, labels, selections and catalog share this hierarchy.
+
+
+### Gulf coastline rendering at overview zoom
+
+Gulf of Kutch and Gulf of Khambhat have zero area overlap with the generated 10m India land polygon, but against 50m land the overlaps were 0.0284 and 0.0447 square degrees respectively (larger at 110m). Their water masks were correct against the detailed source; the overview land tier was not aligned. India now carries `COAST_DETAIL` from the curation pipeline. Its fill, border, click target, glow and selection use the 10m source from z3, when marine boundaries begin; other countries retain their usual tier thresholds. Country and marine sources preserve shoreline vertices with `tolerance: 0`. No gulf membership or table changes. Regression checks cover both countries across every transition and selection filters.
