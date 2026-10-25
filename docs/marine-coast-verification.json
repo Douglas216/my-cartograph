@@ -454,11 +454,6 @@
       "landOverlapSquareDegrees": 2.835855395898358e-08
     },
     {
-      "name": "Strait of Gibraltar",
-      "valid": true,
-      "landOverlapSquareDegrees": 8.201969310708604e-09
-    },
-    {
       "name": "Balearic Sea",
       "valid": true,
       "landOverlapSquareDegrees": 3.112620702501883e-08
@@ -531,7 +526,7 @@
     {
       "name": "Alboran Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.0191749081520664e-08
+      "landOverlapSquareDegrees": 2.011565605082395e-08
     },
     {
       "name": "Khatanga Gulf",
@@ -564,9 +559,14 @@
       "landOverlapSquareDegrees": 4.990441338223093e-10
     },
     {
+      "name": "Strait of Gibraltar",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.312619374778552e-09
+    },
+    {
       "name": "Gulf of C\u00e1diz",
       "valid": true,
-      "landOverlapSquareDegrees": 7.580477199946687e-10
+      "landOverlapSquareDegrees": 7.580477212914091e-10
     },
     {
       "name": "Kerch Strait",
@@ -1146,11 +1146,6 @@
       "parentGapSquareDegrees": 5.197314540257118e-16
     },
     {
-      "name": "Strait of Gibraltar",
-      "valid": true,
-      "parentGapSquareDegrees": 0.0
-    },
-    {
       "name": "Balearic Sea",
       "valid": true,
       "parentGapSquareDegrees": 0.0
@@ -1249,6 +1244,11 @@
       "name": "Sea of Marmara",
       "valid": true,
       "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Strait of Gibraltar",
+      "valid": true,
+      "parentGapSquareDegrees": 7.70310123637375e-18
     },
     {
       "name": "Gulf of C\u00e1diz",

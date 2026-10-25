@@ -4,7 +4,7 @@ All 132 named marine waters were reviewed: 131 coastal names plus the inland Cas
 
 The build matches generalized coastal segments to the detailed 10m land geometry, follows the intervening coastline vertices, and subtracts land and islands. Existing curated bays retain their clipped footprints. Offshore limits remain straight; parent selections include their descendants. A shared six-decimal precision grid and polygon normalization remove numerical slivers and collapsed rings.
 
-Matched 29,559 coastal segments. Independent GEOS verification passes for all 133 components and all 137 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
+Matched 29,536 coastal segments. Independent GEOS verification passes for all 133 components and all 137 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
 
 Caspian uses its inland-lake shoreline and is checked for validity, not subtracted from the country land mask. This audit checks fit to the atlas coastline; it does not establish legal or hydrographic offshore boundaries.
 
@@ -133,7 +133,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | Skagerrak | 68 | Pass |
 | Solomon Sea | 446 | Pass |
 | South China Sea | 880 | Pass |
-| Strait of Gibraltar | 23 | Pass |
+| Strait of Gibraltar | 0 | Pass; existing clipped shoreline |
 | Strait of Malacca | 205 | Pass |
 | Strait of Singapore | 44 | Pass |
 | Strait of Tartary | 0 | Pass; existing clipped shoreline |

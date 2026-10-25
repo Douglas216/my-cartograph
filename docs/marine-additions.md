@@ -59,3 +59,15 @@ entrance. These are atlas selection extents.
 - [NOAA: Black Sea connections](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/10)
 - [Marine Regions: Kerch Strait](https://marineregions.org/gazetteer.php?id=3737&p=details)
 - [Crete geography](https://www.discovercrete.com/content/the-geography-of-crete)
+
+
+## Separate Strait of Gibraltar footprint
+
+Gibraltar now has one complete coastline-clipped polygon, replacing the small
+source fragments. Its west entrance is Trafalgar–Spartel; its east entrance is
+Europa Point–Almina Point. The strait is removed from the Gulf of Cádiz, Alboran
+Sea and Mediterranean selection geometry, while remaining directly under the
+Atlantic Ocean. The table retains the same 132 names and shows Atlantic Ocean
+as its immediate parent.
+
+Reference: [NOAA Strait of Gibraltar limits](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/4).

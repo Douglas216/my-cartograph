@@ -445,11 +445,6 @@
     "maxShoreShiftDegrees": 0.03074959942128989
   },
   {
-    "name": "Strait of Gibraltar",
-    "coastalSegments": 23,
-    "maxShoreShiftDegrees": 0.024045821235760042
-  },
-  {
     "name": "Balearic Sea",
     "coastalSegments": 93,
     "maxShoreShiftDegrees": 0.036377695817629584
@@ -553,6 +548,11 @@
     "name": "Sea of Marmara",
     "coastalSegments": 54,
     "maxShoreShiftDegrees": 0.028855575824831448
+  },
+  {
+    "name": "Strait of Gibraltar",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
   },
   {
     "name": "Gulf of Cádiz",

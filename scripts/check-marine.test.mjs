@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -156,4 +156,30 @@ test('Atlantic–Mediterranean selection structure exactly follows the requested
   assert.deepEqual(byName.get('Kerch Strait').path,['Atlantic Ocean','Mediterranean Sea','Black Sea','Kerch Strait']);
   assert(!byName.get('Aegean Sea').descendants.includes('Dardanelles'));
   assert(!byName.get('Sea of Marmara').descendants.includes('Bosporus'));
+});
+
+
+test('Gibraltar owns a substantial separate shape, directly under Atlantic', () => {
+  const strait=selections.get('Strait of Gibraltar').geometry;
+  assert.equal(byName.get('Strait of Gibraltar').parent,'Atlantic Ocean');
+  assert.equal(seaRows.find(r=>r.name==='Strait of Gibraltar').parent,'Atlantic Ocean');
+  assert.deepEqual(byName.get('Strait of Gibraltar').path,['Atlantic Ocean','Strait of Gibraltar']);
+  assert(area(strait.coordinates)>.08,'the source slivers were not replaced by the actual strait');
+  for(const name of ['Gulf of Cádiz','Alboran Sea','Mediterranean Sea']) {
+    const neighbour=selections.get(name).geometry;
+    assert(area(clipping.intersection(strait.coordinates,neighbour.coordinates))<1e-8,`${name} still selects Gibraltar water`);
+    const hit=read('seas.geojson').features.find(f=>f.properties.name===name).geometry;
+    assert(area(clipping.intersection(strait.coordinates,hit.coordinates))<1e-8,`${name} still owns Gibraltar's hit surface`);
+  }
+  assert(!byName.get('Mediterranean Sea').descendants.includes('Strait of Gibraltar'));
+  assert.equal(read('seas.geojson').features.filter(f=>f.properties.name==='Strait of Gibraltar').length,1);
+});
+
+
+test('Gibraltar stays between its two entrance lines without offshore sketch corners', () => {
+  const cross=(a,b,p)=>(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]);
+  for (const point of selections.get('Strait of Gibraltar').geometry.coordinates.flat(2)) {
+    assert(cross([-5.344444,36.110556],[-5.282222,35.898056],point)<=1e-6,'Gibraltar spills east of Europa–Almina into Alboran');
+    assert(cross([-6.033333,36.183333],[-5.923333,35.793333],point)>=-1e-6,'Gibraltar spills west of Trafalgar–Spartel');
+  }
 });

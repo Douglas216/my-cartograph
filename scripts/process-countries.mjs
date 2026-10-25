@@ -1121,6 +1121,10 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  // NOAA/IHO entrance lines: Trafalgar–Spartel (west), Europa–Almina (east).
+  // Other vertices lie inland; the detailed coastline cuts the actual shores.
+  { name: 'Strait of Gibraltar', featurecla: 'strait', scalerank: 4, labelAt: [-5.65,35.96],
+    ring: [[-6.033333,36.183333],[-5.923333,35.793333],[-5.9,35.6],[-5.5,35.6],[-5.4,35.8],[-5.282222,35.898056],[-5.344444,36.110556],[-5.5,36.4],[-6.0,36.4],[-6.033333,36.183333]] },
   { name: 'Gulf of Cádiz', featurecla: 'gulf', scalerank: 4, labelAt: [-7.3,36.7],
     // Cape St Vincent–Cape Trafalgar offshore closing line.
     ring: [[-8.996,37.025],[-6.036,36.185],[-5.3,36.6],[-6.0,38.0],[-8.0,38.0],[-8.996,37.025]] },
@@ -1309,7 +1313,7 @@ function refitBayCoast(geometry, land, landBb) {
 
 function enrichSeas() {
   const data = readRaw('seas-raw.geojson');
-  data.features = data.features.filter((f) => !f.properties.curated); // idempotent
+  data.features = data.features.filter((f) => !f.properties.curated && !SEA_ADD.some(s=>s.name===f.properties.name)); // curated masks replace source fragments
   // Retained subset of Natural Earth's 10m marine source; unrelated names
   // never enter the personal atlas. Keep membership decisions in this script.
   const additions=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','marine-additions.geojson')));
@@ -1372,6 +1376,23 @@ function enrichSeas() {
     const coordinates=polygonClipping.union(roundMarineCoordinates(f.geometry.coordinates));
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
+  }
+  // Gibraltar is an Atlantic sibling, not part of either neighbouring polygon
+  // or the Mediterranean selection. Remove shared water, not just label overlap.
+  const gibraltar=data.features.find(f=>f.properties.name==='Strait of Gibraltar');
+  // Limit the coastal mask to the two entrance half-planes, including the
+  // small shoreline discrepancy at Spartel between the source datasets.
+  const west=[[-6.033333,36.183333],[-5.923333,35.793333]];
+  const east=[[-5.344444,36.110556],[-5.282222,35.898056]];
+  const atLatitude=(line,y)=>[line[0][0]+(y-line[0][1])*(line[1][0]-line[0][0])/(line[1][1]-line[0][1]),y];
+  const limits=[atLatitude(west,35.4),atLatitude(east,35.4),atLatitude(east,36.6),atLatitude(west,36.6),atLatitude(west,35.4)];
+  gibraltar.geometry={type:'MultiPolygon',coordinates:polygonClipping.intersection(gibraltar.geometry.coordinates,[limits])};
+
+  for (const name of ['Gulf of Cádiz','Alboran Sea','Mediterranean Sea']) {
+    const neighbour=data.features.find(f=>f.properties.name===name);
+    const coordinates=polygonClipping.difference(neighbour.geometry.coordinates,gibraltar.geometry.coordinates);
+    if (!coordinates.length) throw new Error(`Gibraltar separation erased ${name}`);
+    neighbour.geometry={type:'MultiPolygon',coordinates};
   }
   fs.writeFileSync(path.join(__dirname,'..','docs','marine-coast-audit.json'),JSON.stringify(audit,null,2)+'\n');
   writeGeo('seas.geojson', data);
