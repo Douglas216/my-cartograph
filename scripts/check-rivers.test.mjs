@@ -53,7 +53,7 @@ test('all generated river cards have facts and consistent shared identities', ()
     if (systems.has(p.label_name)) assert.equal(facts, systems.get(p.label_name));
     systems.set(p.label_name, facts);
   }
-  assert.equal(systems.size, 60);
+  assert.equal(systems.size, 61);
   assert(data.features.some(f => f.properties.name === 'Colorado' && f.properties.featurecla === 'River'));
   const tarim = data.features.find(f => f.properties.name === 'Tarim').properties;
   assert.match(tarim.mouth_name, /Taitema.*flow-dependent.*Lop Nur/);

@@ -550,6 +550,16 @@
     "maxShoreShiftDegrees": 0.028855575824831448
   },
   {
+    "name": "Palk Strait",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Türkmenbaşy Gulf",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
     "name": "Strait of Gibraltar",
     "coastalSegments": 0,
     "maxShoreShiftDegrees": 0

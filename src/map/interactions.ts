@@ -195,7 +195,7 @@ export function setupInteractions(
         type: 'peak',
         name: props.name,
         coordinates: [lng, lat],
-        summary: `${props.name} is a mountain peak${elev}.`,
+        summary: `${props.name} is a mountain peak${elev}.${props.parent ? ` Part of ${props.parent}.` : ''}${props.story ? ` ${props.story}` : ''}`,
         nativeName: props.name_native || undefined,
         nativeLang: props.name_native_lang || undefined,
       });
@@ -209,7 +209,7 @@ export function setupInteractions(
         type: 'mountain_range',
         name: props.name,
         coordinates: [lng, lat],
-        summary: `The ${props.name} is a mountain range.${elev}`,
+        summary: `The ${props.name} is a mountain range.${elev}${props.parent ? ` Part of ${props.parent}.` : ''}${props.story ? ` ${props.story}` : ''}`,
         nativeName: props.name_native || undefined,
         nativeLang: props.name_native_lang || undefined,
       });
@@ -292,7 +292,7 @@ export function setupInteractions(
         waterPath: String(sp.water_path || name).split('|'),
         waterChildren: Number(sp.water_children || 0),
         coordinates: [lng, lat],
-        summary: `${name || 'This body of water'} is a ${label}.`,
+        summary: `${name || 'This body of water'} is a ${label}.${sp.story ? ` ${sp.story}` : ''}`,
       });
     } else if (layerId === 'ocean-fill') {
       clearHighlights();

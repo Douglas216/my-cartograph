@@ -41,6 +41,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 | Tiber | Tevere |
 | Rhine | Rhine, Rhein, Rhin |
 | Rhône | Rhône |
+| Seine | Seine |
 | Loire | Loire |
 | Thames | Thames |
 | Danube | Danube, Donau |
@@ -2660,7 +2661,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Rivers (local reach names)
 
-129 records; 88 distinct catalog entries. Multiple geometry records can represent one feature.
+131 records; 89 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Abay
 - Al Furat
@@ -2725,6 +2726,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Rio Grande
 - S. Branch Potomac
 - Salween
+- Seine
 - Sénégal
 - Shiquan
 - Songhua
@@ -2786,7 +2788,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Mountain ranges
 
-20 records; 20 distinct catalog entries. Multiple geometry records can represent one feature.
+22 records; 22 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Alps
 - Altay Mountains
@@ -2794,9 +2796,11 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Apennines
 - Appalachian Mountains
 - Atlas Mountains
+- Bismarck Range
 - Carpathian Mountains
 - Cascade Range
 - Caucasus Mountains
+- Dolomites
 - Eastern Ghats
 - Great Dividing Range
 - Himalayas
@@ -2811,7 +2815,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Peaks
 
-10 records; 10 distinct catalog entries. Multiple geometry records can represent one feature.
+21 records; 21 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Annapurna I — 8091 m
 - Cho Oyu — 8188 m
@@ -2821,7 +2825,18 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Lhotse — 8516 m
 - Makalu — 8485 m
 - Manaslu — 8163 m
+- Mont Blanc — 4805.59 m
+- Mount Elbert — 4401 m
+- Mount Elbrus — 5642 m
 - Mount Everest — 8848.86 m
+- Mount Heng (Hunan) — 1300.2 m
+- Mount Heng (Shanxi) — 2016.1 m
+- Mount Hua — 2154.9 m
+- Mount McKinley (Denali) — 6190 m
+- Mount Rainier — 4392 m
+- Mount Song — 1512 m
+- Mount Tai — 1545 m
+- Mount Whitney — 4421 m
 - Nanga Parbat — 8126 m
 
 ## Oceans
@@ -2836,7 +2851,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-139 records; 139 distinct catalog entries. Multiple geometry records can represent one feature.
+141 records; 141 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -2942,6 +2957,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - North Sea
 - Norton Sound
 - Norwegian Sea
+- Palk Strait
 - Penzhina Bay
 - Persian Gulf
 - Philippine Sea
@@ -2972,6 +2988,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Tasman Sea
 - The North Western Passages
 - Timor Sea
+- Türkmenbaşy Gulf
 - Tyrrhenian Sea
 - Weddell Sea
 - White Sea
@@ -3015,6 +3032,7 @@ Sources describe the named river or its stated headwaters. Inland termini may be
 | Tiber | Monte Fumaiolo in the Apennines | Tyrrhenian Sea |
 | Rhine | the Swiss Alps | North Sea |
 | Rhône | the Rhône Glacier in the Swiss Alps | Mediterranean Sea |
+| Seine | Source-Seine on the Langres plateau, Burgundy | English Channel at Le Havre and Honfleur |
 | Loire | Mont Gerbier de Jonc in the Massif Central | Atlantic Ocean |
 | Thames | Thames Head in the Cotswolds (conventional source) | North Sea |
 | Danube | the Black Forest (Brigach–Breg) | Black Sea |

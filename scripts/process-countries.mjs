@@ -31,18 +31,19 @@ const PERSONAL_MARINE_EXCLUDED = new Set([
 const MARINE_OCEAN_GROUPS = {
     'Atlantic Ocean': ['Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
     'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
-    'Indian Ocean': ['Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
+    'Indian Ocean': ['Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
     'Atlantic / Southern oceans': ['Scotia Sea'],
     'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
-    'Inland basin · no ocean outlet': ['Caspian Sea'],
+    'Inland basin · no ocean outlet': ['Caspian Sea', 'Türkmenbaşy Gulf'],
   };
 
 // Curated selection parents, including owner-defined groups of connected basins.
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Palk Strait': 'Bay of Bengal', 'Türkmenbaşy Gulf': 'Caspian Sea',
   // Owner's basin-selection structure; the Turkish straits remain siblings.
   'Gulf of Cádiz': 'Atlantic Ocean', 'Strait of Gibraltar': 'Atlantic Ocean',
   'Mediterranean Sea': 'Atlantic Ocean', 'Sea of Crete': 'Aegean Sea',
@@ -71,7 +72,7 @@ const MARINE_PARENT_OVERRIDES = {
 };
 
 const PERSONAL_RANGES = [
-  'Atlas Mountains', 'Ural Mountains', 'Caucasus Mountains', 'Carpathian Mountains',
+  'Dolomites', 'Bismarck Range', 'Atlas Mountains', 'Ural Mountains', 'Caucasus Mountains', 'Carpathian Mountains',
   'Alps', 'Apennines', 'Pyrenees', 'Altay Mountains', 'Tian Shan', 'Himalayas',
   'Karakoram Range', 'Western Ghats', 'Eastern Ghats', 'Great Dividing Range',
   'Southern Alps', 'Rocky Mountains', 'Appalachian Mountains', 'Sierra Nevada', 'Cascade Range', 'Andes',
@@ -87,7 +88,7 @@ const PERSONAL_RIVERS = {
   Congo: ['Congo', 'Lualaba'], Orange: ['Orange'], Limpopo: ['Limpopo'], Zambezi: ['Zambezi'],
   Euphrates: ['Euphrates', 'Al Furat', 'Firat'], Tigris: ['Tigris', 'Dicle'],
   Po: ['Po'], Tiber: ['Tevere'], Rhine: ['Rhine', 'Rhein', 'Rhin'], Rhône: ['Rhône'],
-  Loire: ['Loire'], Thames: ['Thames'], Danube: ['Danube', 'Donau'],
+  Seine: ['Seine'], Loire: ['Loire'], Thames: ['Thames'], Danube: ['Danube', 'Donau'],
   Dnieper: ['Dnepre', 'Dnipro'], Volga: ['Volga'], Ural: ['Ural'], Ob: ['Ob'], Lena: ['Lena'],
   Yenisey: ['Yenisey'], Amur: ['Amur', 'Heilong Jiang'], Songhua: ['Songhua'], Yalu: ['Yalu'],
   'Yellow River': ['Huang'], Yangtze: ['Yangtze', 'Chang Jiang', 'Jinsha', 'Tongtian', 'Tuotuo'],
@@ -107,18 +108,148 @@ const PERSONAL_LAKES = [
 ];
 const PERSONAL_ASIA_EXCLUDED = new Set(['YE', 'OM', 'LB', 'SY', 'AF', 'IQ', 'GE', 'AM', 'AZ', 'JO', 'QA', 'AE', 'PS', 'TR', 'CY']);
 const PERSONAL_OTHER_ADMIN = new Set(['GB', 'ES', 'FR', 'IT', 'DE', 'BY', 'KM', 'CV', 'EG', 'SD', 'ET', 'ZA', 'CM', 'AU', 'PG']);
-// Independent summits, ranked by elevation above sea level (not prominence).
+// Selected cultural and geographical summits, sorted by elevation (not prominence).
 // References: https://ntb.gov.np/things-to-do/mountaineering and
 // https://www.geonames.org/NP/highest-mountains-in-nepal.html
 // Coordinates are approximate summit locations; elevations are metres.
 const PERSONAL_PEAKS = [
+  ["Mount McKinley (Denali)", 6190, -151.0074, 63.0695],
+  ["Mount Whitney", 4421, -118.2923, 36.5786],
+  ["Mount Rainier", 4392, -121.7603, 46.8523],
+  ["Mount Elbert", 4401, -106.4454, 39.1178],
+  ["Mount Elbrus", 5642, 42.4392, 43.355],
+  ["Mont Blanc", 4805.59, 6.865, 45.8326],
+  ["Mount Tai", 1545, 117.1017, 36.2558],
+  ["Mount Hua", 2154.9, 110.087, 34.477],
+  ["Mount Heng (Hunan)", 1300.2, 112.6897, 27.29722],
+  ["Mount Heng (Shanxi)", 2016.1, 113.7328, 39.674],
+  ["Mount Song", 1512, 112.934647, 34.472416],
   ['Mount Everest', 8848.86, 86.925, 27.9881], ['K2', 8611, 76.5133, 35.8814],
   ['Kangchenjunga', 8586, 88.1475, 27.7025], ['Lhotse', 8516, 86.9331, 27.9617],
   ['Makalu', 8485, 87.0889, 27.8897], ['Cho Oyu', 8188, 86.6608, 28.0942],
   ['Dhaulagiri I', 8167, 83.4878, 28.6983], ['Manaslu', 8163, 84.5597, 28.55],
   ['Nanga Parbat', 8126, 74.5892, 35.2372], ['Annapurna I', 8091, 83.8203, 28.5958],
-];
+].sort((a, b) => b[1] - a[1]);
 
+
+const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
+const FEATURE_ADDITIONS = {
+  'Palk Strait': {countries:['India','Sri Lanka'], story:'A shallow passage between India and Sri Lanka, connecting the Bay of Bengal to Palk Bay; its shoals constrain navigation.', sourceUrl:'https://www.un.org/depts/los/LEGISLATIONANDTREATIES/PDFFILES/publications/E.87.V.12.pdf'},
+  'Türkmenbaşy Gulf': {countries:['Turkmenistan'], story:'Also called Krasnovodsk Bay, this shallow Caspian embayment supports migratory waterbirds and the port of Türkmenbaşy.', sourceUrl:'https://tehranconvention.org/system/files/tcis/caspian-sea-encyclopediapdf.pdf'},
+  "Mount McKinley (Denali)": {
+    "countries": [
+      "United States"
+    ],
+    "parent": "Alaska Range",
+    "story": "North America’s highest summit; Denali is its longstanding Alaska Native name. The US federal name returned to Mount McKinley in 2025.",
+    "sourceUrl": "https://www.govinfo.gov/features/denali-national-park"
+  },
+  "Mount Whitney": {
+    "countries": [
+      "United States"
+    ],
+    "parent": "Sierra Nevada",
+    "story": "The highest summit in the contiguous United States rises above the Owens Valley.",
+    "sourceUrl": "https://www.nps.gov/seki/planyourvisit/whitney.htm"
+  },
+  "Mount Rainier": {
+    "countries": [
+      "United States"
+    ],
+    "parent": "Cascade Range",
+    "story": "A glacier-clad active volcano shapes the landscape and volcanic hazards of the Pacific Northwest.",
+    "sourceUrl": "https://www.nps.gov/mora/index.htm"
+  },
+  "Mount Elbert": {
+    "countries": [
+      "United States"
+    ],
+    "parent": "Rocky Mountains",
+    "story": "The Sawatch Range summit is the highest point of the Rocky Mountains.",
+    "sourceUrl": "https://www.fs.usda.gov/"
+  },
+  "Mount Elbrus": {
+    "countries": [
+      "Russia"
+    ],
+    "parent": "Caucasus Mountains",
+    "story": "A twin-summit volcano, conventionally Europe’s highest mountain when the continental boundary follows the Greater Caucasus watershed.",
+    "sourceUrl": "https://www.wikidata.org/wiki/Q43105"
+  },
+  "Mont Blanc": {
+    "countries": [
+      "France",
+      "Italy"
+    ],
+    "parent": "Alps",
+    "story": "The Alps’ highest summit lies in a disputed Franco-Italian border sector. Elevation shown is the 2023 snow-cap survey (4805.59 m); snow and ice heights vary.",
+    "sourceUrl": "https://geologie-montblanc.fr/montBlanc.htm"
+  },
+  "Mount Tai": {
+    "countries": [
+      "China"
+    ],
+    "parent": "Five Great Mountains (Five Yue)",
+    "story": "Eastern mountain of the Five Yue, a sacred geography of imperial rites and pilgrimage. ",
+    "sourceUrl": "https://www.berkshirepublishing.com/ecph-china/2018/01/04/five-great-mountains/"
+  },
+  "Mount Hua": {
+    "countries": [
+      "China"
+    ],
+    "parent": "Five Great Mountains (Five Yue)",
+    "story": "Western mountain of the Five Yue, a sacred geography of imperial rites and pilgrimage. ",
+    "sourceUrl": "https://www.berkshirepublishing.com/ecph-china/2018/01/04/five-great-mountains/"
+  },
+  "Mount Heng (Hunan)": {
+    "countries": [
+      "China"
+    ],
+    "parent": "Five Great Mountains (Five Yue)",
+    "story": "Southern mountain of the Five Yue, a sacred geography of imperial rites and pilgrimage. ",
+    "sourceUrl": "https://www.berkshirepublishing.com/ecph-china/2018/01/04/five-great-mountains/"
+  },
+  "Mount Heng (Shanxi)": {
+    "countries": [
+      "China"
+    ],
+    "parent": "Five Great Mountains (Five Yue)",
+    "story": "Northern mountain of the Five Yue, a sacred geography of imperial rites and pilgrimage. ",
+    "sourceUrl": "https://www.berkshirepublishing.com/ecph-china/2018/01/04/five-great-mountains/"
+  },
+  "Mount Song": {
+    "countries": [
+      "China"
+    ],
+    "parent": "Five Great Mountains (Five Yue)",
+    "story": "Central mountain of the Five Yue, a sacred geography of imperial rites and pilgrimage. The point marks Liantian Feng, the Song massif’s highest summit, rather than lower Junji Feng.",
+    "sourceUrl": "https://www.berkshirepublishing.com/ecph-china/2018/01/04/five-great-mountains/"
+  },
+  "Dolomites": {
+    "countries": [
+      "Italy"
+    ],
+    "parent": "Alps",
+    "story": "Dolomite rock towers preserve ancient tropical marine environments, now uplifted into the Alps. This is a generalized range footprint, not the UNESCO property boundary.",
+    "sourceUrl": "https://whc.unesco.org/en/list/1237/"
+  },
+  "Bismarck Range": {
+    "countries": [
+      "Papua New Guinea"
+    ],
+    "parent": "New Guinea Highlands",
+    "story": "Part of New Guinea’s central highlands, the range includes Mount Wilhelm, Papua New Guinea’s highest summit. It is on the mainland, separate from the Bismarck Archipelago.",
+    "sourceUrl": "https://www.papuaerfgoed.org/sites/default/files/collectie/files/2006-03/vanRoyen_1980_Alpine.pdf"
+  },
+  "Seine": {
+    "countries": [
+      "France"
+    ],
+    "parent": "English Channel",
+    "story": "The Seine links Paris with the Channel ports, a historic corridor of trade and urban life.",
+    "sourceUrl": "https://whc.unesco.org/en/list/600/"
+  }
+};
 
 const DISPUTED_TO_PARENT = {
   TWN: 'CHN', // Taiwan -> China
@@ -1121,6 +1252,15 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  // Palk Strait proper, north of Palk Bay, with the eastern opening toward
+  // the Bay of Bengal. Inland edges are removed by the detailed coast.
+  { name: 'Palk Strait', featurecla: 'strait', scalerank: 5, labelAt: [79.75,10.05],
+    ring: [[79.4,9.75],[79.65,10.65],[80.25,10.65],[80.45,9.8],[80.1,9.45],[79.4,9.75]] },
+  // Krasnovodsk/Türkmenbaşy Bay: the entrance is between the western spits;
+  // generous inland vertices include the eastern Balkan embayment.
+  { name: 'Türkmenbaşy Gulf', featurecla: 'gulf', scalerank: 5, labelAt: [53.2,39.85],
+    ring: [[52.8,40.05],[52.85,39.65],[53.3,39.35],[54.1,39.5],[54.2,40.25],[53.25,40.4],[52.8,40.05]] },
+
   // NOAA/IHO entrance lines: Trafalgar–Spartel (west), Europa–Almina (east).
   // Other vertices lie inland; the detailed coastline cuts the actual shores.
   { name: 'Strait of Gibraltar', featurecla: 'strait', scalerank: 4, labelAt: [-5.65,35.96],
@@ -1162,7 +1302,9 @@ const SEA_ADD = [
     ring: [[121.95,30.9],[121.95,29.95],[121.5,29.7],[120.2,29.9],[120.1,30.5],[121.6,31.15],[121.95,30.9]] },
   {
     name: 'Sea of Azov', featurecla: 'sea', scalerank: 4, labelAt: [37.0, 46.1],
-    ring: [[34.6, 45.1], [36.8, 45.1], [39.7, 46.8], [39.4, 47.4], [36.8, 47.5], [34.7, 46.7], [34.6, 45.1]],
+    // Keep every non-entrance edge inland: the old diagonal from Kerch
+    // to Taganrog sliced off the southeastern sea and Kuban coastal bays.
+    ring: [[34.6,45.1],[36.45,45.10],[36.6333,45.1333],[37.5,44.9],[39.2,45.5],[40.0,46.6],[40.0,47.6],[36.8,47.7],[34.5,46.8],[34.6,45.1]],
   },
   {
     name: 'Gulf of Martaban', featurecla: 'gulf', scalerank: 4, labelAt: [96.5, 16.0],
@@ -1351,7 +1493,7 @@ function enrichSeas() {
       else console.warn(`  ${s.name}: openInto "${nm}" not found among seas — seaward edge stays a drawn line`);
     }
     const geometry = clipRingToWater(s.ring, land, landBb, extra) || { type: 'Polygon', coordinates: [s.ring] };
-    const props = { name: s.name, featurecla: s.featurecla, scalerank: s.scalerank, curated: true };
+    const props = { name: s.name, featurecla: s.featurecla, scalerank: s.scalerank, curated: true, ...(FEATURE_ADDITIONS[s.name] ?? {}) };
     if (s.labelAt) { props.label_lon = s.labelAt[0]; props.label_lat = s.labelAt[1]; }
     data.features.push({ type: 'Feature', properties: props, geometry });
   }
@@ -1512,6 +1654,18 @@ function pointInGeom([px, py], geom) {
 // The same regions file also holds deserts/plateaus/isthmuses — future themes.
 function buildOrography() {
   const regions = readRaw('regions-raw.geojson');
+
+  for (const [name, max, ring] of [
+    ['Dolomites', 3343, [[11.45,46.1],[11.3,46.55],[11.7,46.85],[12.25,46.85],[12.65,46.65],[12.6,46.25],[12.15,46.05],[11.45,46.1]]],
+    ['Bismarck Range', 4509, [[143.95,-5.8],[144.2,-5.45],[144.7,-5.3],[145.15,-5.65],[145.4,-6.1],[145.05,-6.35],[144.55,-6.1],[143.95,-5.8]]],
+  ]) {
+    const countryCode = name === 'Dolomites' ? 'ITA' : 'PNG';
+    const country = readRaw('countries-10m-raw.geojson').features.find(f => f.properties.ADM0_A3 === countryCode);
+    const coordinates = polygonClipping.intersection([ring], country.geometry.coordinates);
+    if (!coordinates.length) throw new Error(`Empty curated range: ${name}`);
+    regions.features.push({type:'Feature', properties:{NAME:name, FEATURECLA:'Range/mtn', SCALERANK:3}, geometry:{type:'MultiPolygon',coordinates}});
+    RANGE_MAX_ELEV[normRangeName(name)] = max;
+  }
   const elevRaw = readRaw('elevation-points-raw.geojson');
   const elevPts = elevRaw.features.filter(
     (f) => f.properties.featurecla === 'mountain' && f.properties.elevation != null,
@@ -1547,12 +1701,13 @@ function buildOrography() {
     .map((f, i) => ({
       type: 'Feature',
       id: i,
-      geometry: { ...f.geometry, coordinates: roundCoords(f.geometry.coordinates) },
+      geometry: { ...f.geometry, coordinates: FEATURE_ADDITIONS[f.properties.NAME] ? roundMarineCoordinates(f.geometry.coordinates) : roundCoords(f.geometry.coordinates) },
       properties: {
         name: normalizeRangeName(f.properties.NAME),
         scalerank: f.properties.SCALERANK ?? 5,
         max_elev: rangeMaxElev(f),
         ...rangeNative(f),
+        ...FEATURE_ADDITIONS[normalizeRangeName(f.properties.NAME)],
       },
     }));
   const noElev = rangePolys.filter((f) => f.properties.max_elev == null);
@@ -1586,6 +1741,7 @@ function buildOrography() {
           scalerank: f.properties.SCALERANK ?? 5,
           EXTENT: Math.round(extent * 10) / 10,
           ...rangeNative(f),
+          ...FEATURE_ADDITIONS[normalizeRangeName(f.properties.NAME)],
         },
       };
     })
@@ -1852,6 +2008,7 @@ function largestRing(geometry) {
 // Aliases are pooled before orientation so a name change cannot reverse the flow.
 const PERSONAL_RIVER_BY_REACH = new Map(Object.entries(PERSONAL_RIVERS).flatMap(([name, members]) => members.map(member => [member, name])));
 const RIVER_MOUTH_COORDS = {
+  Seine: [0.1, 49.43],
   Yukon: [-164.6, 62.6], Mackenzie: [-135.5, 69.3], Mississippi: [-89.3, 29.0],
   Missouri: [-90.1, 38.8], Ohio: [-89.1, 37.0], Colorado: [-114.9, 31.8],
   Arkansas: [-91.1, 33.8], Tennessee: [-88.6, 37.1], Potomac: [-76.3, 38.0],
@@ -1923,6 +2080,9 @@ const RIVER_REVERSE = new Map([
 // flow animation runs the right way; it's appended before orientation, so a curated
 // RIVER_REVERSE entry still keeps it (and any overlapping NE stub) consistent.
 const RIVER_ADD = [
+  // Natural Earth stops at Tancarville; continue through the estuary to the
+  // Channel rather than ending the selected river upstream of Le Havre.
+  { name: 'Seine', scalerank: 4, coordinates: [[0.439255,49.473208],[0.37,49.455],[0.32,49.452],[0.27,49.43],[0.20,49.435],[0.10,49.43]] },
   {
     name: 'St. Lawrence',
     scalerank: 2,
@@ -2183,6 +2343,7 @@ const RIVER_INFO = {
 // Inland sinks have flow qualifications; water need not reach them year-round.
 // Supporting references are included in docs/river-facts-sources.md.
 const PERSONAL_RIVER_INFO = {
+  Seine: ['spring', 'Source-Seine on the Langres plateau, Burgundy', 'channel', 'English Channel at Le Havre and Honfleur'],
   Yukon: ['lake', 'Marsh Lake (headwaters in the Coast Mountains)', 'sea', 'Bering Sea'],
   Mackenzie: ['lake', 'Great Slave Lake', 'sea', 'Beaufort Sea'],
   Ohio: ['confluence', 'the Allegheny–Monongahela confluence at Pittsburgh', 'river', 'Mississippi'],
@@ -2320,7 +2481,7 @@ function applyRiverSystem(rivers) {
       ...facts,
       name: canonical,
       members: aliases,
-      note: aliases.length > 1 ? `Mapped reach names for this river: ${aliases.join(', ')}.` : '',
+      note: FEATURE_ADDITIONS[canonical]?.story ?? (aliases.length > 1 ? `Mapped reach names for this river: ${aliases.join(', ')}.` : ''),
       ...curated,
       label: canonical,
     };
@@ -2612,7 +2773,7 @@ function applyPersonalSelection() {
   const oldPeaks = readGeo('peaks.geojson').features;
   writeGeo('peaks.geojson', { type: 'FeatureCollection', features: PERSONAL_PEAKS.map(([name, elevation, lon, lat], i) => ({
     type: 'Feature', geometry: { type: 'Point', coordinates: [lon, lat] },
-    properties: { ...(oldPeaks.find(f => f.properties.name === name)?.properties ?? {}), name, elevation, scalerank: 1, elevation_rank: i + 1 },
+    properties: { ...(oldPeaks.find(f => f.properties.name === name)?.properties ?? {}), name, elevation, scalerank: 1, elevation_rank: i + 1, ...FEATURE_ADDITIONS[name], ...(FIVE_YUE_NATIVE[name] ? {name_native:FIVE_YUE_NATIVE[name],name_native_lang:'zh',NATIVE_ON_MAP:true} : {}) },
   })) });
   // Generate the human-readable inventory from the exact display files.
   const sections = [
@@ -2650,7 +2811,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
 function buildCatalog() {
   const reference = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'catalog-reference.json'), 'utf8'));
   const fact = (category, name) => reference.features[`${category}:${name}`] ?? {};
-  const url = item => item.id ? `https://www.wikidata.org/wiki/${item.id}` : undefined;
+  const url = item => item.sourceUrl ?? (item.id ? `https://www.wikidata.org/wiki/${item.id}` : undefined);
   const tidyCountry = name => ({ "People's Republic of China": 'China', 'Czech Republic': 'Czechia' }[name] ?? name);
   // Structured country statements sometimes describe basins or broader mountain
   // systems. These explicit geographic overrides keep table membership meaningful.
@@ -2670,7 +2831,7 @@ function buildCatalog() {
     'ranges:Appalachian Mountains': ['Canada', 'United States'],
     'peaks:K2': ['Pakistan', 'China'],
   };
-  const countriesFor = (category, name) => (countryOverrides[`${category}:${name}`] ?? fact(category, name).countries ?? []).map(tidyCountry);
+  const countriesFor = (category, name) => (FEATURE_ADDITIONS[name]?.countries ?? countryOverrides[`${category}:${name}`] ?? fact(category, name).countries ?? []).map(tidyCountry);
   const preferredLakeVolumes = { 'Tai Hu': 4.4, 'Lake Superior': 12100, 'Lake Michigan': 4920, 'Lake Huron': 3540, 'Lake Erie': 484, 'Lake Ontario': 1640 };
   const processedCountries = readGeo('countries-10m.geojson').features;
   const rawCountries = new Map(readRaw('countries-10m-raw.geojson').features.map(f => [f.properties.ADM0_A3, f.properties]));
@@ -2689,7 +2850,7 @@ function buildCatalog() {
   const riverRows = Object.keys(PERSONAL_RIVERS).map(name => {
     const p = selectedRivers.find(f => f.properties.label_name === name).properties;
     const data = fact('rivers', name);
-    return { id: name, name, aliases: PERSONAL_RIVERS[name], countries: countriesFor('rivers', name), length: name === 'Tarim' ? 1321 : data.lengthKm?.value ?? null, lengthYear: data.lengthKm?.year ?? null, source: p.source_name, mouth: p.mouth_name, sourceUrl: url(data) };
+    return { id: name, name, aliases: PERSONAL_RIVERS[name], countries: countriesFor('rivers', name), length: name === 'Tarim' ? 1321 : data.lengthKm?.value ?? null, lengthYear: data.lengthKm?.year ?? null, source: p.source_name, mouth: p.mouth_name, ...FEATURE_ADDITIONS[name], sourceUrl: FEATURE_ADDITIONS[name]?.sourceUrl ?? url(data) };
   });
   const lakeRows = [...new Map(readGeo('lakes.geojson').features.map(f => [f.properties.name, f])).values()].map(f => {
     const p = f.properties, data = fact('lakes', p.name);
@@ -2709,22 +2870,22 @@ function buildCatalog() {
     return Math.abs(area * 6371.0088 ** 2 / 2);
   };
   const polygonArea = rings => Math.max(0, ringArea(rings[0]) - rings.slice(1).reduce((n, ring) => n + ringArea(ring), 0));
-  const rangeRows = readGeo('ranges.geojson').features.map((f, i) => ({ id: `range-${i}`, name: f.properties.name, area: Math.round((f.geometry.type === 'Polygon' ? polygonArea(f.geometry.coordinates) : f.geometry.coordinates.reduce((n, poly) => n + polygonArea(poly), 0)) / 1000) * 1000, countries: countriesFor('ranges', f.properties.name), sourceUrl: url(fact('ranges', f.properties.name)) }));
-  const peakRows = readGeo('peaks.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, elevation: f.properties.elevation, countries: countriesFor('peaks', f.properties.name), sourceUrl: url(fact('peaks', f.properties.name)) }));
+  const rangeRows = readGeo('ranges.geojson').features.map((f, i) => ({ id: `range-${i}`, name: f.properties.name, area: Math.round((f.geometry.type === 'Polygon' ? polygonArea(f.geometry.coordinates) : f.geometry.coordinates.reduce((n, poly) => n + polygonArea(poly), 0)) / 1000) * 1000, countries: countriesFor('ranges', f.properties.name), ...FEATURE_ADDITIONS[f.properties.name], sourceUrl: FEATURE_ADDITIONS[f.properties.name]?.sourceUrl ?? url(fact('ranges', f.properties.name)) }));
+  const peakRows = readGeo('peaks.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, elevation: f.properties.elevation, countries: countriesFor('peaks', f.properties.name), ...FEATURE_ADDITIONS[f.properties.name], sourceUrl: FEATURE_ADDITIONS[f.properties.name]?.sourceUrl ?? url(fact('peaks', f.properties.name)) }));
   const oceanSettings = { 'Pacific Ocean': 'Between Asia & Oceania and the Americas', 'Atlantic Ocean': 'Between the Americas and Europe & Africa', 'Indian Ocean': 'Between Africa, Asia and Australia', 'Arctic Ocean': 'Around the North Pole, north of Eurasia and North America', 'Southern Ocean': 'Encircling Antarctica; conventionally south of 60° S' };
   const oceanRows = readGeo('ocean-labels.geojson').features.map(f => ({ id: f.properties.name, name: f.properties.name, setting: oceanSettings[f.properties.name], waters: f.properties.water_children, sourceUrl: 'https://oceanservice.noaa.gov/facts/howmanyoceans.html' }));
   const seaRows = [...new Map(readGeo('seas.geojson').features.filter(f => f.properties.featurecla !== 'ocean').map(f => [f.properties.name, f])).values()].map(f => {
     const p = f.properties;
     if (!p.water_ocean) throw new Error(`Missing catalog ocean association: ${p.name}`);
-    return { id: p.name, name: p.name, kind: (p.featurecla ?? 'marine area').replace(/^./, c => c.toUpperCase()), parent: p.water_parent || null, ocean: p.water_ocean, sourceUrl: p.wikidataid ? `https://www.wikidata.org/wiki/${p.wikidataid}` : undefined };
+    return { id: p.name, name: p.name, kind: (p.featurecla ?? 'marine area').replace(/^./, c => c.toUpperCase()), parent: p.water_parent || null, ocean: p.water_ocean, story: FEATURE_ADDITIONS[p.name]?.story,  sourceUrl: FEATURE_ADDITIONS[p.name]?.sourceUrl ?? (p.wikidataid ? `https://www.wikidata.org/wiki/${p.wikidataid}` : undefined) };
   });
   const sections = [
     { id: 'countries', title: 'Countries & territories', description: 'All political features on the map. Capitals from the reference snapshot; Natural Earth population estimates; the reference year appears below each figure. A dash means no capital is recorded in the source.', rows: countryRows },
     { id: 'cities', title: 'Cities', description: 'National capitals and cities with a source population of at least one million. Natural Earth estimates use differing urban definitions and reference dates; these are not current census counts.', rows: cityRows },
     { id: 'rivers', title: 'Rivers', description: 'One row per river, including its locally named reaches. Lengths are approximate reference values; headwater conventions vary. Countries include border reaches, not every country in the drainage basin.', rows: riverRows },
     { id: 'lakes', title: 'Lakes', description: 'Reference surface areas and volumes, not live water levels. Available measurement years appear below the figures. A dash means the measurement is not recorded; the Aral Sea is listed as its North and South remnants.', rows: lakeRows },
-    { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
-    { id: 'peaks', title: 'Peaks', description: 'The ten highest independent summits, with elevations in metres above sea level. Border peaks list both countries; territorial claims are described on the map.', rows: peakRows },
+    { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth or curated footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
+    { id: 'peaks', title: 'Peaks', description: 'Selected summits, including the ten highest independent peaks and China’s Five Yue, with elevations in metres above sea level. Border peaks list both countries; territorial claims are described on the map.', rows: peakRows },
     { id: 'oceans', title: 'The five oceans', description: 'The five named basins of one connected global ocean.', rows: oceanRows },
     { id: 'seas', title: 'Seas & coastal waters', description: 'Named seas, bays, gulfs, straits and other marine features already on the map. Part of shows the immediate containing water body. Ocean associations include indirect connections; transitional waters list more than one ocean.', rows: seaRows },
   ];

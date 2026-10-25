@@ -38,7 +38,7 @@ test('every selected river has a length, course countries, source and mouth', ()
 test('physical tables use correct units, positive values and complete country lists', () => {
   for (const id of ['lakes', 'ranges', 'peaks']) for (const r of section(id).rows) {
     assert(r.countries.length > 0, r.name);
-    if (id === 'peaks') assert(r.elevation > 8000);
+    if (id === 'peaks') assert(r.elevation > 0);
     else assert(r.area > 0, r.name);
   }
   assert.equal(section('lakes').rows.find(r => r.name === 'Great Slave Lake').volume, 1580);

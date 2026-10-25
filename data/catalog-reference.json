@@ -3202,6 +3202,16 @@
     "countries:SCR": {
       "id": "Q628716",
       "capitals": []
+    },
+    "rivers:Seine": {
+      "id": "Q1471",
+      "countries": [
+        "France"
+      ],
+      "lengthKm": {
+        "value": 777,
+        "year": null
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ import SpeakButton from './SpeakButton';
 
 // Physical features show their endonym but no pronounce button — the speaker is
 // reserved for country/territory/city names.
-const NO_SPEAKER = new Set(['river', 'lake', 'mountain_range']);
+const NO_SPEAKER = new Set(['river', 'lake', 'mountain_range', 'peak']);
 
 // Global-rank medal shown beside a lake's area / depth. 1-3 are the classic
 // gold/silver/bronze; 4-10 share one slate colour. Title spells out the rank.

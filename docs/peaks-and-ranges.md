@@ -1,3 +1,5 @@
+> This document describes the reusable Natural Earth source library, not the current map selection. See [my atlas](my-atlas.md) for the generated inventory and [addition sources](atlas-additions-sources.md) for curated features.
+
 # Natural Earth peaks & mountain ranges (reference)
 
 Generated from `data/raw/elevation-points-raw.geojson` (peaks) and

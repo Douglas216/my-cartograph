@@ -19,7 +19,7 @@ test('all eight unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 132);
+  assert.equal(seaRows.length, 134);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
