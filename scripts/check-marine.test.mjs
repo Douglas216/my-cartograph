@@ -215,3 +215,14 @@ test('Gujarat gulfs have individual shapes and Arabian Sea ancestry in map and t
   }
   assert.equal(area(clipping.intersection(selections.get('Gulf of Khambhat').geometry.coordinates, selections.get('Gulf of Kutch').geometry.coordinates)), 0);
 });
+
+test('Arabian Sea fills Gujarat entrance gaps and shares both gulf mouths', () => {
+  const arabian=read('seas.geojson').features.find(f=>f.properties.name==='Arabian Sea');
+  const sample=(x,y)=>[[[[x-.00001,y-.00001],[x+.00001,y-.00001],[x+.00001,y+.00001],[x-.00001,y+.00001],[x-.00001,y-.00001]]]];
+  for(const [x,y] of [[72,20.8],[72.2,20.6],[68.90,22.75]]) {
+    assert(area(clipping.difference(sample(x,y),selections.get('Arabian Sea').geometry.coordinates))<1e-12,`bare ocean remains at ${x},${y}`);
+  }
+  for(const name of ['Gulf of Kutch','Gulf of Khambhat']) {
+    assert(area(clipping.intersection(arabian.geometry.coordinates,selections.get(name).geometry.coordinates))<1e-10,`${name} should own its water up to the common entrance`);
+  }
+});

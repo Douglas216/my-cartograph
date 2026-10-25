@@ -1577,6 +1577,17 @@ function enrichSeas() {
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
   }
+  // Repair the containing basin too: its old Gujarat coast/mouth approximation
+  // leaves a wedge outside Khambhat and a second entrance beside Kutch.
+  // The offshore edges of this generous repair mask lie inside Arabian Sea;
+  // land clips its coastal side. Child mouths then become the shared edges.
+  const arabian = data.features.find(f => f.properties.name === 'Arabian Sea');
+  const gujaratCoast = clipRingToWater([[68,21],[68,23.5],[69.5,24],[74,23],[74,19],[72,19],[68,21]], land, landBb);
+  if (!gujaratCoast) throw new Error('Gujarat basin repair produced no water');
+  const gujaratGulfs = ['Gulf of Kutch','Gulf of Khambhat'].map(name => data.features.find(f => f.properties.name === name));
+  arabian.geometry = {type:'MultiPolygon', coordinates:polygonClipping.difference(
+    polygonClipping.union(arabian.geometry.coordinates, gujaratCoast.coordinates),
+    ...gujaratGulfs.map(f => f.geometry.coordinates))};
   // Gibraltar is an Atlantic sibling, not part of either neighbouring polygon
   // or the Mediterranean selection. Remove shared water, not just label overlap.
   const gibraltar=data.features.find(f=>f.properties.name==='Strait of Gibraltar');
