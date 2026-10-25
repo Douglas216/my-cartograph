@@ -31,7 +31,7 @@ const PERSONAL_MARINE_EXCLUDED = new Set([
 const MARINE_OCEAN_GROUPS = {
     'Atlantic Ocean': ['Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
     'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
-    'Indian Ocean': ['Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
+    'Indian Ocean': ['Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Khambhat', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
     'Atlantic / Southern oceans': ['Scotia Sea'],
@@ -43,6 +43,7 @@ const MARINE_OCEAN_GROUPS = {
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Gulf of Khambhat': 'Arabian Sea', 'Gulf of Kutch': 'Arabian Sea',
   'Palk Strait': 'Bay of Bengal', 'Türkmenbaşy Gulf': 'Caspian Sea',
   // Owner's basin-selection structure; the Turkish straits remain siblings.
   'Gulf of Cádiz': 'Atlantic Ocean', 'Strait of Gibraltar': 'Atlantic Ocean',
@@ -1252,6 +1253,13 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  // Gujarat gulfs: detailed Indian coastline, with only the seaward mouth closed.
+  // Khambhat uses the Gopnath–Daman entrance convention (NCCR gulf profile).
+  { name: 'Gulf of Khambhat', featurecla: 'gulf', scalerank: 5, labelAt: [72.4,21.6],
+    coastBetween: {country:'IND', entrance:[[72.104747,21.205064],[72.82309,20.416815]]}, keepLabelComponent: true },
+  { name: 'Gulf of Kutch', featurecla: 'gulf', scalerank: 4, labelAt: [69.6,22.6],
+    coastBetween: {country:'IND', entrance:[[68.866222,23.019965],[68.992931,22.431586]]}, keepLabelComponent: true },
+
   // NOAA/IHO maps Palk Strait with adjoining Palk Bay: close at Point
   // Calimere–Point Pedro and Adam's Bridge, then keep the connected basin.
   { name: 'Palk Strait', featurecla: 'strait', scalerank: 5, labelAt: [79.75,10.05],

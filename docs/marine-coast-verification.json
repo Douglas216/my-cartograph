@@ -479,11 +479,6 @@
       "landOverlapSquareDegrees": 1.4300814048622903e-08
     },
     {
-      "name": "Gulf of Kutch",
-      "valid": true,
-      "landOverlapSquareDegrees": 1.3102577448417116e-10
-    },
-    {
       "name": "Golfo de Panam\u00e1",
       "valid": true,
       "landOverlapSquareDegrees": 3.5645969546440498e-09
@@ -557,6 +552,16 @@
       "name": "Sea of Marmara",
       "valid": true,
       "landOverlapSquareDegrees": 4.990441338223093e-10
+    },
+    {
+      "name": "Gulf of Khambhat",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Kutch",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Palk Strait",
@@ -1181,11 +1186,6 @@
       "parentGapSquareDegrees": 0.0
     },
     {
-      "name": "Gulf of Kutch",
-      "valid": true,
-      "parentGapSquareDegrees": 0.0
-    },
-    {
       "name": "Golfo de Panam\u00e1",
       "valid": true,
       "parentGapSquareDegrees": 0.0
@@ -1252,6 +1252,16 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Khambhat",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Kutch",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

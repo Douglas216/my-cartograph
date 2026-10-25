@@ -19,7 +19,7 @@ test('all eight unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 134);
+  assert.equal(seaRows.length, 135);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -202,4 +202,16 @@ test('Azov and Kerch are non-overlapping siblings directly under Black Sea', () 
   assert(area(clipping.intersection(azovHit,kerchHit))<1e-8,'click surfaces still overlap');
   const line=read('marine-hierarchy.json').filter(r=>['Sea of Azov','Kerch Strait'].includes(r.name));
   assert.equal(line.length,2);
+});
+
+
+test('Gujarat gulfs have individual shapes and Arabian Sea ancestry in map and table', () => {
+  for (const name of ['Gulf of Khambhat', 'Gulf of Kutch']) {
+    assert.deepEqual(byName.get(name).path, ['Indian Ocean', 'Arabian Sea', name]);
+    assert.equal(seaRows.filter(r => r.name === name).length, 1);
+    assert.equal(seaRows.find(r => r.name === name).parent, 'Arabian Sea');
+    assert.equal(read('sea-labels.geojson').features.filter(f => f.properties.name === name).length, 1);
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates, selections.get('Arabian Sea').geometry.coordinates)) < 1e-8);
+  }
+  assert.equal(area(clipping.intersection(selections.get('Gulf of Khambhat').geometry.coordinates, selections.get('Gulf of Kutch').geometry.coordinates)), 0);
 });

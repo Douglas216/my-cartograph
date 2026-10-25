@@ -1,10 +1,10 @@
 # Marine coastline audit
 
-All 134 named marine waters were reviewed: 133 coastal names plus the inland Caspian Sea. The source has 135 components because the Great Barrier Reef has two features.
+All 135 named marine waters were reviewed: 134 coastal names plus the inland Caspian Sea. The source has 136 components because the Great Barrier Reef has two features.
 
 The build matches generalized coastal segments to the detailed 10m land geometry, follows the intervening coastline vertices, and subtracts land and islands. Existing curated bays retain their clipped footprints. Offshore limits remain straight; parent selections include their descendants. A shared six-decimal precision grid and polygon normalization remove numerical slivers and collapsed rings.
 
-Matched 29,536 coastal segments. Independent GEOS verification passes for all 135 components and all 139 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
+Matched 29,504 coastal segments. Independent GEOS verification passes for all 136 components and all 140 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
 
 Caspian uses its inland-lake shoreline and is checked for validity, not subtracted from the country land mask. This audit checks fit to the atlas coastline; it does not establish legal or hydrographic offshore boundaries.
 
@@ -46,7 +46,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | Cantabrian Sea | 0 | Pass; existing clipped shoreline |
 | Cape Cod Bay | 0 | Pass; existing clipped shoreline |
 | Caribbean Sea | 856 | Pass |
-| Caspian Sea | 0 | Valid inland shoreline |
+| Caspian Sea | 0 | Pass; inland shoreline |
 | Celebes Sea | 235 | Pass |
 | Ceram Sea | 157 | Pass |
 | Chesapeake Bay | 192 | Pass |
@@ -75,7 +75,8 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | Gulf of Finland | 101 | Pass |
 | Gulf of Guinea | 139 | Pass |
 | Gulf of Honduras | 28 | Pass |
-| Gulf of Kutch | 32 | Pass |
+| Gulf of Khambhat | 0 | Pass; existing clipped shoreline |
+| Gulf of Kutch | 0 | Pass; existing clipped shoreline |
 | Gulf of Maine | 100 | Pass |
 | Gulf of Mannar | 32 | Pass |
 | Gulf of Martaban | 0 | Pass; existing clipped shoreline |
@@ -123,7 +124,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | Red Sea | 261 | Pass |
 | Ross Sea | 467 | Pass |
 | Río de la Plata | 61 | Pass |
-| Sargasso Sea | 0 | Pass; offshore only |
+| Sargasso Sea | 0 | Pass; offshore limits |
 | Scotia Sea | 4 | Pass |
 | Sea of Azov | 0 | Pass; existing clipped shoreline |
 | Sea of Crete | 150 | Pass |
@@ -142,7 +143,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | Sulu Sea | 256 | Pass |
 | Taiwan Strait | 48 | Pass |
 | Tasman Sea | 474 | Pass |
-| The North Western Passages | 2,846 | Pass |
+| The North Western Passages | 2846 | Pass |
 | Timor Sea | 154 | Pass |
 | Tyrrhenian Sea | 177 | Pass |
 | Türkmenbaşy Gulf | 0 | Pass; existing clipped shoreline |

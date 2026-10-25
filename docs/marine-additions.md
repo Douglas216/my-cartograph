@@ -90,3 +90,8 @@ than the previous offshore zigzag. Only the connected inner bay is retained;
 open Caspian water outside the northern spit is excluded. The gulf remains under
 Caspian Sea with no ocean outlet. Both shapes are clipped to the detailed land
 outline; island holes are retained. See [Ramsar’s bay description](https://rsis.ramsar.org/ris/1855).
+
+
+## Gujarat gulfs
+
+Gulf of Khambhat (Cambay) and Gulf of Kutch are individual children of Arabian Sea, within Indian Ocean. Khambhat is newly curated; Kutch replaces the generalized source outline with the detailed Indian coastline. Both use a coastline arc with one straight seaward entrance closure, retaining islands as land holes. Khambhat uses the Gopnath–Daman entrance convention; these are editorial map limits, not legal boundaries. Reference: [NCCR Gulf of Khambhat profile](https://nccr.gov.in/sites/default/files/GulfofKhambhat.PDF). Generated map, labels, selections and catalog share this hierarchy.

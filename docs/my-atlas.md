@@ -2851,7 +2851,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-141 records; 141 distinct catalog entries. Multiple geometry records can represent one feature.
+142 records; 142 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -2913,6 +2913,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Finland
 - Gulf of Guinea
 - Gulf of Honduras
+- Gulf of Khambhat
 - Gulf of Kutch
 - Gulf of Maine
 - Gulf of Mannar

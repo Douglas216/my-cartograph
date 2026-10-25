@@ -470,11 +470,6 @@
     "maxShoreShiftDegrees": 0.07628197024855099
   },
   {
-    "name": "Gulf of Kutch",
-    "coastalSegments": 32,
-    "maxShoreShiftDegrees": 0.034556820093583525
-  },
-  {
     "name": "Golfo de Panamá",
     "coastalSegments": 62,
     "maxShoreShiftDegrees": 0.024972032443257932
@@ -548,6 +543,16 @@
     "name": "Sea of Marmara",
     "coastalSegments": 54,
     "maxShoreShiftDegrees": 0.028855575824831448
+  },
+  {
+    "name": "Gulf of Khambhat",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Kutch",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
   },
   {
     "name": "Palk Strait",
