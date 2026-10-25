@@ -77,3 +77,16 @@ Sea of Azov and Kerch Strait are direct siblings under Black Sea. Kerch owns
 its complete strait footprint; that same footprint is subtracted from Azov.
 Their click surfaces and selection highlights do not overlap, and the Black Sea
 selection includes both.
+
+## Palk and Türkmenbaşy shoreline corrections
+
+Palk Strait uses the conventional combined Palk Strait/Palk Bay cartographic
+footprint, bounded by Point Calimere–Point Pedro and Adam’s Bridge, following
+[NOAA’s definition](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/118).
+The oversized offshore box is removed; the same object remains under Bay of Bengal.
+
+Türkmenbaşy Gulf closes between the mapped spit tips at its entrance, rather
+than the previous offshore zigzag. Only the connected inner bay is retained;
+open Caspian water outside the northern spit is excluded. The gulf remains under
+Caspian Sea with no ocean outlet. Both shapes are clipped to the detailed land
+outline; island holes are retained. See [Ramsar’s bay description](https://rsis.ramsar.org/ris/1855).

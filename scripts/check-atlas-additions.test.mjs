@@ -46,3 +46,32 @@ test('Seine is in the catalog and flows toward its Channel mouth',async()=>{
  assert.equal(orientRiverParts({type:'FeatureCollection',features:rivers},()=>1000).length,0);
  const row=read('public/geo/catalog.json').sections.find(s=>s.id==='rivers').rows.find(r=>r.name==='Seine');assert.equal(row.length,777);assert.deepEqual(row.countries,['France']);assert.match(row.mouth,/English Channel/);
 });
+
+test('Palk follows its entrance and Adam’s Bridge limits rather than the old offshore box',()=>{
+ const f=sea('Palk Strait');
+ assert(!contains(f.geometry,80.15,10.45),'old rectangle still extends into open Bay of Bengal');
+ for(const [x,y] of [[79.75,10.05],[79.5,9.7],[79.7,9.3]])assert(contains(f.geometry,x,y),`missing connected Palk water at ${x},${y}`);
+ const cross=(a,b,p)=>(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]);
+ for(const p of f.geometry.coordinates.flat(2)) {
+  assert(cross([79.875,10.291667],[80.25,9.825],p)<=1e-6,'Palk spills past Calimere–Pedro');
+  assert(cross([79.435,9.171],[79.724,9.103],p)>=-1e-6,'Palk spills south of Adam’s Bridge');
+ }
+ assert.equal(f.geometry.coordinates.length,1,'detached ocean fragments remain');
+});
+
+test('Türkmenbaşy Gulf closes at the spit tips and excludes offshore Caspian water',async()=>{
+ const f=sea('Türkmenbaşy Gulf');
+ assert.equal(f.geometry.coordinates.length,1,'detached Caspian fragments remain');
+ assert(!contains(f.geometry,52.9,39.8),'outer Caspian water west of the northern spit remains in the gulf');
+ assert(contains(f.geometry,53.2,39.85));
+ const a=[53.04005,39.742011],b=[53.27589,39.664862];
+ const {coastlineIndex}=await import('./lib/marine-coast.mjs');
+ const land=read('data/raw/countries-10m-raw.geojson');
+ const index=coastlineIndex({features:land.features.filter(f=>f.properties.ADM0_A3==='TKM')});
+ for(const poly of f.geometry.coordinates)for(const ring of poly)for(let i=0;i<ring.length-1;i++) {
+  const p=[(ring[i][0]+ring[i+1][0])/2,(ring[i][1]+ring[i+1][1])/2];
+  if(index.nearest(p,1e-5))continue;
+  const cross=(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]);
+  assert(Math.abs(cross)/Math.hypot(b[0]-a[0],b[1]-a[1])<1e-5,'non-coastal edge away from the actual bay mouth');
+ }
+});

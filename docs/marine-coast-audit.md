@@ -1,10 +1,10 @@
 # Marine coastline audit
 
-All 132 named marine waters were reviewed: 131 coastal names plus the inland Caspian Sea. The source has 133 components because the Great Barrier Reef has two features.
+All 134 named marine waters were reviewed: 133 coastal names plus the inland Caspian Sea. The source has 135 components because the Great Barrier Reef has two features.
 
 The build matches generalized coastal segments to the detailed 10m land geometry, follows the intervening coastline vertices, and subtracts land and islands. Existing curated bays retain their clipped footprints. Offshore limits remain straight; parent selections include their descendants. A shared six-decimal precision grid and polygon normalization remove numerical slivers and collapsed rings.
 
-Matched 29,536 coastal segments. Independent GEOS verification passes for all 133 components and all 137 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
+Matched 29,536 coastal segments. Independent GEOS verification passes for all 135 components and all 139 selection geometries, including parent/child containment. Remaining land overlaps are below 0.00001 square degrees per component (numerical shoreline rounding, not a physical gap allowance).
 
 Caspian uses its inland-lake shoreline and is checked for validity, not subtracted from the country land mask. This audit checks fit to the atlas coastline; it does not establish legal or hydrographic offshore boundaries.
 
@@ -116,6 +116,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | North Sea | 384 | Pass |
 | Norton Sound | 0 | Pass; existing clipped shoreline |
 | Norwegian Sea | 567 | Pass |
+| Palk Strait | 0 | Pass; existing clipped shoreline |
 | Penzhina Bay | 0 | Pass; existing clipped shoreline |
 | Persian Gulf | 269 | Pass |
 | Philippine Sea | 437 | Pass |
@@ -144,6 +145,7 @@ The machine-readable results are in `marine-coast-audit.json` and `marine-coast-
 | The North Western Passages | 2,846 | Pass |
 | Timor Sea | 154 | Pass |
 | Tyrrhenian Sea | 177 | Pass |
+| Türkmenbaşy Gulf | 0 | Pass; existing clipped shoreline |
 | Weddell Sea | 619 | Pass |
 | White Sea | 191 | Pass |
 | Yangtze River | 40 | Pass |

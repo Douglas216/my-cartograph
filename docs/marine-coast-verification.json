@@ -559,6 +559,16 @@
       "landOverlapSquareDegrees": 4.990441338223093e-10
     },
     {
+      "name": "Palk Strait",
+      "valid": true,
+      "landOverlapSquareDegrees": 4.448917964338657e-09
+    },
+    {
+      "name": "T\u00fcrkmenba\u015fy Gulf",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
       "name": "Strait of Gibraltar",
       "valid": true,
       "landOverlapSquareDegrees": 5.312619374778552e-09
@@ -626,7 +636,7 @@
     {
       "name": "Sea of Azov",
       "valid": true,
-      "landOverlapSquareDegrees": 5.074833145431657e-09
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Gulf of Martaban",
@@ -713,7 +723,7 @@
     {
       "name": "Bay of Bengal",
       "valid": true,
-      "parentGapSquareDegrees": 0.0
+      "parentGapSquareDegrees": 1.616599950031408e-16
     },
     {
       "name": "South China Sea",
@@ -1244,6 +1254,16 @@
       "name": "Sea of Marmara",
       "valid": true,
       "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Palk Strait",
+      "valid": true,
+      "parentGapSquareDegrees": 1.7568647130360936e-21
+    },
+    {
+      "name": "T\u00fcrkmenba\u015fy Gulf",
+      "valid": true,
+      "parentGapSquareDegrees": 2.0134371858945946e-16
     },
     {
       "name": "Strait of Gibraltar",

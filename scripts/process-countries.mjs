@@ -134,7 +134,7 @@ const PERSONAL_PEAKS = [
 
 const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
 const FEATURE_ADDITIONS = {
-  'Palk Strait': {countries:['India','Sri Lanka'], story:'A shallow passage between India and Sri Lanka, connecting the Bay of Bengal to Palk Bay; its shoals constrain navigation.', sourceUrl:'https://www.un.org/depts/los/LEGISLATIONANDTREATIES/PDFFILES/publications/E.87.V.12.pdf'},
+  'Palk Strait': {countries:['India','Sri Lanka'], story:'Shallow waters between India and Sri Lanka, mapped together with adjoining Palk Bay; Adam’s Bridge separates them from the Gulf of Mannar and their shoals constrain navigation.', sourceUrl:'https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/118'},
   'Türkmenbaşy Gulf': {countries:['Turkmenistan'], story:'Also called Krasnovodsk Bay, this shallow Caspian embayment supports migratory waterbirds and the port of Türkmenbaşy.', sourceUrl:'https://tehranconvention.org/system/files/tcis/caspian-sea-encyclopediapdf.pdf'},
   "Mount McKinley (Denali)": {
     "countries": [
@@ -1252,14 +1252,15 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
-  // Palk Strait proper, north of Palk Bay, with the eastern opening toward
-  // the Bay of Bengal. Inland edges are removed by the detailed coast.
+  // NOAA/IHO maps Palk Strait with adjoining Palk Bay: close at Point
+  // Calimere–Point Pedro and Adam's Bridge, then keep the connected basin.
   { name: 'Palk Strait', featurecla: 'strait', scalerank: 5, labelAt: [79.75,10.05],
-    ring: [[79.4,9.75],[79.65,10.65],[80.25,10.65],[80.45,9.8],[80.1,9.45],[79.4,9.75]] },
+    ring: [[78.5,8.5],[80.8,8.5],[80.8,10.7],[78.5,10.7],[78.5,8.5]],
+    entrances: [[[79.875,10.291667],[80.25,9.825]],[[79.435,9.171],[79.724,9.103]]], keepLabelComponent: true },
   // Krasnovodsk/Türkmenbaşy Bay: the entrance is between the western spits;
   // generous inland vertices include the eastern Balkan embayment.
   { name: 'Türkmenbaşy Gulf', featurecla: 'gulf', scalerank: 5, labelAt: [53.2,39.85],
-    ring: [[52.8,40.05],[52.85,39.65],[53.3,39.35],[54.1,39.5],[54.2,40.25],[53.25,40.4],[52.8,40.05]] },
+    coastBetween: {country:'TKM', entrance:[[53.04005,39.742011],[53.27589,39.664862]]}, keepLabelComponent: true },
 
   // NOAA/IHO entrance lines: Trafalgar–Spartel (west), Europa–Almina (east).
   // Other vertices lie inland; the detailed coastline cuts the actual shores.
@@ -1453,6 +1454,44 @@ function refitBayCoast(geometry, land, landBb) {
   return {type:'MultiPolygon',coordinates:polygonClipping.difference(envelope,...clippers)};
 }
 
+// For narrow spit entrances, follow the actual containing coastline between
+// the two cape vertices and close only the mouth. This avoids sketch edges
+// crossing the inner branches of the gulf.
+function coastalBayRing(land,{country,entrance:[a,b]}) {
+  const feature=land.features.find(f=>f.properties.ADM0_A3===country);
+  const polygons=feature.geometry.type==='Polygon'?[feature.geometry.coordinates]:feature.geometry.coordinates;
+  const matches=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1])<1e-7;
+  for(const polygon of polygons) {
+    const ring=polygon[0].slice(0,-1), ia=ring.findIndex(p=>matches(p,a)),ib=ring.findIndex(p=>matches(p,b));
+    if(ia<0||ib<0) continue;
+    const forward=(from,to)=>from<to?ring.slice(from,to+1):[...ring.slice(from),...ring.slice(0,to+1)];
+    const length=path=>path.slice(1).reduce((sum,p,i)=>sum+Math.hypot(p[0]-path[i][0],p[1]-path[i][1]),0);
+    const first=forward(ia,ib),second=forward(ib,ia);
+    const coast=length(first)<length(second)?first:second;
+    return [...coast,coast[0]];
+  }
+  throw new Error(`Cannot find bay entrance capes on ${country} coastline`);
+}
+
+// Clip a coastal mask to the waterward side of a real entrance. The broad
+// rectangle is only a construction aid; its edges never become bay boundaries.
+function clipMarineAtEntrance(geometry, [a,b], interior) {
+  const cross=p=>(b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]);
+  const sign=Math.sign(cross(interior));
+  const [w,s,e,n]=plainBbox(geometry);
+  const box=[[w-1,s-1],[e+1,s-1],[e+1,n+1],[w-1,n+1]], ring=[];
+  for(let i=0;i<box.length;i++) {
+    const from=box[i],to=box[(i+1)%box.length],d1=sign*cross(from),d2=sign*cross(to);
+    if(d1>=0) ring.push(from);
+    if((d1>=0)!==(d2>=0)) {
+      const t=d1/(d1-d2);
+      ring.push([from[0]+t*(to[0]-from[0]),from[1]+t*(to[1]-from[1])]);
+    }
+  }
+  ring.push(ring[0]);
+  return {type:'MultiPolygon',coordinates:polygonClipping.intersection(geometry.coordinates,[ring])};
+}
+
 function enrichSeas() {
   const data = readRaw('seas-raw.geojson');
   data.features = data.features.filter((f) => !f.properties.curated && !SEA_ADD.some(s=>s.name===f.properties.name)); // curated masks replace source fragments
@@ -1492,7 +1531,16 @@ function enrichSeas() {
       if (adj) extra.push(adj.geometry);
       else console.warn(`  ${s.name}: openInto "${nm}" not found among seas — seaward edge stays a drawn line`);
     }
-    const geometry = clipRingToWater(s.ring, land, landBb, extra) || { type: 'Polygon', coordinates: [s.ring] };
+    const ring=s.coastBetween?coastalBayRing(land,s.coastBetween):s.ring;
+    let geometry = clipRingToWater(ring, land, landBb, extra);
+    if (!geometry && (s.entrances || s.coastBetween)) throw new Error(`Cannot clip ${s.name} to water`);
+    geometry ||= { type: 'Polygon', coordinates: [ring] };
+    for(const entrance of s.entrances || []) geometry=clipMarineAtEntrance(geometry,entrance,s.labelAt);
+    if(s.keepLabelComponent) {
+      const connected=geometry.coordinates.filter(poly=>pointInGeom(s.labelAt,{type:'Polygon',coordinates:poly}));
+      if(connected.length!==1) throw new Error(`Cannot identify connected water for ${s.name}`);
+      geometry={type:'MultiPolygon',coordinates:connected};
+    }
     const props = { name: s.name, featurecla: s.featurecla, scalerank: s.scalerank, curated: true, ...(FEATURE_ADDITIONS[s.name] ?? {}) };
     if (s.labelAt) { props.label_lon = s.labelAt[0]; props.label_lat = s.labelAt[1]; }
     data.features.push({ type: 'Feature', properties: props, geometry });
