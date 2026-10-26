@@ -134,7 +134,7 @@ Run the regular regression checks with `scripts/check-coast-matching.test.mjs`
 included. The optional independent GEOS audit is
 `python3 scripts/audit-marine-coasts.py` (requires Shapely in the Python environment).
 
-## Marine boundary draft editor
+## Marine boundary editor
 
 Choose **Edit water boundaries** on the map, then a named water body and its
 offshore line. Drag numbered handles, select a handle and **Add midpoint**, or
@@ -143,11 +143,29 @@ Earth 10m coastline. The coastline itself is never editable. Gold shading is
 the draft; the gray outline previews its containing water. Normal feature
 selection is suspended while editing. Undo/redo and Reset shape are available.
 
-**Save draft** stores changes only in this browser. Reopening the same water
-restores its saved draft. **Export drafts** downloads `marine-boundary-edits.json`,
-including valid unsaved changes to the current water. Keep this file as a backup;
-clearing browser storage removes local drafts. Draft previews do not alter the
-published map, its catalog or other visitors' views.
+**Save to my atlas** writes the current water's offshore handles to your signed-in
+account. The normal map applies them immediately and loads them again after a
+refresh or on another device. Existing browser drafts still open in the editor;
+press Save to my atlas to migrate one. No download or separate publication is
+required. To return to the dataset boundary, choose **Reset shape**, then save.
+**Reload saved boundaries** refreshes a water after a conflict with another tab.
+
+The same geometry engine reconstructs both previews and normal-map sources from
+the immutable 10m coastline. Parent selection/highlight geometry is recomputed;
+labels that fall outside an adjusted shape are moved inside the water. Stale
+baseline fingerprints are surfaced for review rather than silently applied.
+
+Hosted storage uses a D1 `DB` binding and the schema migration in `drizzle/`.
+The ESM Worker serves an authenticated `/api/marine-boundaries` endpoint alongside
+the existing Vite SPA assets. Rows are keyed by Sites' stable authenticated user
+ID and water name. Conditional revisions prevent stale-tab overwrites; saves are
+same-origin JSON requests and return errors without discarding the current edit.
+Deployment preserves the existing site audience. Ordinary Vite dev/preview does
+not emulate account storage; API/storage regression tests use SQLite locally.
+
+Export remains an optional backup/manual integration path. For that workflow,
+browser storage holds only legacy drafts, so clearing it does not remove account
+saves. To incorporate an export into the shared build-time dataset:
 
 To apply an exported file:
 

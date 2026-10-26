@@ -3,6 +3,8 @@ import maplibregl, { type GeoJSONSource } from 'maplibre-gl';
 import { mapRegistry, setFeatureHighlight, setHighlightCodes } from '../map/mapRegistry';
 import { whenMapStyleReady } from '../map/whenMapStyleReady';
 import { marineEditorState } from '../map/marineEditorState';
+import { requestMarine } from '../map/marineClient';
+import { useAtlasStore } from '../store/atlasStore';
 import { useMapStore } from '../store/mapStore';
 import './MarineBoundaryEditor.css';
 type Point=[number,number];
@@ -18,19 +20,21 @@ export default function MarineBoundaryEditor(){
   const [boundaryId,setBoundaryId]=useState(''),[selected,setSelected]=useState<number|null>(null);
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[ready,setReady]=useState(false);
   const [drafts,setDrafts]=useState(readDrafts);
-  const worker=useRef<Worker|null>(null),sequence=useRef(0),pending=useRef(new Map<number,{resolve:(v:any)=>void;reject:(e:Error)=>void}>());
+  const atlas=useAtlasStore();
+  const [saving,setSaving]=useState(false);
+  const accountRevision=useRef(0);
+  const preferCloud=useRef(false);
+  const [reloadTick,setReloadTick]=useState(0);
   const revision=useRef(0),markers=useRef<maplibregl.Marker[]>([]),saved=useRef('');
   const selectedPoint=useMapStore(s=>s.selectedPoint);
-  const request=(data:object)=>new Promise<any>((resolve,reject)=>{if(!worker.current){reject(Error('Open the editor before requesting a preview.'));return;}const id=++sequence.current;pending.current.set(id,{resolve,reject});worker.current?.postMessage({...data,id});});
+  const request=requestMarine;
   const change=(next:Edits)=>{setHistory(h=>[...h,edits]);setFuture([]);setEdits(next);setNotice('');};
   const isDirty=JSON.stringify(edits)!==saved.current;
+  useEffect(()=>{if(open)void atlas.load();},[open,atlas.load]);
   useEffect(()=>{
     if(!open)return;
     marineEditorState.active=true;
     useMapStore.getState().selectPoint(null);setFeatureHighlight(null);setHighlightCodes([]);
-    const w=new Worker(new URL('../map/marineEditor.worker.ts',import.meta.url),{type:'module'});worker.current=w;
-    w.onmessage=({data})=>{const task=pending.current.get(data.id);if(!task)return;pending.current.delete(data.id);data.error?task.reject(Error(data.error)):task.resolve(data);};
-    w.onerror=()=>{for(const task of pending.current.values())task.reject(Error('The preview worker stopped. Close and reopen the editor.'));pending.current.clear();};
     let live=true;
     setBusy(true);setError('');
     request({type:'list'}).then(r=>{if(!live)return;setNames(r.features);setName(current=>r.features.includes(current)?current:r.features.includes(selectedPoint?.name)?selectedPoint!.name:r.features[0]||'');}).catch(e=>{if(live)setError(e.message);}).finally(()=>{if(live)setBusy(false);});
@@ -61,8 +65,7 @@ export default function MarineBoundaryEditor(){
     const unload=(event:BeforeUnloadEvent)=>{if(JSON.stringify(editsRef.current)!==saved.current){event.preventDefault();}};
     window.addEventListener('beforeunload',unload);
     return ()=>{
-      live=false;revision.current++;marineEditorState.active=false;setReady(false);w.terminate();worker.current=null;
-      for(const task of pending.current.values())task.reject(Error('Editor closed.'));pending.current.clear();
+      live=false;revision.current++;marineEditorState.active=false;setReady(false);
       stopWaiting();markers.current.forEach(m=>m.remove());
       for(const id of ['marine-draft-line','marine-draft-outline','marine-draft-fill','marine-draft-parent'])if(map?.getLayer(id))map.removeLayer(id);
       for(const id of ['marine-draft-line','marine-draft','marine-draft-parent'])if(map?.getSource(id))map.removeSource(id);
@@ -75,19 +78,26 @@ export default function MarineBoundaryEditor(){
   },[open]);
   const editsRef=useRef(edits);editsRef.current=edits;
   useEffect(()=>{
-    if(!open||!name||!worker.current)return;
+    if(!open||!name)return;
     let canceled=false;revision.current++;setDefinition(null);setBusy(true);setError('');setNotice('');
-    request({type:'select',name}).then(r=>{
+    (async()=>{await useAtlasStore.getState().load();return request({type:'select',name});})().then(r=>{
       if(canceled)return;
       const def=r.definition as Definition,draft=readDrafts().find(d=>d.name===name);
-      const next=draft?.fingerprint===def.fingerprint?draft.edits:{};
+      const cloud=useAtlasStore.getState().features.find(f=>f.name===name);
+      accountRevision.current=cloud?.revision||0;
+      const localValid=!preferCloud.current&&draft?.fingerprint===def.fingerprint;preferCloud.current=false;
+      const cloudEdits=cloud?.fingerprint===def.fingerprint?cloud.edits:{};
+      const next=localValid?draft!.edits:cloudEdits;
+      saved.current=cloud&&cloud.fingerprint!==def.fingerprint?'__older_baseline__':JSON.stringify(cloud?cloudEdits:{});
+      if(cloud&&cloud.fingerprint!==def.fingerprint)setNotice('The saved boundary uses older atlas data. Review this shape and save it again.');
+      if(localValid&&!cloud)setNotice('Your browser draft is ready. Save it to your atlas to keep it across devices.');
       if(draft&&draft.fingerprint!==def.fingerprint)setNotice('A saved draft uses an older map. Export it for review; this view starts from the current boundary.');
-      setDefinition(def);setEdits(next);saved.current=JSON.stringify(next);setHistory([]);setFuture([]);setBoundaryId(def.boundaries[0]?.id||'');setSelected(null);
+      setDefinition(def);setEdits(next);setHistory([]);setFuture([]);setBoundaryId(def.boundaries[0]?.id||'');setSelected(null);
       mapRegistry.map?.fitBounds([[r.bbox[0],r.bbox[1]],[r.bbox[2],r.bbox[3]]],{padding:{top:100,bottom:80,left:Math.min(430,window.innerWidth*.4),right:80},maxZoom:9,duration:700});
     }).catch(e=>{if(!canceled)setError(e.message);}).finally(()=>{if(!canceled)setBusy(false);});
     return ()=>{canceled=true;};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[name,open]);
+  },[name,open,reloadTick]);
   useEffect(()=>{
     if(!open||!ready||!definition)return;
     const current=++revision.current;setBusy(true);setError('');
@@ -114,7 +124,7 @@ export default function MarineBoundaryEditor(){
       const button=document.createElement('button');button.className=`marine-handle ${selected===i?'selected':''}`;button.textContent=String(i+1);
       button.title=i===0||i===points.length-1?'Drag entrance endpoint (coast stays locked)':'Drag offshore handle';button.setAttribute('aria-label',button.title+` ${i+1}`);
       button.onclick=e=>{e.stopPropagation();setSelected(i);};
-      const marker=new maplibregl.Marker({element:button,draggable:true}).setLngLat(point).addTo(map);
+      const marker=new maplibregl.Marker({element:button,draggable:!saving}).setLngLat(point).addTo(map);
       let inFlight=false,lastPreview=0,dragRevision=0;
       marker.on('dragstart',()=>{setSelected(i);dragRevision=++revision.current;});
       marker.on('drag',()=>{const p=marker.getLngLat();const next=points.map((v,j)=>i===j?[p.lng,p.lat] as Point:v);(map.getSource('marine-draft-line') as GeoJSONSource)?.setData({type:'Feature',properties:{},geometry:{type:'LineString',coordinates:next}});
@@ -131,10 +141,24 @@ export default function MarineBoundaryEditor(){
     });
     return ()=>{markers.current.forEach(m=>m.remove());markers.current=[];};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[open,ready,definition,boundaryId,edits]);
+  },[open,ready,definition,boundaryId,edits,saving]);
   useEffect(()=>{markers.current.forEach((marker,i)=>marker.getElement().classList.toggle('selected',i===selected));},[selected]);
-  const guard=()=>!isDirty||window.confirm('Discard unsaved handle changes? Saved drafts will remain.');
-  const save=()=>{try{const next=[...drafts.filter(d=>d.name!==name),{name,fingerprint:definition!.fingerprint,edits}];localStorage.setItem(KEY,JSON.stringify(next));setDrafts(next);saved.current=JSON.stringify(edits);setNotice('Draft saved in this browser. The published atlas is unchanged.');}catch{setError('Browser storage is unavailable or full. Export your draft instead.');}};
+  const guard=()=>!isDirty||window.confirm('Leave without saving these changes to your atlas?');
+  const save=async()=>{
+    if(!definition||saving)return;
+    setSaving(true);setError('');
+    const currentDefinition=definition,currentEdits=edits;
+    try{
+      if(!useAtlasStore.getState().loaded){await useAtlasStore.getState().load();if(!useAtlasStore.getState().loaded)throw Error(useAtlasStore.getState().error||'Could not load your atlas. Please retry.');}
+      // Revalidate and snap in the same geometry engine used by the normal map.
+      const preview=await request({type:'preview',name:currentDefinition.name,edits:currentEdits});
+      const stored=await useAtlasStore.getState().save({name:currentDefinition.name,fingerprint:currentDefinition.fingerprint,edits:preview.edits,revision:accountRevision.current});
+      accountRevision.current=stored.revision;saved.current=JSON.stringify(stored.edits);setEdits(stored.edits);
+      try{const next=readDrafts().filter(d=>d.name!==currentDefinition.name);localStorage.setItem(KEY,JSON.stringify(next));setDrafts(next);}catch{/* Account save succeeded even if local storage is unavailable. */}
+      setNotice('Saved to your atlas. Close the editor to see this boundary on the map.');
+    }catch(e){setError(e instanceof Error?e.message:'Could not save. Your current handles are still here.');}
+    finally{setSaving(false);}
+  };
   const exportDrafts=()=>{
     const staleCurrent=drafts.find(d=>d.name===name&&d.fingerprint!==definition?.fingerprint);
     const features=definition&&!error&&!busy&&(!staleCurrent||Object.keys(edits).length>0)?[...drafts.filter(d=>d.name!==name),{name,fingerprint:definition.fingerprint,edits}]:drafts;
@@ -144,19 +168,20 @@ export default function MarineBoundaryEditor(){
   return <>
     {!open&&<button className="marine-editor-open" onClick={()=>setOpen(true)}>✎ Edit water boundaries</button>}
     {open&&<section className="marine-editor" aria-label="Marine boundary editor">
-      <header><div><span className="marine-eyebrow">MY ATLAS · DRAFT STUDIO</span><h2>Edit water boundaries</h2></div><button aria-label="Close boundary editor" onClick={()=>{if(guard())setOpen(false);}}>×</button></header>
+      <header><div><span className="marine-eyebrow">MY ATLAS · BOUNDARY EDITOR</span><h2>Edit water boundaries</h2></div><button disabled={saving} aria-label="Close boundary editor" onClick={()=>{if(!saving&&guard())setOpen(false);}}>×</button></header>
       <p>Adjust entrances and offshore limits. Dataset coastlines stay locked.</p>
-      <label>Water body<select value={name} disabled={!names.length} onChange={e=>{if(guard())setName(e.target.value);}}>{names.map(n=><option key={n}>{n}</option>)}</select></label>
+      <label>Water body<select value={name} disabled={saving||!names.length} onChange={e=>{if(guard())setName(e.target.value);}}>{names.map(n=><option key={n}>{n}</option>)}</select></label>
       {definition&&<>
-        <label>Offshore line<select value={boundaryId} onChange={e=>{setBoundaryId(e.target.value);setSelected(null);}}>{definition.boundaries.map((b,i)=><option key={b.id} value={b.id}>Line {i+1} · {b.handles.length} handles</option>)}</select></label>
+        <label>Offshore line<select disabled={saving} value={boundaryId} onChange={e=>{setBoundaryId(e.target.value);setSelected(null);}}>{definition.boundaries.map((b,i)=><option key={b.id} value={b.id}>Line {i+1} · {b.handles.length} handles</option>)}</select></label>
         <p className="marine-help">Drag the gold numbered circles at the ends of the dashed line—not the line itself. Endpoints on land snap to the coast when released. Select a handle to insert a midpoint after it.</p>
-        <div className="marine-actions"><button disabled={!history.length||busy} onClick={()=>{setFuture(f=>[edits,...f]);setEdits(history.at(-1)!);setHistory(h=>h.slice(0,-1));}}>Undo</button><button disabled={!future.length||busy} onClick={()=>{setHistory(h=>[...h,edits]);setEdits(future[0]);setFuture(f=>f.slice(1));}}>Redo</button><button disabled={busy||!Object.keys(edits).length} onClick={()=>change({})}>Reset shape</button></div>
-        <div className="marine-actions"><button disabled={selected===null||selected>=points.length-1||points.length>=100||busy} onClick={()=>{const i=selected!,a=points[i],b=points[i+1];change({...edits,[boundaryId]:[...points.slice(0,i+1),[(a[0]+b[0])/2,(a[1]+b[1])/2],...points.slice(i+1)]});}}>Add midpoint</button><button disabled={selected===null||selected===0||selected===points.length-1||busy} onClick={()=>{change({...edits,[boundaryId]:points.filter((_,i)=>i!==selected)});setSelected(null);}}>Remove handle</button></div>
+        <div className="marine-actions"><button disabled={!history.length||busy||saving} onClick={()=>{setFuture(f=>[edits,...f]);setEdits(history.at(-1)!);setHistory(h=>h.slice(0,-1));}}>Undo</button><button disabled={!future.length||busy||saving} onClick={()=>{setHistory(h=>[...h,edits]);setEdits(future[0]);setFuture(f=>f.slice(1));}}>Redo</button><button disabled={saving||busy||!Object.keys(edits).length} onClick={()=>change({})}>Reset shape</button></div>
+        <div className="marine-actions"><button disabled={selected===null||selected>=points.length-1||points.length>=100||busy||saving} onClick={()=>{const i=selected!,a=points[i],b=points[i+1];change({...edits,[boundaryId]:[...points.slice(0,i+1),[(a[0]+b[0])/2,(a[1]+b[1])/2],...points.slice(i+1)]});}}>Add midpoint</button><button disabled={selected===null||selected===0||selected===points.length-1||busy||saving} onClick={()=>{change({...edits,[boundaryId]:points.filter((_,i)=>i!==selected)});setSelected(null);}}>Remove handle</button></div>
       </>}
-      <div role="status" className={error?'marine-error':'marine-status'}>{error|| (!ready?'Preparing map controls…':busy?'Preparing coastline-fitted preview…':notice||'Gold: edited water · Gray: containing water outline')}</div>
-      <footer><button className="marine-primary" disabled={!definition||busy||!!error||!isDirty} onClick={save}>Save draft</button><button disabled={!ready||busy||(!drafts.length&&!definition)} onClick={exportDrafts}>Export drafts{drafts.length?` (${drafts.length})`:''}</button></footer>
-      {drafts.some(d=>d.name===name)&&<button className="marine-delete" onClick={()=>{if(!window.confirm('Delete the saved draft for this water body and reset its handles?'))return;try{const next=drafts.filter(d=>d.name!==name);localStorage.setItem(KEY,JSON.stringify(next));setDrafts(next);setEdits({});setHistory([]);setFuture([]);saved.current='{}';setNotice('Saved draft removed.');}catch{setError('Could not update browser storage.');}}}>Delete this saved draft</button>}
-      <p className="marine-help">Drafts live in this browser. Export backs them up and lets you apply them to a future atlas publication.</p>
+      <div role="status" className={error?'marine-error':'marine-status'}>{error||atlas.error|| (!ready?'Preparing map controls…':busy?'Preparing coastline-fitted preview…':notice||'Gold: edited water · Gray: containing water outline')}</div>
+      <footer><button className="marine-primary" disabled={!definition||busy||saving||!ready||!isDirty} onClick={()=>void save()}>{saving?'Saving…':'Save to my atlas'}</button><button disabled={saving||!ready||busy||(!drafts.length&&!definition)} onClick={exportDrafts}>Export drafts{drafts.length?` (${drafts.length})`:''}</button></footer>
+      <button className="marine-delete" disabled={saving||busy} onClick={()=>{if(guard()){preferCloud.current=true;setReloadTick(n=>n+1);}}}>Reload saved boundaries</button>
+      {drafts.some(d=>d.name===name)&&<button disabled={saving} className="marine-delete" onClick={()=>{if(!window.confirm('Delete this browser draft and return to your saved atlas boundary?'))return;try{const next=drafts.filter(d=>d.name!==name);localStorage.setItem(KEY,JSON.stringify(next));const cloud=useAtlasStore.getState().features.find(f=>f.name===name);const accountEdits=cloud&&cloud.fingerprint===definition?.fingerprint?cloud.edits:{};setDrafts(next);setEdits(accountEdits);setHistory([]);setFuture([]);saved.current=JSON.stringify(accountEdits);setNotice('Browser draft removed. Your saved atlas boundary is unchanged.');}catch{setError('Could not update browser storage.');}}}>Delete this saved draft</button>}
+      <p className="marine-help">Save to your atlas to keep this boundary across devices. To restore the dataset boundary, choose Reset shape, then Save to my atlas. Export is optional.</p>
     </section>}
   </>;
 }

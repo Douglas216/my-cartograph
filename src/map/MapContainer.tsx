@@ -11,6 +11,7 @@ import { cityLayers } from './layers/cityLayers';
 import { setupInteractions } from './interactions';
 import { useMapStore } from '../store/mapStore';
 import { mapRegistry } from './mapRegistry';
+import AtlasBoundarySync from './AtlasBoundarySync';
 import { THEMES } from './themes';
 
 function makeStarImage(size: number): ImageData {
@@ -193,5 +194,5 @@ export default function MapContainer() {
     };
   }, [selectPoint, setZoom, setHoveredFeatureId, setFocusedCountry]);
 
-  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />;
+  return <><div ref={containerRef} style={{ width: '100%', height: '100%' }} /><AtlasBoundarySync /></>;
 }
