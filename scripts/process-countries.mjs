@@ -630,7 +630,7 @@ function processCountryTier(rawName, outName) {
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
         // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
-        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR'].includes(adm0),
+        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU'].includes(adm0),
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,
@@ -1605,6 +1605,16 @@ function enrichSeas() {
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
   }
+  // Razim–Sinoe lagoon coast: the generalized marine outline skips water
+  // that the detailed country source exposes. Restore the coastal envelope,
+  // using only original land to define the shoreline; no shore is redrawn.
+  const blackSea=data.features.find(f=>f.properties.name==='Black Sea');
+  const razimWater=clipRingToWater([[28.3,44.2],[30.2,44.2],[30.2,45.4],[28.3,45.4],[28.3,44.2]],land,landBb);
+  if(!blackSea||!razimWater)throw Error('Cannot repair Romanian Black Sea coastline');
+  const joined=polygonClipping.union(blackSea.geometry.coordinates,razimWater.coordinates);
+  // Keep only water connected to the source sea, excluding inland lake holes.
+  const connected=joined.filter(poly=>polygonClipping.intersection([poly],blackSea.geometry.coordinates).length);
+  blackSea.geometry={type:'MultiPolygon',coordinates:connected};
   // Shared entrance seams: extend the neighbouring basin across the legacy
   // generalized edge, then cut it with the actual fitted strait polygon.
   // The mask sides lie inland or inside existing basin water, not offshore.

@@ -258,3 +258,13 @@ test('Turkish straits and adjacent basins cover the entrance water without overl
     assert(area(clipping.difference(water,union))<1e-8,`${basin} entrance has uncovered coastal water`);
   }
 });
+
+test('Romanian Black Sea follows the detailed Razim coast without offshore shortcut lines',()=>{
+ const sea=read('seas.geojson').features.find(f=>f.properties.name==='Black Sea').geometry.coordinates;
+ const sample=(x,y)=>[[[[x-.00005,y-.00005],[x+.00005,y-.00005],[x+.00005,y+.00005],[x-.00005,y+.00005],[x-.00005,y-.00005]]]];
+ for(const [x,y] of [[29.623844,44.8707545],[29.663179,45.186713]]) {
+  assert(area(clipping.difference(sample(x,y),sea))<1e-12,`coastal gap at ${x},${y}`);
+ }
+ const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features.find(f=>f.properties.ADM0_A3==='ROU');
+ assert(area(clipping.intersection(sea,land.geometry.coordinates))<1e-6,'repair overlaps Romanian land');
+});

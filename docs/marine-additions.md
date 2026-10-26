@@ -142,3 +142,15 @@ References (also linked per feature in the catalog):
 - [Ramsar: Karkinitska and Dzharylgatska Bays](https://rsis.ramsar.org/ris/114)
 - [Encyclopedia of Modern Ukraine: Kalamita Bay](https://esu.com.ua/article-10364)
 - [Taganrog Bay](https://en.wikipedia.org/wiki/Taganrog_Bay)
+
+## Romanian Razim coast alignment
+
+Romania now uses the detailed country source from the marine-boundary zoom,
+with fill, border and selection switching together. The Black Sea's legacy
+marine outline also left offshore shortcut edges and unfilled coastal wedges
+around the Razim–Sinoe lagoon coast and Danube delta. A local water envelope is
+clipped against the original 10m land and dissolved into the Black Sea; only
+components connected to its existing water are retained. Detached inland lake
+holes are excluded. No coastline vertices are redrawn. The normal marine
+hierarchy, selection geometry and editor baseline regenerate from this repair.
+Saved edits to other bays retain their existing fingerprints.
