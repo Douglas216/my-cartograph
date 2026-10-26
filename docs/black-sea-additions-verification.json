@@ -1,0 +1,119 @@
+{
+  "method": "Independent Shapely/GEOS audit against cached Natural Earth 10m land; bbox west/south/east/north; atlas offshore limits are generalized",
+  "features": [
+    {
+      "name": "Taman Bay",
+      "parent": "Kerch Strait",
+      "bbox": [
+        36.594737,
+        45.202826,
+        36.970388,
+        45.387885
+      ],
+      "vertices": 45,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Dnieper-Bug Estuary",
+      "parent": "Black Sea",
+      "bbox": [
+        31.522459,
+        46.464342,
+        32.645518,
+        46.99
+      ],
+      "vertices": 107,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 2.7821926800891703e-09
+    },
+    {
+      "name": "Burgas Bay",
+      "parent": "Black Sea",
+      "bbox": [
+        27.452891,
+        42.413886,
+        27.892263,
+        42.716051
+      ],
+      "vertices": 61,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Odessa",
+      "parent": "Black Sea",
+      "bbox": [
+        30.754893,
+        46.39643,
+        31.054535,
+        46.612738
+      ],
+      "vertices": 28,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Karkinit Bay",
+      "parent": "Black Sea",
+      "bbox": [
+        31.53,
+        45.34,
+        33.777029,
+        46.467839
+      ],
+      "vertices": 232,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 1.808996678816557e-10
+    },
+    {
+      "name": "Kalamita Bay",
+      "parent": "Black Sea",
+      "bbox": [
+        33.279985,
+        44.840354,
+        33.619884,
+        45.189765
+      ],
+      "vertices": 24,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 5.836319265883494e-10
+    },
+    {
+      "name": "Taganrog Bay",
+      "parent": "Sea of Azov",
+      "bbox": [
+        37.335216,
+        46.615546,
+        39.388682,
+        47.287828
+      ],
+      "vertices": 195,
+      "valid": true,
+      "labelInside": true,
+      "landOverlapSquareDegrees": 0.0
+    }
+  ],
+  "entrances": [
+    {
+      "basin": "Aegean Sea",
+      "strait": "Dardanelles",
+      "distanceDegrees": 0.0,
+      "overlapSquareDegrees": 0.0,
+      "uncoveredWaterSquareDegrees": 0.0
+    },
+    {
+      "basin": "Sea of Marmara",
+      "strait": "Bosporus",
+      "distanceDegrees": 0.0,
+      "overlapSquareDegrees": 0.0,
+      "uncoveredWaterSquareDegrees": 0.0
+    }
+  ]
+}

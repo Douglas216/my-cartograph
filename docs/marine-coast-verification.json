@@ -461,7 +461,7 @@
     {
       "name": "Aegean Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 4.6596659026209784e-08
+      "landOverlapSquareDegrees": 5.20110690253552e-08
     },
     {
       "name": "Gulf of Mannar",
@@ -551,7 +551,42 @@
     {
       "name": "Sea of Marmara",
       "valid": true,
-      "landOverlapSquareDegrees": 4.990441338223093e-10
+      "landOverlapSquareDegrees": 9.319714688755224e-10
+    },
+    {
+      "name": "Taman Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Dnieper-Bug Estuary",
+      "valid": true,
+      "landOverlapSquareDegrees": 2.7821926800891703e-09
+    },
+    {
+      "name": "Burgas Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Odessa",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Karkinit Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.808996678816557e-10
+    },
+    {
+      "name": "Kalamita Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.836319265883494e-10
+    },
+    {
+      "name": "Taganrog Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
     },
     {
       "name": "Gulf of Khambhat",
@@ -1252,6 +1287,41 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Taman Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Dnieper-Bug Estuary",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Burgas Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Odessa",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Karkinit Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 1.7707510252398118e-22
+    },
+    {
+      "name": "Kalamita Bay",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Taganrog Bay",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

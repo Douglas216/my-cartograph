@@ -29,7 +29,7 @@ const PERSONAL_MARINE_EXCLUDED = new Set([
   'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion',
 ]);
 const MARINE_OCEAN_GROUPS = {
-    'Atlantic Ocean': ['Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Atlantic Ocean': ['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay', 'Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
     'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
     'Indian Ocean': ['Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Khambhat', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
@@ -43,6 +43,9 @@ const MARINE_OCEAN_GROUPS = {
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Taman Bay':'Kerch Strait', 'Taganrog Bay':'Sea of Azov',
+  'Dnieper-Bug Estuary':'Black Sea', 'Burgas Bay':'Black Sea',
+  'Gulf of Odessa':'Black Sea', 'Karkinit Bay':'Black Sea', 'Kalamita Bay':'Black Sea',
   'Gulf of Khambhat': 'Arabian Sea', 'Gulf of Kutch': 'Arabian Sea',
   'Palk Strait': 'Bay of Bengal', 'Türkmenbaşy Gulf': 'Caspian Sea',
   // Owner's basin-selection structure; the Turkish straits remain siblings.
@@ -135,6 +138,14 @@ const PERSONAL_PEAKS = [
 
 const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
 const FEATURE_ADDITIONS = {
+  "Taman Bay": {"countries": ["Russia"], "story": "A shallow, island-studded embayment between the Chushka and Tuzla spits on the eastern side of Kerch Strait.", "sourceUrl": "https://www.cbd.int/doc/meetings/mar/ebsaws-2017-01/templates/ebsaws-2017-01-template-03-TamanBay-en.pdf"},
+  "Dnieper-Bug Estuary": {"countries": ["Ukraine"], "story": "The Dnieper and Southern Bug meet in a two-armed liman, linked to the Black Sea through the narrow entrance beside Kinburn Spit.", "sourceUrl": "https://discover.ua/en/en/locations/dniprovsko-buzkij-liman"},
+  "Burgas Bay": {"countries": ["Bulgaria"], "story": "A sheltered western Black Sea embayment on which Burgas developed as a major Bulgarian port.", "sourceUrl": "https://deims.org/locations/929232ff-72b4-4671-8649-79950504f33d"},
+  "Gulf of Odessa": {"countries": ["Ukraine"], "story": "Also called the Gulf of Odesa, this coastal indentation frames the city and its Black Sea port.", "sourceUrl": "https://en.wikipedia.org/wiki/Gulf_of_Odesa"},
+  "Karkinit Bay": {"countries": ["Ukraine"], "story": "Between mainland Ukraine and northwestern Crimea, the bay includes internationally recognized coastal wetlands. Crimea is internationally recognized as Ukrainian territory and is controlled by Russia.", "sourceUrl": "https://rsis.ramsar.org/ris/114"},
+  "Kalamita Bay": {"countries": ["Ukraine"], "story": "A broad western Crimean bay south of Yevpatoria, bounded by the Yevpatoria and Lukull capes. Crimea is internationally recognized as Ukrainian territory and is controlled by Russia.", "sourceUrl": "https://esu.com.ua/article-10364"},
+  "Taganrog Bay": {"countries": ["Ukraine", "Russia"], "story": "The shallow northeastern arm of the Sea of Azov receives the Don River and forms the maritime approach to Taganrog and the lower Don.", "sourceUrl": "https://en.wikipedia.org/wiki/Taganrog_Bay"},
+
   'Palk Strait': {countries:['India','Sri Lanka'], story:'Shallow waters between India and Sri Lanka, mapped together with adjoining Palk Bay; Adam’s Bridge separates them from the Gulf of Mannar and their shoals constrain navigation.', sourceUrl:'https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/118'},
   'Türkmenbaşy Gulf': {countries:['Turkmenistan'], story:'Also called Krasnovodsk Bay, this shallow Caspian embayment supports migratory waterbirds and the port of Türkmenbaşy.', sourceUrl:'https://tehranconvention.org/system/files/tcis/caspian-sea-encyclopediapdf.pdf'},
   "Mount McKinley (Denali)": {
@@ -618,7 +629,7 @@ function processCountryTier(rawName, outName) {
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
         // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
-        COAST_DETAIL: adm0 === 'IND',
+        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR'].includes(adm0),
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,
@@ -1255,6 +1266,22 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+
+  {name:'Taman Bay', featurecla:'bay', scalerank:6, labelAt:[36.78,45.27],
+    coastBetween:{country:'RUS',entrance:[[36.687999,45.331488],[36.594737,45.20482]]}, keepLabelComponent:true},
+  {name:'Dnieper-Bug Estuary', featurecla:'estuary', scalerank:5, labelAt:[31.99,46.64],
+    ring:[[31.53,46.61],[31.51,46.53],[32.4,46.3],[32.8,46.7],[32.5,47.0],[32.2,46.99],[31.8,46.99],[31.53,46.61]], keepLabelComponent:true},
+  {name:'Burgas Bay', featurecla:'bay', scalerank:6, labelAt:[27.6,42.5],
+    coastBetween:{country:'BGR',entrance:[[27.892263,42.710517],[27.699067,42.413886]]}, keepLabelComponent:true},
+  {name:'Gulf of Odessa', featurecla:'gulf', scalerank:6, labelAt:[30.83,46.47],
+    coastBetween:{country:'UKR',entrance:[[30.772472,46.39643],[31.054535,46.612738]]}, keepLabelComponent:true},
+  {name:'Karkinit Bay', featurecla:'bay', scalerank:5, labelAt:[32.8,45.85],
+    ring:[[31.53,46.23],[32.49,45.34],[32.6,45.42],[33.2,45.5],[34.1,45.7],[34.1,46.6],[32.2,46.7],[31.53,46.23]], keepLabelComponent:true},
+  {name:'Kalamita Bay', featurecla:'bay', scalerank:6, labelAt:[33.42,45.0],
+    ring:[[33.28,45.16],[33.55,44.84],[33.9,44.8],[33.9,45.4],[33.2,45.4],[33.28,45.16]], keepLabelComponent:true},
+  {name:'Taganrog Bay', featurecla:'bay', scalerank:5, labelAt:[38.5,46.9],
+    ring:[[37.335216,46.882473],[37.737559,46.676337],[38.2,46.3],[39.6,46.6],[39.8,47.5],[38.4,47.6],[37.1,47.1],[37.335216,46.882473]], keepLabelComponent:true},
+
   // Gujarat gulfs: detailed Indian coastline, with only the seaward mouth closed.
   // Khambhat uses the Gopnath–Daman entrance convention (NCCR gulf profile).
   { name: 'Gulf of Khambhat', featurecla: 'gulf', scalerank: 5, labelAt: [72.4,21.6],
@@ -1576,6 +1603,20 @@ function enrichSeas() {
     const coordinates=polygonClipping.union(roundMarineCoordinates(f.geometry.coordinates));
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
+  }
+  // Shared entrance seams: extend the neighbouring basin across the legacy
+  // generalized edge, then cut it with the actual fitted strait polygon.
+  // The mask sides lie inland or inside existing basin water, not offshore.
+  for(const [basinName,straitName,ring] of [
+    ['Aegean Sea','Dardanelles',[[26.0,39.8],[26.5,39.8],[26.5,40.0],[26.1,40.12],[26.0,39.8]]],
+    ['Sea of Marmara','Bosporus',[[28.85,40.92],[29.15,40.92],[29.15,41.04],[28.85,41.04],[28.85,40.92]]],
+  ]) {
+    const basin=data.features.find(f=>f.properties.name===basinName);
+    const strait=data.features.find(f=>f.properties.name===straitName);
+    const patch=clipRingToWater(ring,land,landBb);
+    if(!patch) throw new Error(`Empty entrance repair: ${straitName}`);
+    basin.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(
+      polygonClipping.union(basin.geometry.coordinates,patch.coordinates),strait.geometry.coordinates)};
   }
   // Repair the containing basin too: its old Gujarat coast/mouth approximation
   // leaves a wedge outside Khambhat and a second entrance beside Kutch.

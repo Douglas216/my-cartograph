@@ -19,7 +19,7 @@ test('all eight unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 135);
+  assert.equal(seaRows.length, 142);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay','Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -224,5 +224,37 @@ test('Arabian Sea fills Gujarat entrance gaps and shares both gulf mouths', () =
   }
   for(const name of ['Gulf of Kutch','Gulf of Khambhat']) {
     assert(area(clipping.intersection(arabian.geometry.coordinates,selections.get(name).geometry.coordinates))<1e-10,`${name} should own its water up to the common entrance`);
+  }
+});
+
+test('Black Sea additions have one label and catalog row, stories, and complete parent selection', () => {
+  const labels=read('sea-labels.geojson').features;
+  for(const [name,parent] of [
+    ['Taman Bay','Kerch Strait'],['Taganrog Bay','Sea of Azov'],
+    ...['Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay'].map(n=>[n,'Black Sea']),
+  ]) {
+    assert.equal(byName.get(name)?.parent,parent,name);
+    assert.equal(labels.filter(f=>f.properties.name===name).length,1,name);
+    const rows=seaRows.filter(r=>r.name===name);
+    assert.equal(rows.length,1,name);
+    assert.equal(rows[0].parent,parent);
+    assert(rows[0].story && rows[0].sourceUrl,name);
+    assert(area(clipping.difference(selections.get(name).geometry.coordinates,selections.get(parent).geometry.coordinates))<1e-8,name);
+  }
+});
+
+test('Turkish straits and adjacent basins cover the entrance water without overlapping hit targets', () => {
+  const features=read('seas.geojson').features;
+  const geometry=n=>features.find(f=>f.properties.name===n).geometry.coordinates;
+  const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features
+    .filter(f=>['TUR','GRC'].includes(f.properties.ADM0_A3)).map(f=>f.geometry.coordinates);
+  for(const [basin,strait,[w,s,e,n]] of [
+    ['Aegean Sea','Dardanelles',[26.12,39.96,26.33,40.03]],
+    ['Sea of Marmara','Bosporus',[28.97,40.99,29.04,41.02]],
+  ]) {
+    const union=clipping.union(geometry(basin),geometry(strait));
+    const water=clipping.difference([[[w,s],[e,s],[e,n],[w,n],[w,s]]],...land);
+    assert(area(clipping.intersection(geometry(basin),geometry(strait)))<1e-10);
+    assert(area(clipping.difference(water,union))<1e-8,`${basin} entrance has uncovered coastal water`);
   }
 });

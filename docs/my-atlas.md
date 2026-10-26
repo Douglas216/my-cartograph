@@ -2851,7 +2851,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-142 records; 142 distinct catalog entries. Multiple geometry records can represent one feature.
+149 records; 149 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -2881,6 +2881,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Bosporus
 - Bristol Bay
 - Bristol Channel
+- Burgas Bay
 - Cantabrian Sea
 - Cape Cod Bay
 - Caribbean Sea
@@ -2895,6 +2896,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Dardanelles
 - Davis Strait
 - Delaware Bay
+- Dnieper-Bug Estuary
 - Drake Passage
 - East China Sea
 - East Siberian Sea
@@ -2920,6 +2922,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Martaban
 - Gulf of Mexico
 - Gulf of Ob
+- Gulf of Odessa
 - Gulf of Oman
 - Gulf of Saint Lawrence
 - Gulf of Thailand
@@ -2935,7 +2938,9 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Irish Sea
 - James Bay
 - Java Sea
+- Kalamita Bay
 - Kara Sea
+- Karkinit Bay
 - Kattegat
 - Kerch Strait
 - Khatanga Gulf
@@ -2985,7 +2990,9 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Strait of Tartary
 - Straits of Florida
 - Sulu Sea
+- Taganrog Bay
 - Taiwan Strait
+- Taman Bay
 - Tasman Sea
 - The North Western Passages
 - Timor Sea

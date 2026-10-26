@@ -104,3 +104,41 @@ Gulf of Kutch and Gulf of Khambhat have zero area overlap with the generated 10m
 ### Shared Gujarat basin entrances
 
 The overview-resolution change did not fix the two separate entrance geometries visible in the owner's screenshot: Arabian Sea retained its old Kutch closing line and excluded a coastal wedge seaward of Khambhat. `enrichSeas` now unions a land-clipped Gujarat coastal repair into Arabian Sea, then subtracts the two gulf interiors. This makes the base hit polygons share exact entrance edges; the dissolved parent selection follows the coast and has no residual offshore entrance line in either locality. Both names and the catalog hierarchy are unchanged. Regression samples cover the formerly bare wedge and Kutch sliver; independent boundary/land checks find zero offshore parent-boundary length around both entrances.
+
+## Black Sea coastal additions and Turkish entrance repairs
+
+Seven additions bring the marine catalog to 142 names. “Karknit” is normalized to
+**Karkinit Bay**; **Gulf of Odessa** retains the owner's requested spelling (also
+known as Gulf of Odesa).
+
+| Water | Immediate parent | Editorial reason and geometry |
+| --- | --- | --- |
+| Taman Bay | Kerch Strait | Shallow bay between Chushka and Tuzla spits; detailed coastal arc, straight entrance closure |
+| Dnieper-Bug Estuary | Black Sea | Shared Dnieper/Southern Bug liman, including both arms; coastal mask closes beside Kinburn Spit |
+| Burgas Bay | Black Sea | Bulgaria's port embayment; detailed coastal arc between Cape Emine and the Sozopol headland |
+| Gulf of Odessa | Black Sea | City and port frontage; detailed coastal arc between northern Odesa and the Velykyi Fontan headland |
+| Karkinit Bay | Black Sea | Mainland–Crimea embayment and wetlands; generalized offshore entrance toward Cape Tarkhankut |
+| Kalamita Bay | Black Sea | Western Crimean embayment south of Yevpatoria; generalized Yevpatoria–Lukull entrance |
+| Taganrog Bay | Sea of Azov | Don estuary and lower-Don maritime approach; Bilosaraiska–Dolgaya spit entrance |
+
+All additions subtract the cached 10m land, retain the connected label-bearing
+water, and carry a short sourced story into the catalog. Boundaries are atlas
+conventions, not legal maritime limits. Crimea's status is described objectively
+in the stories without changing the map's political policy.
+
+The Aegean–Dardanelles and Marmara–Bosporus entrances now use land-clipped repair
+patches in the adjacent basin, cut by the fitted strait geometry. The same edge
+therefore closes both shapes; no extra water or gap is left between them. The
+existing Mediterranean sibling hierarchy is preserved. Ukraine, Russia, Bulgaria
+and Turkey join India in using detailed coast geometry from the marine-boundary
+zoom so overview country fills, borders and selections agree with these waters.
+
+References (also linked per feature in the catalog):
+
+- [CBD scientific description of Taman Bay](https://www.cbd.int/doc/meetings/mar/ebsaws-2017-01/templates/ebsaws-2017-01-template-03-TamanBay-en.pdf)
+- [Dnieper–Bug estuary](https://discover.ua/en/en/locations/dniprovsko-buzkij-liman)
+- [Burgas Bay research site](https://deims.org/locations/929232ff-72b4-4671-8649-79950504f33d)
+- [Gulf of Odesa](https://en.wikipedia.org/wiki/Gulf_of_Odesa)
+- [Ramsar: Karkinitska and Dzharylgatska Bays](https://rsis.ramsar.org/ris/114)
+- [Encyclopedia of Modern Ukraine: Kalamita Bay](https://esu.com.ua/article-10364)
+- [Taganrog Bay](https://en.wikipedia.org/wiki/Taganrog_Bay)
