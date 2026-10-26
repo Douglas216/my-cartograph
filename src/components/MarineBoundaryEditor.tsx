@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import maplibregl, { type GeoJSONSource } from 'maplibre-gl';
 import { mapRegistry, setFeatureHighlight, setHighlightCodes } from '../map/mapRegistry';
+import { whenMapStyleReady } from '../map/whenMapStyleReady';
 import { marineEditorState } from '../map/marineEditorState';
 import { useMapStore } from '../store/mapStore';
 import './MarineBoundaryEditor.css';
@@ -55,13 +56,14 @@ export default function MarineBoundaryEditor(){
       map.addLayer({id:'marine-draft-line',type:'line',source:'marine-draft-line',paint:{'line-color':'#ad6310','line-width':3,'line-dasharray':[2,2]}});
       setReady(true);
     };
-    if(map?.isStyleLoaded())setup();else map?.once('load',setup);
+    const stopWaiting = map ? whenMapStyleReady(map, setup) : () => {};
+    if(!map)setError('The map is still starting. Close and reopen the editor in a moment.');
     const unload=(event:BeforeUnloadEvent)=>{if(JSON.stringify(editsRef.current)!==saved.current){event.preventDefault();}};
     window.addEventListener('beforeunload',unload);
     return ()=>{
       live=false;revision.current++;marineEditorState.active=false;setReady(false);w.terminate();worker.current=null;
       for(const task of pending.current.values())task.reject(Error('Editor closed.'));pending.current.clear();
-      map?.off('load',setup);markers.current.forEach(m=>m.remove());
+      stopWaiting();markers.current.forEach(m=>m.remove());
       for(const id of ['marine-draft-line','marine-draft-outline','marine-draft-fill','marine-draft-parent'])if(map?.getLayer(id))map.removeLayer(id);
       for(const id of ['marine-draft-line','marine-draft','marine-draft-parent'])if(map?.getSource(id))map.removeSource(id);
       for(const [id,[min,max]] of zoomRanges)if(map?.getLayer(id))map.setLayerZoomRange(id,min,max);
@@ -147,12 +149,12 @@ export default function MarineBoundaryEditor(){
       <label>Water body<select value={name} disabled={!names.length} onChange={e=>{if(guard())setName(e.target.value);}}>{names.map(n=><option key={n}>{n}</option>)}</select></label>
       {definition&&<>
         <label>Offshore line<select value={boundaryId} onChange={e=>{setBoundaryId(e.target.value);setSelected(null);}}>{definition.boundaries.map((b,i)=><option key={b.id} value={b.id}>Line {i+1} · {b.handles.length} handles</option>)}</select></label>
-        <p className="marine-help">Drag the numbered handles. Endpoints on land snap to the coast when released. Select a handle to insert a midpoint after it.</p>
+        <p className="marine-help">Drag the gold numbered circles at the ends of the dashed line—not the line itself. Endpoints on land snap to the coast when released. Select a handle to insert a midpoint after it.</p>
         <div className="marine-actions"><button disabled={!history.length||busy} onClick={()=>{setFuture(f=>[edits,...f]);setEdits(history.at(-1)!);setHistory(h=>h.slice(0,-1));}}>Undo</button><button disabled={!future.length||busy} onClick={()=>{setHistory(h=>[...h,edits]);setEdits(future[0]);setFuture(f=>f.slice(1));}}>Redo</button><button disabled={busy||!Object.keys(edits).length} onClick={()=>change({})}>Reset shape</button></div>
         <div className="marine-actions"><button disabled={selected===null||selected>=points.length-1||points.length>=100||busy} onClick={()=>{const i=selected!,a=points[i],b=points[i+1];change({...edits,[boundaryId]:[...points.slice(0,i+1),[(a[0]+b[0])/2,(a[1]+b[1])/2],...points.slice(i+1)]});}}>Add midpoint</button><button disabled={selected===null||selected===0||selected===points.length-1||busy} onClick={()=>{change({...edits,[boundaryId]:points.filter((_,i)=>i!==selected)});setSelected(null);}}>Remove handle</button></div>
       </>}
-      <div role="status" className={error?'marine-error':'marine-status'}>{error|| (busy?'Preparing coastline-fitted preview…':notice||'Gold: edited water · Gray: containing water outline')}</div>
-      <footer><button className="marine-primary" disabled={!definition||busy||!!error||!isDirty} onClick={save}>Save draft</button><button disabled={busy||(!drafts.length&&!definition)} onClick={exportDrafts}>Export drafts{drafts.length?` (${drafts.length})`:''}</button></footer>
+      <div role="status" className={error?'marine-error':'marine-status'}>{error|| (!ready?'Preparing map controls…':busy?'Preparing coastline-fitted preview…':notice||'Gold: edited water · Gray: containing water outline')}</div>
+      <footer><button className="marine-primary" disabled={!definition||busy||!!error||!isDirty} onClick={save}>Save draft</button><button disabled={!ready||busy||(!drafts.length&&!definition)} onClick={exportDrafts}>Export drafts{drafts.length?` (${drafts.length})`:''}</button></footer>
       {drafts.some(d=>d.name===name)&&<button className="marine-delete" onClick={()=>{if(!window.confirm('Delete the saved draft for this water body and reset its handles?'))return;try{const next=drafts.filter(d=>d.name!==name);localStorage.setItem(KEY,JSON.stringify(next));setDrafts(next);setEdits({});setHistory([]);setFuture([]);saved.current='{}';setNotice('Saved draft removed.');}catch{setError('Could not update browser storage.');}}}>Delete this saved draft</button>}
       <p className="marine-help">Drafts live in this browser. Export backs them up and lets you apply them to a future atlas publication.</p>
     </section>}
