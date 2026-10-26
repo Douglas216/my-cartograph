@@ -133,3 +133,38 @@ nested selections. See [the coastline audit](docs/marine-coast-audit.md).
 Run the regular regression checks with `scripts/check-coast-matching.test.mjs`
 included. The optional independent GEOS audit is
 `python3 scripts/audit-marine-coasts.py` (requires Shapely in the Python environment).
+
+## Marine boundary draft editor
+
+Choose **Edit water boundaries** on the map, then a named water body and its
+offshore line. Drag numbered handles, select a handle and **Add midpoint**, or
+remove interior handles. Endpoints touching land snap to the cached Natural
+Earth 10m coastline. The coastline itself is never editable. Gold shading is
+the draft; the gray outline previews its containing water. Normal feature
+selection is suspended while editing. Undo/redo and Reset shape are available.
+
+**Save draft** stores changes only in this browser. Reopening the same water
+restores its saved draft. **Export drafts** downloads `marine-boundary-edits.json`,
+including valid unsaved changes to the current water. Keep this file as a backup;
+clearing browser storage removes local drafts. Draft previews do not alter the
+published map, its catalog or other visitors' views.
+
+To apply an exported file:
+
+```sh
+node scripts/import-marine-edits.mjs /absolute/path/to/marine-boundary-edits.json
+node scripts/process-countries.mjs
+node --experimental-strip-types --test scripts/check-*.test.mjs
+npm run build
+```
+
+The importer validates geometry and baseline fingerprints before appending to
+`data/marine-boundary-edits.json`. Builds replay that edit history before generating
+hierarchy, labels and catalog. Source-data changes that invalidate an old draft
+fail explicitly rather than silently moving the wrong boundary. A browser draft
+from an older baseline remains exportable for review, but is not auto-applied.
+
+The editor discovers offshore chains from fitted marine polygons and loads its
+coastline data only on demand, inside a background worker. It excludes ocean-only
+outlines, the inland Caspian Sea, reef footprints and sub-kilometre rounding seams.
+Offshore limits are editorial atlas extents, not maritime legal boundaries.

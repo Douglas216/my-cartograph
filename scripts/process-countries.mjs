@@ -1,3 +1,4 @@
+import { boundaries, fingerprint, editGeometry } from './lib/marine-editor.mjs';
 import { coastlineIndex, refitMarineCoast } from './lib/marine-coast.mjs';
 // Processes Natural Earth country data into the app's display model.
 //
@@ -2790,6 +2791,7 @@ buildOceanLabels();
 
 console.log('Adding curated seas...');
 enrichSeas();
+buildMarineEditor();
 
 console.log('Building marine hierarchy and selection extents...');
 buildMarineHierarchy();
@@ -3064,4 +3066,28 @@ function buildMarineHierarchy() {
   const labels = readGeo('ocean-labels.geojson');
   for (const f of labels.features) Object.assign(f.properties, propsFor(f.properties.name));
   writeGeo('ocean-labels.geojson', labels);
+}
+
+// Draft files contain offshore handles only; land always comes from the raw dataset.
+function buildMarineEditor() {
+  const land=readRaw('countries-10m-raw.geojson'),index=coastlineIndex(land);
+  const seas=readGeo('seas.geojson');
+  const definitions=()=>seas.features.filter(f=>f.properties.featurecla!=='ocean'&&!['Caspian Sea','Great Barrier Reef'].includes(f.properties.name)).map(f=>({name:f.properties.name,fingerprint:fingerprint(f.geometry),boundaries:boundaries(f.geometry,index)})).filter(r=>r.boundaries.length);
+  const file=path.join(__dirname,'..','data','marine-boundary-edits.json');
+  if(fs.existsSync(file)) {
+    const saved=JSON.parse(fs.readFileSync(file));
+    if(saved.version!==1)throw Error('Invalid marine boundary draft');
+    for(const draft of saved.batches??[saved]) {
+      if(!Array.isArray(draft.features))throw Error('Invalid marine boundary features');
+      const entries=definitions();
+      for(const item of draft.features) {
+        const definition=entries.find(r=>r.name===item.name),feature=seas.features.find(f=>f.properties.name===item.name);
+        if(!definition||definition.fingerprint!==item.fingerprint)throw Error(`Stale marine boundary draft: ${item.name}`);
+        feature.geometry=editGeometry(feature.geometry,definition.boundaries,item.edits,land,index).geometry;
+      }
+    }
+    writeGeo('seas.geojson',seas);
+  }
+  writeGeo('marine-editor.json',{version:1,features:definitions()});
+  writeGeo('marine-editor-land.geojson',land);
 }

@@ -39,7 +39,7 @@ export function coastlineIndex(land) {
   return {rings,nearest};
 }
 
-function coastPath(a,b,index) {
+export function coastPath(a,b,index) {
   if(!a||!b||a.id!==b.id) return null;
   const ring=index.rings[a.id], {coordinates,lengths,total}=ring;
   const pos=p=>lengths[p.i]+p.t*(lengths[p.i+1]-lengths[p.i]);

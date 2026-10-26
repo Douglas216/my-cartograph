@@ -9,6 +9,7 @@ import ZoomIndicator from './components/ZoomIndicator';
 import PolicyNote from './components/PolicyNote';
 import InsetPanel from './components/InsetPanel';
 import LayerPanel from './components/LayerPanel';
+import MarineBoundaryEditor from './components/MarineBoundaryEditor';
 import './styles/global.css';
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
           <ZoomIndicator />
         </div>
         <LayerPanel />
+        <MarineBoundaryEditor />
         <PolicyNote />
         <InsetPanel />
         <InfoCard />

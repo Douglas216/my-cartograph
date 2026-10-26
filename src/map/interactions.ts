@@ -1,3 +1,4 @@
+import { marineEditorState } from './marineEditorState';
 import { countryFillLayerIds } from './layers/countryLayers';
 import type { Map as MapLibreMap, MapMouseEvent } from 'maplibre-gl';
 import type { Feature, Geometry } from 'geojson';
@@ -148,6 +149,7 @@ export function setupInteractions(
   };
 
   map.on('click', (e: MapMouseEvent) => {
+    if(marineEditorState.active)return;
     const features = map.queryRenderedFeatures(e.point, {
       layers: interactiveLayers.filter((id) => map.getLayer(id)),
     });
@@ -353,6 +355,7 @@ export function setupInteractions(
 
   // Double-click: zoom to fit, and surface the inset panel for territories.
   map.on('dblclick', (e: MapMouseEvent) => {
+    if(marineEditorState.active)return;
     const features = map.queryRenderedFeatures(e.point, {
       layers: countryFillIds.filter((id) => map.getLayer(id)),
     });
