@@ -185,3 +185,9 @@ References:
 - [UNEP: Gulf of Lion continental margin](https://wedocs.unep.org/bitstream/handle/20.500.11822/6612/13wg382_inf6_eng.pdf)
 - [ESA: Gatun Lake and the Panama Canal](https://www.esa.int/Applications/Observing_the_Earth/Earth_from_Space_The_Panama_Canal)
 - [NASA: Lake Nasser](https://science.nasa.gov/earth/earth-observatory/lake-nasser-egypt-5988/) and [ILEC reservoir profile](https://wldb.ilec.or.jp/Lake/AFR-19)
+
+### Gulf of Guinea additions (2026-10-27)
+
+Added Bight of Benin, Bight of Bonny and Corisco Bay as direct children of Gulf of Guinea, with sourced stories and catalog entries. Benin uses Cape Saint Paul–Cape Formoso; Bonny uses Cape Formoso–Cape Lopez. Corisco uses a generalized offshore bow between Cabo San Juan and Cap Esterias. Offshore lines are editorial approximations, not jurisdictional boundaries. Reference: NGA Sailing Directions Pub. 123, sectors 2–3 (https://msi.nga.mil/api/publications/download?key=16694491%2FSFH00000%2FPub123bk.pdf&type=view).
+
+Replaced the parent's São Tomé shortcut with a Cape Palmas–Cape Lopez envelope, clipped to original 10m land. Children have disjoint hit targets (Corisco is cut from Bonny), while parent selection dissolves all three back into the complete gulf. Shorelines and island holes use the original dataset; no coastline vertices were edited. Detailed coastal country tiers switch together from zoom 3. Global GEOS audit: 148 names, no validity, land-overlap or parent-containment failures.

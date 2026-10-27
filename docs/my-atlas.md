@@ -2859,7 +2859,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-152 records; 152 distinct catalog entries. Multiple geometry records can represent one feature.
+155 records; 155 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -2882,6 +2882,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Bay of Plenty
 - Beaufort Sea
 - Bering Sea
+- Bight of Benin
+- Bight of Bonny
 - Bismarck Sea
 - Black Sea
 - Bo Hai
@@ -2901,6 +2903,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Columbia River
 - Cook Inlet
 - Coral Sea
+- Corisco Bay
 - Dardanelles
 - Davis Strait
 - Delaware Bay

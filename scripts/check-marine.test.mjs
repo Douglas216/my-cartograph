@@ -19,7 +19,7 @@ test('all seven unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 145);
+  assert.equal(seaRows.length, 148);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -267,4 +267,17 @@ test('Romanian Black Sea follows the detailed Razim coast without offshore short
  }
  const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features.find(f=>f.properties.ADM0_A3==='ROU');
  assert(area(clipping.intersection(sea,land.geometry.coordinates))<1e-6,'repair overlaps Romanian land');
+});
+
+
+test('Gulf of Guinea children have shared seams and direct catalog parents', () => {
+  const names=['Bight of Benin','Bight of Bonny','Corisco Bay'];
+  const raw=new Map(read('seas.geojson').features.map(f=>[f.properties.name,f]));
+  for(const name of names){
+    assert.deepEqual(byName.get(name).path,['Atlantic Ocean','Gulf of Guinea',name]);
+    assert(seaRows.some(r=>r.name===name));
+    assert(area(clipping.difference(raw.get(name).geometry.coordinates,selections.get('Gulf of Guinea').geometry.coordinates))<1e-8,name);
+    assert(area(clipping.intersection(raw.get(name).geometry.coordinates,raw.get('Gulf of Guinea').geometry.coordinates))<1e-8,name);
+  }
+  assert(area(clipping.intersection(raw.get('Bight of Bonny').geometry.coordinates,raw.get('Corisco Bay').geometry.coordinates))<1e-8);
 });

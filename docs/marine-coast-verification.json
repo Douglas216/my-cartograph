@@ -154,11 +154,6 @@
       "landOverlapSquareDegrees": 1.2081291457749263e-07
     },
     {
-      "name": "Gulf of Guinea",
-      "valid": true,
-      "landOverlapSquareDegrees": 6.168329102680618e-08
-    },
-    {
       "name": "Scotia Sea",
       "valid": true,
       "landOverlapSquareDegrees": 3.5426447803530228e-09
@@ -554,6 +549,26 @@
       "landOverlapSquareDegrees": 9.319714688755224e-10
     },
     {
+      "name": "Gulf of Guinea",
+      "valid": true,
+      "landOverlapSquareDegrees": 4.185759290256386e-09
+    },
+    {
+      "name": "Bight of Benin",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Bight of Bonny",
+      "valid": true,
+      "landOverlapSquareDegrees": 3.1378130692785978e-09
+    },
+    {
+      "name": "Corisco Bay",
+      "valid": true,
+      "landOverlapSquareDegrees": 5.7110261294384116e-09
+    },
+    {
       "name": "Gulf of Lion",
       "valid": true,
       "landOverlapSquareDegrees": 1.2074747891373867e-08
@@ -907,11 +922,6 @@
     },
     {
       "name": "Mozambique Channel",
-      "valid": true,
-      "parentGapSquareDegrees": 0.0
-    },
-    {
-      "name": "Gulf of Guinea",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },
@@ -1302,6 +1312,26 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Guinea",
+      "valid": true,
+      "parentGapSquareDegrees": 1.6689511513848577e-18
+    },
+    {
+      "name": "Bight of Benin",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Bight of Bonny",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Corisco Bay",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

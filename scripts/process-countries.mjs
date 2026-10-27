@@ -30,7 +30,7 @@ const PERSONAL_MARINE_EXCLUDED = new Set([
   'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge',
 ]);
 const MARINE_OCEAN_GROUPS = {
-    'Atlantic Ocean': ['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay', 'Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Gulf of Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Atlantic Ocean': ['Bight of Benin','Bight of Bonny','Corisco Bay','Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay', 'Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Gulf of Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
     'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
     'Indian Ocean': ['Gulf of Suez','Gulf of Aqaba','Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Khambhat', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
@@ -44,6 +44,7 @@ const MARINE_OCEAN_GROUPS = {
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Bight of Benin':'Gulf of Guinea', 'Bight of Bonny':'Gulf of Guinea', 'Corisco Bay':'Gulf of Guinea',
   'Gulf of Suez':'Red Sea', 'Gulf of Aqaba':'Red Sea',
   'Taman Bay':'Kerch Strait', 'Taganrog Bay':'Sea of Azov',
   'Dnieper-Bug Estuary':'Black Sea', 'Burgas Bay':'Black Sea',
@@ -140,6 +141,9 @@ const PERSONAL_PEAKS = [
 
 const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
 const FEATURE_ADDITIONS = {
+  'Bight of Benin': {countries:['Ghana','Togo','Benin','Nigeria'],story:'The lagoon-backed coast between Cape Saint Paul and Cape Formoso links the ports of Lomé, Cotonou and Lagos along the northern Gulf of Guinea.',sourceUrl:'https://msi.nga.mil/api/publications/download?key=16694491%2FSFH00000%2FPub123bk.pdf&type=view'},
+  'Bight of Bonny': {countries:['Nigeria','Cameroon','Equatorial Guinea','Gabon'],story:'Also known as the Bight of Biafra, this eastern Gulf of Guinea embayment extends from the Niger Delta to Cape Lopez, with the volcanic island of Bioko offshore.',sourceUrl:'https://msi.nga.mil/api/publications/download?key=16694491%2FSFH00000%2FPub123bk.pdf&type=view'},
+  'Corisco Bay': {countries:['Equatorial Guinea','Gabon'],story:'An island-studded coastal bay between Cabo San Juan and Cap Esterias, where estuaries open into the eastern Gulf of Guinea.',sourceUrl:'https://msi.nga.mil/api/publications/download?key=16694491%2FSFH00000%2FPub123bk.pdf&type=view'},
   "Gulf of Suez": {"countries": ["Egypt"], "story": "The northwestern arm of the Red Sea leads to the Suez Canal, linking this rift-bounded gulf to a global shipping route.", "sourceUrl": "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/AboutSuezCanal.aspx"},
   "Gulf of Aqaba": {"countries": ["Egypt", "Israel", "Jordan", "Saudi Arabia"], "story": "A deep northeastern arm of the Red Sea, shared by four countries and connected to the main basin through the Straits of Tiran.", "sourceUrl": "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/16"},
   "Gulf of Lion": {"countries": ["France", "Spain"], "story": "The Mediterranean embayment along Occitanie and Provence includes the Rh\u00f4ne delta and the French continental shelf.", "sourceUrl": "https://www.wikidata.org/wiki/Q210118"},
@@ -639,7 +643,7 @@ function processCountryTier(rawName, outName) {
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
         // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
-        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU','EGY','SAU','JOR','ISR','FRA','ESP'].includes(adm0),
+        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU','EGY','SAU','JOR','ISR','FRA','ESP','LBR','CIV','GHA','TGO','BEN','NGA','CMR','GNQ','GAB','STP'].includes(adm0),
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,
@@ -1276,6 +1280,16 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  // Generalized offshore limits; the original 10m land supplies every shoreline.
+  // Restore the parent cape-to-cape envelope instead of its old São Tomé shortcut.
+  {name:'Gulf of Guinea',featurecla:'gulf',scalerank:2,labelAt:[2,3],keepLabelComponent:true,
+    ring:[[-7.72,4.36],[8.709271,-.629817],[12,-1],[12,8],[-8,8],[-7.72,4.36]]},
+  {name:'Bight of Benin',featurecla:'gulf',scalerank:4,labelAt:[3.3,5.8],keepLabelComponent:true,
+    ring:[[.982233,5.816680],[6.093969,4.281211],[7,5],[6,7],[.4,7],[.982233,5.816680]]},
+  {name:'Bight of Bonny',featurecla:'gulf',scalerank:4,labelAt:[8.2,2.5],keepLabelComponent:true,
+    ring:[[6.093969,4.281211],[8.709271,-.629817],[11,-1],[11,3],[10,5],[7,6],[6.093969,4.281211]]},
+  {name:'Corisco Bay',featurecla:'bay',scalerank:6,labelAt:[9.45,.95],keepLabelComponent:true,
+    ring:[[9.34669,1.181708],[9.05,1.1],[9.05,.75],[9.307899,.600876],[9.9,.5],[10,1.4],[9.34669,1.181708]]},
   {name:'Gulf of Lion',featurecla:'gulf',scalerank:4,labelAt:[4.2,43.0],keepLabelComponent:true,
     ring:[[3.316,42.319],[5.855,43.05],[6.1,43.4],[5,44],[3,44],[2.5,42.5],[3.316,42.319]]},
 
@@ -1624,6 +1638,15 @@ function enrichSeas() {
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
   }
+  // Sibling hit targets share exact entrance edges; the selection hierarchy
+  // dissolves them back into the complete Gulf of Guinea.
+  const guinea=data.features.find(f=>f.properties.name==='Gulf of Guinea');
+  const benin=data.features.find(f=>f.properties.name==='Bight of Benin');
+  const bonny=data.features.find(f=>f.properties.name==='Bight of Bonny');
+  const corisco=data.features.find(f=>f.properties.name==='Corisco Bay');
+  if(!guinea||!benin||!bonny||!corisco)throw Error('Missing Gulf of Guinea waters');
+  bonny.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(bonny.geometry.coordinates,corisco.geometry.coordinates)};
+  guinea.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(guinea.geometry.coordinates,benin.geometry.coordinates,bonny.geometry.coordinates,corisco.geometry.coordinates)};
   // Shared Red Sea entrances: restore the northern coastal water, then let
   // each gulf own its complete footprint up to the common mouth boundary.
   const redSea=data.features.find(f=>f.properties.name==='Red Sea');

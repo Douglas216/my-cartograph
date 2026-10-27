@@ -145,11 +145,6 @@
     "maxShoreShiftDegrees": 0.06635433719810815
   },
   {
-    "name": "Gulf of Guinea",
-    "coastalSegments": 139,
-    "maxShoreShiftDegrees": 0.044531613192331815
-  },
-  {
     "name": "Scotia Sea",
     "coastalSegments": 4,
     "maxShoreShiftDegrees": 0.006332721861721552
@@ -543,6 +538,26 @@
     "name": "Sea of Marmara",
     "coastalSegments": 54,
     "maxShoreShiftDegrees": 0.028855575824831448
+  },
+  {
+    "name": "Gulf of Guinea",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Bight of Benin",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Bight of Bonny",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Corisco Bay",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
   },
   {
     "name": "Gulf of Lion",
