@@ -2753,11 +2753,18 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Za
 - Zambezi
 
+## Canals
+
+1 records; 1 distinct catalog entries. Multiple geometry records can represent one feature.
+
+- Suez Canal
+
 ## Lakes
 
-29 records; 28 distinct catalog entries. Multiple geometry records can represent one feature.
+31 records; 30 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Dead Sea
+- Gatun Lake
 - Great Bear Lake
 - Great Salt Lake
 - Great Slave Lake
@@ -2774,6 +2781,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Lake Malawi
 - Lake Maracaibo
 - Lake Michigan
+- Lake Nasser
 - Lake Onega
 - Lake Ontario
 - Lake Superior
@@ -2851,7 +2859,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-149 records; 149 distinct catalog entries. Multiple geometry records can represent one feature.
+152 records; 152 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -2908,6 +2916,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Greenland Sea
 - Gulf of Aden
 - Gulf of Alaska
+- Gulf of Aqaba
 - Gulf of Bangkok
 - Gulf of Bothnia
 - Gulf of Cádiz
@@ -2917,6 +2926,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Honduras
 - Gulf of Khambhat
 - Gulf of Kutch
+- Gulf of Lion
 - Gulf of Maine
 - Gulf of Mannar
 - Gulf of Martaban
@@ -2925,6 +2935,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Odessa
 - Gulf of Oman
 - Gulf of Saint Lawrence
+- Gulf of Suez
 - Gulf of Thailand
 - Gulf of Tomini
 - Gulf of Tonkin

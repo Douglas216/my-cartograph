@@ -554,6 +554,21 @@
       "landOverlapSquareDegrees": 9.319714688755224e-10
     },
     {
+      "name": "Gulf of Lion",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.2074747891373867e-08
+    },
+    {
+      "name": "Gulf of Suez",
+      "valid": true,
+      "landOverlapSquareDegrees": 1.6419134708844733e-09
+    },
+    {
+      "name": "Gulf of Aqaba",
+      "valid": true,
+      "landOverlapSquareDegrees": 6.115489152163123e-10
+    },
+    {
       "name": "Taman Bay",
       "valid": true,
       "landOverlapSquareDegrees": 0.0
@@ -1287,6 +1302,21 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Lion",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Suez",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Aqaba",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

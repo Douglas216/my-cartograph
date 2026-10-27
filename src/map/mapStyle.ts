@@ -65,6 +65,7 @@ export const mapStyle: StyleSpecification = {
       data: '/geo/marine-selections.geojson',
       tolerance: 0, // Preserve the shared land/water shoreline vertices.
     },
+    canals:{type:'geojson',data:'/geo/canals.geojson',generateId:true,tolerance:0},
     seas: {
       type: 'geojson',
       data: '/geo/seas.geojson',

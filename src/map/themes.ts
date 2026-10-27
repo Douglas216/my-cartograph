@@ -28,8 +28,8 @@ export const THEMES: Theme[] = [
   },
   {
     id: 'hydrography',
-    label: 'Rivers & Lakes',
-    layerIds: ['river-casing', 'river-line', 'river-flow', 'river-label', 'lake-fill', 'lake-border', 'lake-label'],
+    label: 'Rivers, Canals & Lakes',
+    layerIds: ['canal-casing','canal-line','canal-label','canal-hit','canal-highlight','canal-highlight-glow', 'river-casing', 'river-line', 'river-flow', 'river-label', 'lake-fill', 'lake-border', 'lake-label'],
   },
   {
     id: 'marineLabels',

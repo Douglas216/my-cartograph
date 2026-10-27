@@ -9,7 +9,7 @@ test('catalog follows the actual map selection without duplicating river reaches
   assert.equal(catalog.sections.length, 8);
   assert.equal(section('countries').rows.length, new Set(read('countries-10m.geojson').features.map(f => f.properties.ADM0_A3)).size);
   assert.equal(section('cities').rows.length, read('cities.geojson').features.length);
-  assert.equal(section('rivers').rows.length, new Set(read('rivers.geojson').features.map(f => f.properties.label_name)).size);
+  assert.equal(section('rivers').rows.length, new Set(read('rivers.geojson').features.map(f => f.properties.label_name)).size + read('canals.geojson').features.length);
   assert.equal(section('lakes').rows.length, new Set(read('lakes.geojson').features.map(f => f.properties.name)).size);
   assert.equal(section('ranges').rows.length, read('ranges.geojson').features.length);
   assert.equal(section('peaks').rows.length, read('peaks.geojson').features.length);

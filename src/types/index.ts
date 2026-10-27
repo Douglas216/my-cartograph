@@ -1,6 +1,6 @@
 export interface KnowledgePoint {
   id: string;
-  type: 'country' | 'disputed' | 'territory' | 'city' | 'river' | 'lake' | 'mountain_range' | 'peak' | 'ocean' | 'sea' | 'strait' | 'gulf' | 'natural_wonder' | 'timezone';
+  type: 'country' | 'disputed' | 'territory' | 'city' | 'river' | 'canal' | 'lake' | 'mountain_range' | 'peak' | 'ocean' | 'sea' | 'strait' | 'gulf' | 'natural_wonder' | 'timezone';
   name: string;
   nameLocal?: string;
   coordinates: [number, number];

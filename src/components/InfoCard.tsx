@@ -3,7 +3,7 @@ import SpeakButton from './SpeakButton';
 
 // Physical features show their endonym but no pronounce button — the speaker is
 // reserved for country/territory/city names.
-const NO_SPEAKER = new Set(['river', 'lake', 'mountain_range', 'peak']);
+const NO_SPEAKER = new Set(['canal','river', 'lake', 'mountain_range', 'peak']);
 
 // Global-rank medal shown beside a lake's area / depth. 1-3 are the classic
 // gold/silver/bronze; 4-10 share one slate colour. Title spells out the rank.
@@ -29,6 +29,7 @@ const typeLabels: Record<string, string> = {
   disputed: 'Disputed Area',
   territory: 'Territory',
   city: 'City',
+  canal:'Canal',
   river: 'River',
   lake: 'Lake',
   mountain_range: 'Mountain Range',
@@ -46,6 +47,7 @@ const typeColors: Record<string, string> = {
   disputed: '#95a5a6',
   territory: '#7E8FA6',
   city: '#E74C3C',
+  canal:'#45B7D1',
   river: '#45B7D1',
   lake: '#45B7D1',
   mountain_range: '#96CEB4',
@@ -111,7 +113,7 @@ export default function InfoCard() {
         <div className="info-card-stats">
           {selectedPoint.riverSource && (
             <div className="info-card-stat">
-              <span className="info-card-stat-label">Source</span>
+              <span className="info-card-stat-label">{selectedPoint.type==='canal'?'North terminal':'Source'}</span>
               <span className="info-card-stat-value">
                 {selectedPoint.riverSource.name}
                 <span className="info-card-stat-tag">{selectedPoint.riverSource.type}</span>
@@ -120,7 +122,7 @@ export default function InfoCard() {
           )}
           {selectedPoint.riverMouth && (
             <div className="info-card-stat">
-              <span className="info-card-stat-label">Mouth</span>
+              <span className="info-card-stat-label">{selectedPoint.type==='canal'?'South terminal':'Mouth'}</span>
               <span className="info-card-stat-value">
                 {selectedPoint.riverMouth.name}
                 <span className="info-card-stat-tag">{selectedPoint.riverMouth.type}</span>

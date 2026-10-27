@@ -3,14 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import clipping from 'polygon-clipping';
 const read = file => JSON.parse(fs.readFileSync(new URL(`../public/geo/${file}`, import.meta.url)));
-const excluded = ['Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion'];
+const excluded = ['Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea', 'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge'];
 const hierarchy = read('marine-hierarchy.json');
 const byName = new Map(hierarchy.map(r => [r.name, r]));
 const selections = new Map(read('marine-selections.geojson').features.map(f => [f.properties.name, f]));
 const catalog = read('catalog.json');
 const seaRows = catalog.sections.find(s => s.id === 'seas').rows;
 
-test('all eight unlearned waters are absent from labels, hit targets, selection records and catalog rows', () => {
+test('all seven unlearned waters are absent from labels, hit targets, selection records and catalog rows', () => {
   for (const name of excluded) {
     assert(!read('seas.geojson').features.some(f => f.properties.name === name), name);
     assert(!read('sea-labels.geojson').features.some(f => f.properties.name === name), name);
@@ -19,7 +19,7 @@ test('all eight unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 142);
+  assert.equal(seaRows.length, 145);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {

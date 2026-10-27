@@ -545,6 +545,21 @@
     "maxShoreShiftDegrees": 0.028855575824831448
   },
   {
+    "name": "Gulf of Lion",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Suez",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Aqaba",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
     "name": "Taman Bay",
     "coastalSegments": 0,
     "maxShoreShiftDegrees": 0

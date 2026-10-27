@@ -9,7 +9,7 @@ type Column = { key: string; label: string; numeric?: boolean; unit?: string };
 const tabs = [
   { id: 'countries', label: 'Countries', description: 'The political geography of the world.', sections: ['countries'] },
   { id: 'cities', label: 'Cities', description: 'Capitals and cities of a million or more.', sections: ['cities'] },
-  { id: 'water', label: 'Rivers & lakes', description: 'The waterways and inland waters in my atlas.', sections: ['rivers', 'lakes'] },
+  { id: 'water', label: 'Rivers, canals & lakes', description: 'The waterways and inland waters in my atlas.', sections: ['rivers', 'lakes'] },
   { id: 'ranges', label: 'Mountain ranges', description: 'The mountain systems I have come to know.', sections: ['ranges'] },
   { id: 'peaks', label: 'Peaks', description: 'Great summits and culturally significant mountains.', sections: ['peaks'] },
   { id: 'marine', label: 'Oceans & seas', description: 'Ocean basins and the named waters connected to them.', sections: ['oceans', 'seas'] },
@@ -17,7 +17,7 @@ const tabs = [
 const columns: Record<string, Column[]> = {
   countries: [{ key: 'name', label: 'Country / territory' }, { key: 'capital', label: 'Capital' }, { key: 'population', label: 'Population', numeric: true }],
   cities: [{ key: 'name', label: 'City' }, { key: 'country', label: 'Country / territory' }, { key: 'population', label: 'Population', numeric: true }],
-  rivers: [{ key: 'name', label: 'River' }, { key: 'length', label: 'Length · km', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'source', label: 'Source' }, { key: 'mouth', label: 'Mouth / terminus' }],
+  rivers: [{ key: 'name', label: 'River / canal' }, { key: 'length', label: 'Length · km', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'source', label: 'Source / terminal' }, { key: 'mouth', label: 'Mouth / terminus' }],
   lakes: [{ key: 'name', label: 'Lake' }, { key: 'area', label: 'Area · km²', numeric: true }, { key: 'volume', label: 'Volume · km³', numeric: true }, { key: 'countries', label: 'Countries on its shores' }],
   ranges: [{ key: 'name', label: 'Mountain range' }, { key: 'area', label: 'Mapped span · km²', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'parent', label: 'Part of' }, { key: 'story', label: 'Why it matters' }],
   peaks: [{ key: 'name', label: 'Peak' }, { key: 'elevation', label: 'Elevation · m', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'parent', label: 'Range / group' }, { key: 'story', label: 'Why it matters' }],

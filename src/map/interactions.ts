@@ -22,6 +22,7 @@ export function setupInteractions(
     // Peaks have no hit surface of their own — the rendered "▲ Name" symbol IS
     // the click target (symbol layers are queryable like any other).
     'peak-label',
+    'canal-hit',
     'river-hit',
     // Precise line target — a deliberate click on the thin line means the zone,
     // so it beats the broad area fills (lakes, seas, countries, ocean) beneath.
@@ -223,7 +224,7 @@ export function setupInteractions(
         type: 'lake',
         name: props.name || 'Lake',
         coordinates: [lng, lat],
-        summary: `${props.name || 'This lake'} is a ${sal ? `${sal} ` : ''}lake.`,
+        summary: `${props.name || 'This lake'} is a ${sal ? `${sal} ` : ''}lake.${props.story ? ` ${props.story}` : ''}`,
         lakeAreaKm2: props.area_km2 ?? undefined,
         lakeMaxDepthM: props.max_depth_m ?? undefined,
         lakeAreaRank: props.area_rank ?? undefined,
@@ -233,6 +234,9 @@ export function setupInteractions(
         nativeName: props.name_native || undefined,
         nativeLang: props.name_native_lang || undefined,
       });
+    } else if(layerId==='canal-hit') {
+      setHighlight([]);setFeatureHighlight('canal',props.name);
+      onSelectPoint({id:`canal-${props.name}`,type:'canal',name:props.name,coordinates:[lng,lat],summary:props.story||'An artificial navigable waterway.',riverSource:{type:'sea',name:'Mediterranean Sea (Port Said)'},riverMouth:{type:'gulf',name:'Gulf of Suez (Suez)'}});
     } else if (layerId === 'river-hit') {
       setHighlight([]);
       // A name-changing river (Lancang→Mekong) reports its whole-system name and

@@ -154,3 +154,34 @@ components connected to its existing water are retained. Detached inland lake
 holes are excluded. No coastline vertices are redrawn. The normal marine
 hierarchy, selection geometry and editor baseline regenerate from this repair.
 Saved edits to other bays retain their existing fingerprints.
+
+## Red Sea gulfs, Gulf of Lion, and navigable reservoirs
+
+The Gulf of Suez and Gulf of Aqaba are individual children of the Red Sea.
+Their coastal masks subtract the original detailed land and retain island holes.
+The Aqaba entrance follows the Tiran convention, with its Saudi cape fitted to
+the source coastline. Northern Red Sea water is repaired before subtracting the
+two gulf interiors, making the containing basin and gulfs share their entrances.
+The Gulf of Lion is restored with its English name, under Mediterranean Sea,
+using the broad Cape de Creus–Cape Sicié convention along Occitanie and Provence.
+These are generalized atlas limits. A later editor adjustment can refine them.
+
+Gatun Lake and Lake Nasser use the cached 10m reservoir polygons. Lake Nasser
+includes the Sudanese reach known as Lake Nubia. Their reference surface areas
+(approximately 430 and 6,000 km²) vary with operating levels. Neither missing
+volume nor maximum-depth data is represented as zero.
+
+Suez Canal is a separate clickable, labeled line source and catalog entry. Its
+NE detailed centerline parts are joined with small endpoint connections and a
+southern approach into the Gulf of Suez. The route is generalized and does not
+claim to depict every modern bypass. It is not sent through river orientation
+or animated as a downstream river. Its catalog length is the Suez Canal
+Authority's 193.3 km reference, including the authority's route convention.
+
+References:
+
+- [Suez Canal Authority: canal overview](https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/AboutSuezCanal.aspx) and [FAQ](https://www.suezcanal.gov.eg/English/Pages/FAQ.aspx)
+- [NOAA: Gulf of Aqaba limits](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/16)
+- [UNEP: Gulf of Lion continental margin](https://wedocs.unep.org/bitstream/handle/20.500.11822/6612/13wg382_inf6_eng.pdf)
+- [ESA: Gatun Lake and the Panama Canal](https://www.esa.int/Applications/Observing_the_Earth/Earth_from_Space_The_Panama_Canal)
+- [NASA: Lake Nasser](https://science.nasa.gov/earth/earth-observatory/lake-nasser-egypt-5988/) and [ILEC reservoir profile](https://wldb.ilec.or.jp/Lake/AFR-19)

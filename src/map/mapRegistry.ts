@@ -30,6 +30,7 @@ export function setHighlightCodes(codes: string[]) {
 // name-filtered glow (physical/water layers) that lights up the selected
 // feature; ranges also darken via a companion fill layer.
 const FEATURE_HIGHLIGHT_IDS: Record<string, string[]> = {
+  canal:['canal-highlight','canal-highlight-glow'],
   range: ['range-highlight-fill', 'range-highlight-line'],
   lake: ['lake-highlight-glow', 'lake-highlight'],
   river: ['river-highlight-glow', 'river-highlight', 'river-highlight-flow'],

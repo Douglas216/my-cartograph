@@ -1,3 +1,4 @@
+import { canalLayers,canalHighlights } from './layers/canalLayers';
 import { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -84,8 +85,10 @@ export default function MapContainer() {
           ...subdivisionBorderLayers, // admin borders (below water, so lakes cover lines in water)
           ...orographyAreaLayers, // soft range tints (below water so rivers stay crisp)
           ...inlandWaterLayers, // rivers + lakes drawn ON TOP of land
+          ...canalLayers, // navigable canal lines stay above lake fills
           ...orographyHighlightLayers, // selected-range darken + glow
-          ...waterHighlightLayers, // selected sea / lake / river glow
+          ...waterHighlightLayers,
+          ...canalHighlights, // selected canal glow
           ...timezoneLayers, // time-zone lines (default off via theme) + hit target
           ...timezoneHighlightLayers, // selected time-zone band glow
           countryLabel,

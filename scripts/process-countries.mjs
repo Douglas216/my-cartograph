@@ -27,12 +27,12 @@ const RAW_DIR = path.join(__dirname, '..', 'data', 'raw');
 // catalog row; its water still belongs to the containing ocean/sea's full extent.
 const PERSONAL_MARINE_EXCLUDED = new Set([
   'Amundsen Gulf', 'Amundsen Sea', 'Bellingshausen Sea',
-  'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge', 'Golfe du Lion',
+  'Viscount Melville Sound', 'Ungava Bay', 'Melville Bay', 'Golfo San Jorge',
 ]);
 const MARINE_OCEAN_GROUPS = {
-    'Atlantic Ocean': ['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay', 'Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Golfe du Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
+    'Atlantic Ocean': ['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay', 'Gulf of Cádiz', 'Sea of Crete', 'Dardanelles', 'Sea of Marmara', 'Bosporus', 'Kerch Strait', 'Alboran Sea', 'Ligurian Sea', 'Cantabrian Sea', 'Kattegat', 'Skagerrak', 'Black Sea', 'Caribbean Sea', 'Gulf of Mexico', 'Labrador Sea', 'Hudson Bay', 'Mediterranean Sea', 'Norwegian Sea', 'Bay of Biscay', 'Gulf of Guinea', 'Baltic Sea', 'North Sea', 'Irish Sea', 'Bahía de Campeche', 'Davis Strait', 'Sargasso Sea', 'Tyrrhenian Sea', 'James Bay', 'Hudson Strait', 'English Channel', 'Gulf of Honduras', 'Gulf of Bothnia', 'Adriatic Sea', 'Bristol Channel', 'Inner Seas', 'Gulf of Finland', 'Gulf of Lion', 'Straits of Florida', 'Ionian Sea', 'Gulf of Saint Lawrence', 'Bay of Fundy', 'Río de la Plata', 'Melville Bay', 'Gulf of Maine', 'Chesapeake Bay', 'Long Island Sound', 'Cape Cod Bay', 'Golfo San Jorge', 'Amazon River', 'Aegean Sea', 'Balearic Sea', 'Strait of Gibraltar', 'Ungava Bay', 'Sea of Azov', 'Delaware Bay'],
     'Pacific Ocean': ['Strait of Tartary', 'Shelikhov Gulf', 'Penzhina Bay', 'Academy Bay', 'Gulf of Bangkok', 'Laizhou Bay', 'Bohai Bay', 'Liaodong Bay', 'Hangzhou Bay', 'Bo Hai', 'Philippine Sea', 'Tasman Sea', 'South China Sea', 'Gulf of Alaska', 'Sea of Okhotsk', 'Coral Sea', 'Sea of Japan', 'Celebes Sea', 'Sulu Sea', 'Banda Sea', 'Luzon Strait', 'Java Sea', 'Yellow Sea', 'East China Sea', 'Bering Sea', 'Gulf of Thailand', 'Golfo de California', 'Great Barrier Reef', 'Bay of Plenty', 'Molucca Sea', 'Bismarck Sea', 'Solomon Sea', 'Gulf of Tonkin', 'Makassar Strait', 'Ceram Sea', 'Inner Sea', 'Taiwan Strait', 'Cook Inlet', 'Bristol Bay', 'Gulf of Tomini', 'Golfo de Panamá', 'Korea Strait', 'Shelikhova Gulf', 'Columbia River', 'Yangtze River', 'Norton Sound'],
-    'Indian Ocean': ['Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Khambhat', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
+    'Indian Ocean': ['Gulf of Suez','Gulf of Aqaba','Palk Strait', 'Bay of Bengal', 'Arabian Sea', 'Red Sea', 'Persian Gulf', 'Mozambique Channel', 'Andaman Sea', 'Arafura Sea', 'Timor Sea', 'Laccadive Sea', 'Great Australian Bight', 'Gulf of Aden', 'Gulf of Oman', 'Gulf of Carpentaria', 'Strait of Malacca', 'Strait of Singapore', 'Gulf of Khambhat', 'Gulf of Kutch', 'Gulf of Mannar', 'Gulf of Martaban'],
     'Arctic Ocean': ['Gulf of Ob', 'Khatanga Gulf', 'Beaufort Sea', 'Baffin Bay', 'Greenland Sea', 'Barents Sea', 'Chukchi Sea', 'Kara Sea', 'Laptev Sea', 'White Sea', 'The North Western Passages', 'Viscount Melville Sound', 'East Siberian Sea', 'Amundsen Gulf', 'Kotzebue Sound'],
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
     'Atlantic / Southern oceans': ['Scotia Sea'],
@@ -44,6 +44,7 @@ const MARINE_OCEAN_GROUPS = {
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Gulf of Suez':'Red Sea', 'Gulf of Aqaba':'Red Sea',
   'Taman Bay':'Kerch Strait', 'Taganrog Bay':'Sea of Azov',
   'Dnieper-Bug Estuary':'Black Sea', 'Burgas Bay':'Black Sea',
   'Gulf of Odessa':'Black Sea', 'Karkinit Bay':'Black Sea', 'Kalamita Bay':'Black Sea',
@@ -66,7 +67,7 @@ const MARINE_PARENT_OVERRIDES = {
   'Sea of Azov': 'Black Sea',
   'Adriatic Sea': 'Mediterranean Sea', 'Aegean Sea': 'Mediterranean Sea',
   'Ionian Sea': 'Mediterranean Sea', 'Tyrrhenian Sea': 'Mediterranean Sea',
-  'Balearic Sea': 'Mediterranean Sea', 'Golfe du Lion': 'Mediterranean Sea',
+  'Balearic Sea': 'Mediterranean Sea', 'Gulf of Lion': 'Mediterranean Sea',
   'Gulf of Bothnia': 'Baltic Sea', 'Gulf of Finland': 'Baltic Sea',
   'James Bay': 'Hudson Bay', 'Bahía de Campeche': 'Gulf of Mexico',
   'Gulf of Tonkin': 'South China Sea', 'Gulf of Thailand': 'South China Sea',
@@ -105,7 +106,7 @@ const PERSONAL_RIVERS = {
   Godavari: ['Godävari'], Krishna: ['Krishna'],
 };
 const PERSONAL_LAKES = [
-  'Lake Superior', 'Lake Michigan', 'Lake Huron', 'Lake Erie', 'Lake Ontario',
+  'Gatun Lake', 'Lake Nasser', 'Lake Superior', 'Lake Michigan', 'Lake Huron', 'Lake Erie', 'Lake Ontario',
   'Great Slave Lake', 'Great Bear Lake', 'Lake Athabasca', 'Lake Winnipeg',
   'Great Salt Lake', 'Lake Tahoe', 'Lago de Nicaragua', 'Lago de Managua',
   'Lago Titicaca', 'Lake Maracaibo', 'Lake Ladoga', 'Lake Onega', 'Lake Balkhash',
@@ -139,6 +140,13 @@ const PERSONAL_PEAKS = [
 
 const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
 const FEATURE_ADDITIONS = {
+  "Gulf of Suez": {"countries": ["Egypt"], "story": "The northwestern arm of the Red Sea leads to the Suez Canal, linking this rift-bounded gulf to a global shipping route.", "sourceUrl": "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/AboutSuezCanal.aspx"},
+  "Gulf of Aqaba": {"countries": ["Egypt", "Israel", "Jordan", "Saudi Arabia"], "story": "A deep northeastern arm of the Red Sea, shared by four countries and connected to the main basin through the Straits of Tiran.", "sourceUrl": "https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/seaname/details/16"},
+  "Gulf of Lion": {"countries": ["France", "Spain"], "story": "The Mediterranean embayment along Occitanie and Provence includes the Rh\u00f4ne delta and the French continental shelf.", "sourceUrl": "https://www.wikidata.org/wiki/Q210118"},
+  "Gatun Lake": {"countries": ["Panama"], "story": "An artificial lake created for the Panama Canal, providing its elevated navigable crossing and water for the locks.", "sourceUrl": "https://www.esa.int/Applications/Observing_the_Earth/Earth_from_Space_The_Panama_Canal"},
+  "Lake Nasser": {"countries": ["Egypt", "Sudan"], "story": "The Aswan High Dam reservoir flooded part of historical Nubia and prompted the rescue of monuments including Abu Simbel. Its Sudanese reach is known as Lake Nubia.", "sourceUrl": "https://science.nasa.gov/earth/earth-observatory/lake-nasser-egypt-5988/"},
+  "Suez Canal": {"countries": ["Egypt"], "story": "An artificial sea-level waterway connecting the Mediterranean and Red Sea through Egypt. Opened in 1869, it lets ships travel between Europe and Asia without rounding Africa.", "sourceUrl": "https://www.suezcanal.gov.eg/English/About/SuezCanal/Pages/AboutSuezCanal.aspx"},
+
   "Taman Bay": {"countries": ["Russia"], "story": "A shallow, island-studded embayment between the Chushka and Tuzla spits on the eastern side of Kerch Strait.", "sourceUrl": "https://www.cbd.int/doc/meetings/mar/ebsaws-2017-01/templates/ebsaws-2017-01-template-03-TamanBay-en.pdf"},
   "Dnieper-Bug Estuary": {"countries": ["Ukraine"], "story": "The Dnieper and Southern Bug meet in a two-armed liman, linked to the Black Sea through the narrow entrance beside Kinburn Spit.", "sourceUrl": "https://discover.ua/en/en/locations/dniprovsko-buzkij-liman"},
   "Burgas Bay": {"countries": ["Bulgaria"], "story": "A sheltered western Black Sea embayment on which Burgas developed as a major Bulgarian port.", "sourceUrl": "https://deims.org/locations/929232ff-72b4-4671-8649-79950504f33d"},
@@ -498,6 +506,7 @@ const RIVER_NATIVE = {
 };
 
 const LAKE_NATIVE = {
+  'Gatun Lake':{native:'Lago Gatún',lang:'es'},
   'Qinghai Hu': { col: 'zh' },
   'Poyang Hu': { col: 'zh' },
   'Tai Hu': { col: 'zh' },
@@ -630,7 +639,7 @@ function processCountryTier(rawName, outName) {
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
         // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
-        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU'].includes(adm0),
+        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU','EGY','SAU','JOR','ISR','FRA','ESP'].includes(adm0),
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,
@@ -1267,6 +1276,14 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  {name:'Gulf of Lion',featurecla:'gulf',scalerank:4,labelAt:[4.2,43.0],keepLabelComponent:true,
+    ring:[[3.316,42.319],[5.855,43.05],[6.1,43.4],[5,44],[3,44],[2.5,42.5],[3.316,42.319]]},
+
+  {name:'Gulf of Suez',featurecla:'gulf',scalerank:4,labelAt:[33.05,28.65],keepLabelComponent:true,
+    ring:[[33.65,27.45],[34.033333,27.45],[34.25,27.716667],[34.4,28],[33.7,29.6],[32.6,30.2],[32.1,30.1],[32.1,29.4],[33,28],[33.65,27.45]]},
+  {name:'Gulf of Aqaba',featurecla:'gulf',scalerank:4,labelAt:[34.75,29.15],keepLabelComponent:true,
+    ring:[[34.35,27.913889],[34.55,27.913889],[34.583333,27.969444],[34.619974,28.031181],[34.75,28.2],[35.4,29.65],[34.8,29.8],[34.3,29.5],[34,28.5],[34.35,27.913889]]},
+
 
   {name:'Taman Bay', featurecla:'bay', scalerank:6, labelAt:[36.78,45.27],
     coastBetween:{country:'RUS',entrance:[[36.687999,45.331488],[36.594737,45.20482]]}, keepLabelComponent:true},
@@ -1532,13 +1549,15 @@ function clipMarineAtEntrance(geometry, [a,b], interior) {
 
 function enrichSeas() {
   const data = readRaw('seas-raw.geojson');
-  data.features = data.features.filter((f) => !f.properties.curated && !SEA_ADD.some(s=>s.name===f.properties.name)); // curated masks replace source fragments
+  data.features = data.features.filter((f) => !f.properties.curated && !SEA_ADD.some(s=>s.name===(f.properties.name==='Golfe du Lion'?'Gulf of Lion':f.properties.name))); // curated masks replace source fragments
   // Retained subset of Natural Earth's 10m marine source; unrelated names
   // never enter the personal atlas. Keep membership decisions in this script.
   const additions=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','marine-additions.geojson')));
   const requested=new Set(['Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Alboran Sea','Ligurian Sea','Skagerrak','Gulf of Ob','Khatanga Gulf']);
   data.features.push(...additions.features.filter(f=>requested.has(f.properties.name)));
   for (const f of data.features) {
+    if(f.properties.name==='Golfe du Lion')f.properties.name='Gulf of Lion';
+    Object.assign(f.properties,FEATURE_ADDITIONS[f.properties.name]??{});
     if (f.properties.name === 'Shelikhova Gulf') f.properties.name='Shelikhov Gulf';
     if (['Skagerrak','Dardanelles'].includes(f.properties.name)) f.properties.featurecla='strait';
     const label = {'Sea of Crete':[25.0,35.8], 'Sea of Marmara':[28.2,40.75], 'Bosporus':[29.066735,41.107001], 'Dardanelles':[26.43,40.2], 'Ligurian Sea':[8.9,43.8], 'Skagerrak':[9.3,57.9], 'Gulf of Ob':[73.1,70.5], 'Khatanga Gulf':[110.5,73.7]}[f.properties.name];
@@ -1605,6 +1624,13 @@ function enrichSeas() {
     if (!coordinates.length) throw new Error(`Marine precision grid erased ${f.properties.name}`);
     f.geometry={type:'MultiPolygon',coordinates};
   }
+  // Shared Red Sea entrances: restore the northern coastal water, then let
+  // each gulf own its complete footprint up to the common mouth boundary.
+  const redSea=data.features.find(f=>f.properties.name==='Red Sea');
+  const northRedSea=clipRingToWater([[32,27.2],[35.5,27.2],[35.5,30.2],[32,30.2],[32,27.2]],land,landBb);
+  const redGulfs=['Gulf of Suez','Gulf of Aqaba'].map(name=>data.features.find(f=>f.properties.name===name));
+  if(!redSea||!northRedSea||redGulfs.some(f=>!f))throw Error('Missing northern Red Sea geometry');
+  redSea.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(polygonClipping.union(redSea.geometry.coordinates,northRedSea.coordinates),...redGulfs.map(f=>f.geometry.coordinates))};
   // Razim–Sinoe lagoon coast: the generalized marine outline skips water
   // that the detailed country source exposes. Restore the coastal envelope,
   // using only original land to define the shoreline; no shore is redrawn.
@@ -1892,6 +1918,7 @@ function buildOrography() {
 
 // One label point per named lake (centroid of its largest ring), so big lakes
 // like the Great Lakes get a single clean label. scalerank drives priority.
+const LAKE_LABEL_POS = {'Lake Nasser':[32.7,23.5]};
 function buildLakeLabels() {
   const data = readGeo('lakes.geojson');
   const points = data.features
@@ -1914,7 +1941,7 @@ function buildLakeLabels() {
       const extent = Math.max((bb[2] - bb[0]) * Math.cos((midLat * Math.PI) / 180), bb[3] - bb[1]);
       return {
         type: 'Feature',
-        geometry: { type: 'Point', coordinates: [x / ring.length, y / ring.length] },
+        geometry: { type: 'Point', coordinates: LAKE_LABEL_POS[p.name] ?? [x / ring.length, y / ring.length] },
         properties: {
           name: p.name,
           scalerank: p.scalerank ?? 5,
@@ -2500,6 +2527,8 @@ const PERSONAL_RIVER_INFO = {
 };
 
 const LAKE_INFO = {
+  'Gatun Lake':{areaKm2:430,salinity:'freshwater'},
+  'Lake Nasser':{areaKm2:6000,salinity:'freshwater'},
   'Lake Baikal': { areaKm2: 31722, maxDepthM: 1642, salinity: 'freshwater' },
   'Lake Superior': { areaKm2: 82100, maxDepthM: 406, salinity: 'freshwater' },
   'Lake Michigan': { areaKm2: 58000, maxDepthM: 281, salinity: 'freshwater' },
@@ -2820,6 +2849,20 @@ buildSeaLabels();
   lakes.features.push({ type: 'Feature', geometry, properties: { name: 'Lake Maracaibo', featurecla: 'Lake', scalerank: 1 } });
   writeGeo('lakes.geojson', lakes);
 }
+// Prefer the detailed reservoir shorelines and a consistent English map name.
+{
+  const lakes=readGeo('lakes.geojson'), detailed=readRaw('lakes-10m-raw.geojson');
+  lakes.features=lakes.features.filter(f=>!['Lago Gatun','Lake Nasser'].includes(f.properties.name));
+  for(const rawName of ['Lago Gatun','Lake Nasser']) {
+    const f=structuredClone(detailed.features.find(f=>f.properties.name===rawName));
+    if(!f)throw Error(`Missing detailed lake: ${rawName}`);
+    f.properties.name=rawName==='Lago Gatun'?'Gatun Lake':rawName;
+    Object.assign(f.properties,FEATURE_ADDITIONS[f.properties.name]);
+    lakes.features.push(f);
+  }
+  writeGeo('lakes.geojson',lakes);
+}
+buildCanals();
 console.log('Building lake labels...');
 buildLakeLabels();
 
@@ -2900,7 +2943,7 @@ function applyPersonalSelection() {
   // Generate the human-readable inventory from the exact display files.
   const sections = [
     ['Countries and territories', 'countries-labels'], ['Subdivisions', 'admin1-labels'],
-    ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Lakes', 'lake-labels'],
+    ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Canals','canals'], ['Lakes', 'lake-labels'],
     ['Mountain ranges', 'range-labels'], ['Peaks', 'peaks'], ['Oceans', 'ocean-labels'], ['Marine areas', 'sea-labels'],
   ];
   let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. All five oceans remain; named marine areas follow PERSONAL_MARINE_EXCLUDED. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
@@ -2974,10 +3017,11 @@ function buildCatalog() {
     const data = fact('rivers', name);
     return { id: name, name, aliases: PERSONAL_RIVERS[name], countries: countriesFor('rivers', name), length: name === 'Tarim' ? 1321 : data.lengthKm?.value ?? null, lengthYear: data.lengthKm?.year ?? null, source: p.source_name, mouth: p.mouth_name, ...FEATURE_ADDITIONS[name], sourceUrl: FEATURE_ADDITIONS[name]?.sourceUrl ?? url(data) };
   });
+  riverRows.push({id:'Suez Canal',name:'Suez Canal',kind:'canal',length:193.3,countries:['Egypt'],source:'Mediterranean Sea (Port Said)',mouth:'Gulf of Suez (Suez)',...FEATURE_ADDITIONS['Suez Canal']});
   const lakeRows = [...new Map(readGeo('lakes.geojson').features.map(f => [f.properties.name, f])).values()].map(f => {
     const p = f.properties, data = fact('lakes', p.name);
     const displayName = { 'Tai Hu': 'Taihu', 'Qinghai Hu': 'Qinghai Lake', 'Lago de Nicaragua': 'Lake Nicaragua', 'Lago de Managua': 'Lake Managua', 'Lago Titicaca': 'Lake Titicaca' }[p.name] ?? p.name;
-    return { id: p.name, name: displayName, area: data.areaKm2?.value ?? p.area_km2 ?? null, areaYear: data.areaKm2?.year ?? null, volume: preferredLakeVolumes[p.name] ?? data.volumeKm3?.value ?? null, volumeYear: data.volumeKm3?.year ?? null, countries: countriesFor('lakes', p.name), sourceUrl: p.name === 'Tai Hu' ? 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4730468/' : p.name in preferredLakeVolumes ? 'https://www.epa.gov/greatlakes/physical-features-great-lakes' : url(data) };
+    return { id: p.name, name: displayName, area: data.areaKm2?.value ?? p.area_km2 ?? null, areaYear: data.areaKm2?.year ?? null, volume: preferredLakeVolumes[p.name] ?? data.volumeKm3?.value ?? null, volumeYear: data.volumeKm3?.year ?? null, countries: countriesFor('lakes', p.name), ...FEATURE_ADDITIONS[p.name], sourceUrl: FEATURE_ADDITIONS[p.name]?.sourceUrl ?? (p.name === 'Tai Hu' ? 'https://pmc.ncbi.nlm.nih.gov/articles/PMC4730468/' : p.name in preferredLakeVolumes ? 'https://www.epa.gov/greatlakes/physical-features-great-lakes' : url(data)) };
   });
   // Spherical polygon area: a transparent measurement of the generalized map
   // footprint, not a claim about an exact geological boundary.
@@ -3004,7 +3048,7 @@ function buildCatalog() {
   const sections = [
     { id: 'countries', title: 'Countries & territories', description: 'All political features on the map. Capitals from the reference snapshot; Natural Earth population estimates; the reference year appears below each figure. A dash means no capital is recorded in the source.', rows: countryRows },
     { id: 'cities', title: 'Cities', description: 'National capitals and cities with a source population of at least one million. Natural Earth estimates use differing urban definitions and reference dates; these are not current census counts.', rows: cityRows },
-    { id: 'rivers', title: 'Rivers', description: 'One row per river, including its locally named reaches. Lengths are approximate reference values; headwater conventions vary. Countries include border reaches, not every country in the drainage basin.', rows: riverRows },
+    { id: 'rivers', title: 'Rivers & canals', description: 'One row per river or canal, including locally named river reaches. Canal endpoints are terminals, not a direction of flow. Lengths are approximate reference values; headwater conventions vary. Countries include border reaches, not every country in the drainage basin.', rows: riverRows },
     { id: 'lakes', title: 'Lakes', description: 'Reference surface areas and volumes, not live water levels. Available measurement years appear below the figures. A dash means the measurement is not recorded; the Aral Sea is listed as its North and South remnants.', rows: lakeRows },
     { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth or curated footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
     { id: 'peaks', title: 'Peaks', description: 'Selected summits, including the ten highest independent peaks and China’s Five Yue, with elevations in metres above sea level. Border peaks list both countries; territorial claims are described on the map.', rows: peakRows },
@@ -3100,4 +3144,22 @@ function buildMarineEditor() {
   }
   writeGeo('marine-editor.json',{version:1,features:definitions()});
   writeGeo('marine-editor-land.geojson',land);
+}
+
+// A navigable canal has terminals, not a downstream flow. Keep its centerline
+// separate from the river orientation/animation pipeline.
+function buildCanals(){
+  const raw=readRaw('rivers-10m-raw.geojson');
+  const parts=raw.features.filter(f=>f.properties.name==='Suez Canal').flatMap(f=>f.geometry.type==='LineString'?[f.geometry.coordinates]:f.geometry.coordinates).map(line=>structuredClone(line));
+  if(parts.length!==3)throw Error('Unexpected Suez centerline components');
+  const endpoints=parts.flatMap(line=>[line[0],line.at(-1)]),north=endpoints.reduce((a,b)=>a[1]>b[1]?a:b);
+  let cursor=north,coordinates=[];
+  while(parts.length){
+    let best=null;
+    parts.forEach((line,i)=>{for(const reverse of [false,true]){const p=reverse?line.at(-1):line[0],distance=Math.hypot(cursor[0]-p[0],cursor[1]-p[1]);if(!best||distance<best.distance)best={i,reverse,distance};}});
+    if(best.distance>.002)throw Error('Disconnected Suez centerline');
+    const line=parts.splice(best.i,1)[0];if(best.reverse)line.reverse();coordinates.push(...line);cursor=line.at(-1);
+  }
+  coordinates.push([32.576,29.985],[32.568,29.963],[32.57,29.935]);
+  writeGeo('canals.geojson',{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'LineString',coordinates},properties:{name:'Suez Canal',featurecla:'Canal',scalerank:4,...FEATURE_ADDITIONS['Suez Canal']}}]});
 }
