@@ -39,3 +39,21 @@ The complete readable source/mouth inventory is generated in [My atlas](my-atlas
 The animation depicts downstream travel along stored centerlines. All selected rivers have an explicit approximate downstream reference, including tributary confluences and inland sinks. Name-changing reaches are pooled into one network. Distinct neighbours determine topology despite duplicate digitizations; weighted network distances orient parts toward downstream endpoints. Multiple coastal delta outlets are treated as sinks, rather than routing one distributary back inland toward another.
 
 Run `node --test scripts/check-rivers.test.mjs` after regeneration. Checks cover Danube/Donau continuity, duplicate linework, disconnected components, delta outlets, complete cards, and a downstream audit of the generated selection. This checks the curated centerline model, not instantaneous hydrology, tides, or seasonal discharge.
+
+## Ganges delta direction correction
+
+The map's Natural Earth Ganges features include a Hooghly reach ending above the
+50m ocean polygon and a Padma reach ending at the Jamuna junction near Goalundo.
+Both are downstream exits from the mapped Ganges graph, even though neither
+passes the generic near-coast outlet test. Treating only coastal termini as
+outlets incorrectly reversed those two branches toward neighboring distributaries.
+
+`RIVER_OUTLET_COORDS` now pins these mapped downstream termini, matched only to
+actual degree-one endpoint clusters within the normal 2 km joining tolerance.
+They supplement the coastal outlet roots; all other rivers keep their existing
+orientation logic. The fix reverses coordinate order on exactly two Ganges
+parts, retaining their geometry, names, upstream course and remaining outlets.
+Regression checks cover both explicit termini and idempotent downstream orientation.
+
+References: [Bangladesh Joint Rivers Commission: Ganges/Padma course](https://jrcb.portal.gov.bd/pages/static-pages/6922dd55933eb65569e148f8),
+[Banglapedia: Ganges–Padma river system and its western distributaries](https://en.banglapedia.org/index.php/Ganges-Padma_River_System).

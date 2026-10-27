@@ -64,3 +64,31 @@ test('generated river geometry passes the full downstream audit', { skip: !fs.ex
   const ocean = JSON.parse(fs.readFileSync(new URL('../data/raw/ocean-50m-raw.geojson', import.meta.url)));
   assert.deepEqual(orientRiverParts(data, riverOceanDistFn(ocean)), []);
 });
+
+test('Ganges delta drains through both the inland-cut Hooghly and the Padma confluence',()=>{
+ const data=collection([
+  feature('Ganges',[[87.919833,24.825048],[88.439749,22.986478]]),
+  feature('Ganges',[[88.087058,22.217714],[88.439749,22.986478]]),
+  feature('Ganges',[[88.439749,22.986478],[89.109373,23.991921]]),
+  feature('Ganges',[[89.749282,23.848054],[89.109373,23.991921]]),
+  feature('Ganges',[[89.109373,23.991921],[90.5,22]]),
+ ]);
+ const coast=p=>p[0]===90.5&&p[1]===22?0:1000;
+ const backwards=orientRiverParts(data,coast);
+ assert.deepEqual(backwards.map(p=>p.fi),[1,3]);
+ reverseParts(data,backwards);
+ assert.deepEqual(orientRiverParts(data,coast),[]);
+});
+
+test('generated Hooghly and Padma delta reaches point downstream',()=>{
+ const rivers=JSON.parse(fs.readFileSync(new URL('../public/geo/rivers.geojson',import.meta.url)));
+ const lines=rivers.features.filter(f=>f.properties.name==='Ganges').flatMap(f=>f.geometry.type==='LineString'?[f.geometry.coordinates]:f.geometry.coordinates);
+ for(const [upstream,downstream] of [
+  [[88.439749,22.986478],[88.087058,22.217714]],
+  [[89.109373,23.991921],[89.749282,23.848054]],
+ ]){
+  const same=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1])<1e-7;
+  const line=lines.find(l=>[l[0],l.at(-1)].some(p=>same(p,downstream)));
+  assert(line,'missing delta reach');assert(same(line[0],upstream),'delta reach starts at its outlet');assert(same(line.at(-1),downstream),'delta reach flows away from its downstream terminal');
+ }
+});

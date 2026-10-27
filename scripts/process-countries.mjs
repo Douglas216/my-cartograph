@@ -2179,6 +2179,14 @@ const RIVER_MOUTH_COORDS = {
   Godavari: [82.3, 16.7], Krishna: [80.9, 15.75],
 };
 
+// Additional downstream termini of a multi-outlet system. NE stops the
+// Hooghly above the coastal ocean polygon and the Padma at its Jamuna junction;
+// neither passes a generic coast-distance test, but both drain out of this graph.
+// Match only actual terminal nodes within JOIN_KM, never nearby interior bends.
+const RIVER_OUTLET_COORDS = {
+  Ganges: [[88.087058,22.217714], [89.749282,23.848054]],
+};
+
 const RIVER_REVERSE = new Map([
   ['Nile', null], ['Tigris', null], ['Dicle', null], ['Tocantins', null],
   ['Don', null], ['Zambezi', null], ['Irtysh', null], ['Al Furat', null],
@@ -2397,7 +2405,10 @@ function orientRiverParts(rivers, distOcean) {
         ?? aliases.map(alias => RIVER_INFO[alias]?.mouth?.type).find(Boolean);
       const coastal = ['ocean', 'sea', 'gulf', 'bay', 'estuary'].includes(mouthType);
       const outlets = coastal && mouthHint ? choices.filter(k => ref(k) < 180 && distOcean(coord.get(k)) < 20) : [];
-      const roots = outlets.length ? outlets : [cmouth];
+      const explicitOutlets=choices.filter(k=>(RIVER_OUTLET_COORDS[name]??[])
+        .some(point=>riverSegKm(coord.get(k),point)<JOIN_KM));
+      const roots = [...new Set([...outlets,...explicitOutlets])];
+      if(!roots.length)roots.push(cmouth);
       for (const key of nodes) depth.set(key, Infinity);
       for (const key of roots) depth.set(key, 0);
       const pending = new Set(nodes);
