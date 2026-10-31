@@ -5,7 +5,7 @@
     {
       "name": "Black Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 1.1182481842869376e-07
+      "landOverlapSquareDegrees": 1.1217488841001179e-07
     },
     {
       "name": "Philippine Sea",
@@ -536,7 +536,7 @@
     {
       "name": "Bosporus",
       "valid": true,
-      "landOverlapSquareDegrees": 7.360620668535655e-10
+      "landOverlapSquareDegrees": 4.1195251360937305e-09
     },
     {
       "name": "Dardanelles",

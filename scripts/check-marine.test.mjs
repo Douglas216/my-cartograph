@@ -249,6 +249,7 @@ test('Turkish straits and adjacent basins cover the entrance water without overl
   const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features
     .filter(f=>['TUR','GRC'].includes(f.properties.ADM0_A3)).map(f=>f.geometry.coordinates);
   for(const [basin,strait,[w,s,e,n]] of [
+    ['Black Sea','Bosporus',[29.08,41.19,29.19,41.27]],
     ['Aegean Sea','Dardanelles',[26.12,39.96,26.33,40.03]],
     ['Sea of Marmara','Bosporus',[28.97,40.99,29.04,41.02]],
   ]) {
@@ -280,4 +281,13 @@ test('Gulf of Guinea children have shared seams and direct catalog parents', () 
     assert(area(clipping.intersection(raw.get(name).geometry.coordinates,raw.get('Gulf of Guinea').geometry.coordinates))<1e-8,name);
   }
   assert(area(clipping.intersection(raw.get('Bight of Bonny').geometry.coordinates,raw.get('Corisco Bay').geometry.coordinates))<1e-8);
+});
+
+test('Bosporus reaches the northern lighthouse entrance as one connected water',()=>{
+ const strait=read('seas.geojson').features.find(f=>f.properties.name==='Bosporus').geometry.coordinates;
+ assert.equal(strait.length,1,'detached southern artifact must not return');
+ const probe=[[[[29.12,41.219],[29.125,41.219],[29.125,41.225],[29.12,41.225],[29.12,41.219]]]];
+ assert(area(clipping.difference(probe,strait))<1e-10,'northern approach is missing');
+ const vertices=strait.flat(2);
+ for(const p of [[29.109223,41.235297],[29.150487,41.222829]])assert(vertices.some(q=>Math.hypot(q[0]-p[0],q[1]-p[1])<2e-6),'missing lighthouse mouth endpoint');
 });

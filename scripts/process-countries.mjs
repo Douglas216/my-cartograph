@@ -1664,10 +1664,21 @@ function enrichSeas() {
   // Keep only water connected to the source sea, excluding inland lake holes.
   const connected=joined.filter(poly=>polygonClipping.intersection([poly],blackSea.geometry.coordinates).length);
   blackSea.geometry={type:'MultiPolygon',coordinates:connected};
+  // Northern Bosporus: source geometry stops south of the lighthouse entrance.
+  // Turkish Ministry entrance definition (2024 fisheries notice, map 2):
+  // https://trabzon.tarimorman.gov.tr/Sayfalar/Detay.aspx?Liste=Duyuru&OgeId=240
+  // Project lighthouse positions to original 10m shore; only the mouth is drawn.
+  const bosporus=data.features.find(f=>f.properties.name==='Bosporus');
+  const northBosporus=clipRingToWater([[29.109223,41.235297],[29.150487,41.222829],[29.20,41.16],[29.02,41.16],[29.109223,41.235297]],land,landBb);
+  if(!bosporus||!northBosporus)throw Error('Missing northern Bosporus water');
+  const bosporusParts=polygonClipping.union(bosporus.geometry.coordinates,roundMarineCoordinates(northBosporus.coordinates));
+  // Exclude the tiny detached artifact beside the southern entrance.
+  bosporus.geometry={type:'MultiPolygon',coordinates:bosporusParts.filter(poly=>pointInGeom([29.066735,41.107001],{type:'Polygon',coordinates:poly}))};
   // Shared entrance seams: extend the neighbouring basin across the legacy
   // generalized edge, then cut it with the actual fitted strait polygon.
   // The mask sides lie inland or inside existing basin water, not offshore.
   for(const [basinName,straitName,ring] of [
+    ['Black Sea','Bosporus',[[28.95,41.18],[29.30,41.18],[29.30,41.35],[28.95,41.35],[28.95,41.18]]],
     ['Aegean Sea','Dardanelles',[[26.0,39.8],[26.5,39.8],[26.5,40.0],[26.1,40.12],[26.0,39.8]]],
     ['Sea of Marmara','Bosporus',[[28.85,40.92],[29.15,40.92],[29.15,41.04],[28.85,41.04],[28.85,40.92]]],
   ]) {
