@@ -10,3 +10,8 @@
 
 @media(max-width:850px){.catalog-section-peaks table,.catalog-section-oceans table,.catalog-section-ranges table,.catalog-section-seas table{min-width:0}.catalog-section-peaks .catalog-name,.catalog-section-ranges .catalog-name,.catalog-section-seas .catalog-name{min-width:145px}}
 @media(max-width:850px){.catalog-header-inner{min-height:60px;padding:0 18px}.catalog-content{padding:24px 18px 18px}.catalog-intro{gap:14px;margin-bottom:18px}.catalog-eyebrow{margin-bottom:8px}.catalog-intro h1{font-size:30px}.catalog-intro-copy{font-size:12px;margin-top:8px}.catalog-search{padding:9px 12px}.catalog-tabs a{padding:8px 9px;font-size:11px}.catalog-tabs a span{font-size:9px}.catalog-tab-intro{padding:14px 0 16px}.catalog-section-heading{padding:16px}.catalog-section-heading h2{font-size:21px}.catalog-section-heading p{font-size:10px;line-height:1.6;margin-top:6px}.catalog-section th{padding:10px}.catalog-section td{padding:12px 10px}.catalog-section-countries td,.catalog-section-cities td{min-width:0}.catalog-section-countries .catalog-name,.catalog-section-cities .catalog-name{min-width:130px}.catalog-section-countries td:nth-child(2),.catalog-section-cities td:nth-child(2){width:40%}}
+
+.catalog-city-filters { display:flex; flex-wrap:wrap; align-items:center; gap:16px; padding:0 0 20px; }
+.catalog-city-filters label { display:flex; align-items:center; gap:9px; font-size:13px; color:#61736d; }
+.catalog-city-filters select { max-width:280px; padding:9px 12px; border:1px solid #dbe2dc; border-radius:8px; background:#fff; color:#243b32; font:inherit; }
+.catalog-city-filters button { padding:9px 12px; background:transparent; border:0; color:#567d6b; cursor:pointer; }

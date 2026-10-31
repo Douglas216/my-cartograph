@@ -27,7 +27,7 @@ export const capitalStar: LayerSpecification = {
   filter: isNationalCapital as any,
   layout: {
     'icon-image': 'capital-star',
-    'icon-size': ['interpolate', ['linear'], ['zoom'], 3, 0.38, 6, 0.5, 10, 0.65],
+    'icon-size': ['interpolate', ['linear'], ['zoom'], 3, 0.7, 6, 0.85, 10, 1.0],
     'icon-allow-overlap': true,
   },
 };
@@ -42,7 +42,7 @@ export const capitalLabel: LayerSpecification = {
     // Capitals label bilingually where the endonym differs: "Beijing" over 北京.
     'text-field': withNativeLine(['get', 'NAME']),
     ...cityName.capital.layout,
-    'text-offset': [0, 1.1],
+    'text-offset': [0, 1.6],
     'text-anchor': 'top',
     'text-allow-overlap': false,
     'text-padding': 4,
@@ -55,12 +55,12 @@ export const cityCircle: LayerSpecification = {
   type: 'circle',
   source: 'cities',
   minzoom: 3,
-  filter: ['all', notNationalCapital, ['>=', ['get', 'POP_MAX'], 1000000]] as any,
+  filter: ['all', notNationalCapital, ['!=', ['get', 'SHOW_ADMIN1_CAPITAL'], true], ['>=', ['get', 'POP_MAX'], 1000000]] as any,
   paint: {
     'circle-radius': [
       'interpolate', ['linear'], ['zoom'],
-      3, ['case', ['>=', ['get', 'POP_MAX'], 10000000], 5, ['>=', ['get', 'POP_MAX'], 5000000], 4, 3],
-      8, ['case', ['>=', ['get', 'POP_MAX'], 10000000], 8, ['>=', ['get', 'POP_MAX'], 5000000], 6, 5],
+      3, ['case', ['>=', ['coalesce', ['get', 'POP_MAX'], 0], 10000000], 5, ['>=', ['coalesce', ['get', 'POP_MAX'], 0], 5000000], 4, 3],
+      8, ['case', ['>=', ['coalesce', ['get', 'POP_MAX'], 0], 10000000], 8, ['>=', ['coalesce', ['get', 'POP_MAX'], 0], 5000000], 6, 5],
     ],
     'circle-color': circleColor as any,
     'circle-stroke-color': '#ffffff',
@@ -74,7 +74,7 @@ export const cityLabel: LayerSpecification = {
   type: 'symbol',
   source: 'cities',
   minzoom: 3,
-  filter: ['all', notNationalCapital, ['>=', ['get', 'POP_MAX'], 1000000]] as any,
+  filter: ['all', notNationalCapital, ['!=', ['get', 'SHOW_ADMIN1_CAPITAL'], true], ['>=', ['get', 'POP_MAX'], 1000000]] as any,
   layout: {
     'text-field': ['get', 'NAME'],
     ...cityName.major.layout,
@@ -86,9 +86,18 @@ export const cityLabel: LayerSpecification = {
   paint: { ...cityName.major.paint },
 };
 
-export const cityLayers = [
-  cityCircle,
-  capitalStar,
-  cityLabel,
-  capitalLabel,
+// Separate overlay: large capitals retain overview visibility; smaller seats
+// appear at z5 alongside subdivision borders, without a population cutoff.
+const subdivisionFilter = ['all', notNationalCapital, ['==', ['get', 'SHOW_ADMIN1_CAPITAL'], true]];
+export const subdivisionCityLayers: LayerSpecification[] = [
+  ...[false, true].flatMap(small => {
+    const suffix = small ? 'small' : 'major';
+    const population = small ? ['<', ['coalesce', ['get', 'POP_MAX'], 0], 1000000] : ['>=', ['coalesce', ['get', 'POP_MAX'], 0], 1000000];
+    const filter = [...subdivisionFilter, population] as never;
+    return [
+      { ...cityCircle, id: `subdivision-capital-${suffix}`, minzoom: small ? 5 : 3, filter },
+      { ...cityLabel, id: `subdivision-capital-label-${suffix}`, minzoom: small ? 5 : 3, filter },
+    ] as LayerSpecification[];
+  }),
 ];
+export const cityLayers = [cityCircle, ...subdivisionCityLayers, capitalStar, cityLabel, capitalLabel];

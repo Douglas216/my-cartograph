@@ -8,7 +8,7 @@ type Catalog = { sections: Section[]; retrieved: string };
 type Column = { key: string; label: string; numeric?: boolean; unit?: string };
 const tabs = [
   { id: 'countries', label: 'Countries', description: 'The political geography of the world.', sections: ['countries'] },
-  { id: 'cities', label: 'Cities', description: 'Capitals and cities of a million or more.', sections: ['cities'] },
+  { id: 'cities', label: 'Cities', description: 'National capitals, selected subdivision capitals and major cities.', sections: ['cities'] },
   { id: 'water', label: 'Rivers, canals & lakes', description: 'The waterways and inland waters in my atlas.', sections: ['rivers', 'lakes'] },
   { id: 'ranges', label: 'Mountain ranges', description: 'The mountain systems I have come to know.', sections: ['ranges'] },
   { id: 'peaks', label: 'Peaks', description: 'Great summits and culturally significant mountains.', sections: ['peaks'] },
@@ -16,7 +16,7 @@ const tabs = [
 ];
 const columns: Record<string, Column[]> = {
   countries: [{ key: 'name', label: 'Country / territory' }, { key: 'capital', label: 'Capital' }, { key: 'population', label: 'Population', numeric: true }],
-  cities: [{ key: 'name', label: 'City' }, { key: 'country', label: 'Country / territory' }, { key: 'population', label: 'Population', numeric: true }],
+  cities: [{ key: 'name', label: 'City' }, { key: 'country', label: 'Country / territory' }, { key: 'role', label: 'Role' }, { key: 'capitalOf', label: 'Capital of' }, { key: 'population', label: 'Population', numeric: true }],
   rivers: [{ key: 'name', label: 'River / canal' }, { key: 'length', label: 'Length · km', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'source', label: 'Source / terminal' }, { key: 'mouth', label: 'Mouth / terminus' }],
   lakes: [{ key: 'name', label: 'Lake' }, { key: 'area', label: 'Area · km²', numeric: true }, { key: 'volume', label: 'Volume · km³', numeric: true }, { key: 'countries', label: 'Countries on its shores' }],
   ranges: [{ key: 'name', label: 'Mountain range' }, { key: 'area', label: 'Mapped span · km²', numeric: true }, { key: 'countries', label: 'Countries' }, { key: 'parent', label: 'Part of' }, { key: 'story', label: 'Why it matters' }],
@@ -34,15 +34,23 @@ function searchable(row: Row) {
 }
 
 function CatalogTable({ section, query }: { section: Section; query: string }) {
+  const [role, setRole] = useState('');
+  const [country, setCountry] = useState('');
+  const countries = [...new Set(section.rows.map(r => String(r.country ?? '')))].filter(Boolean).sort();
   const [sort, setSort] = useState({ key: section.id === 'peaks' ? 'elevation' : 'name', direction: section.id === 'peaks' ? -1 : 1 });
-  const rows = useMemo(() => section.rows.filter(row => searchable(row).includes(fold(query.trim()))).sort((a, b) => {
+  const rows = useMemo(() => section.rows.filter(row => searchable(row).includes(fold(query.trim())) && (!role || row.role === role) && (!country || row.country === country)).sort((a, b) => {
     const x = a[sort.key]; const y = b[sort.key];
     if (x == null) return y == null ? 0 : 1;
     if (y == null) return -1;
     return sort.direction * (typeof x === 'number' && typeof y === 'number' ? x - y : String(x).localeCompare(String(y)));
-  }), [section, query, sort]);
+  }), [section, query, sort, role, country]);
   return <section className={`catalog-section catalog-section-${section.id}`} aria-labelledby={`heading-${section.id}`}>
     <div className="catalog-section-heading"><div><h2 id={`heading-${section.id}`}>{section.title} <span>{rows.length.toLocaleString()}</span></h2><p>{section.description}</p></div><span className="catalog-record-count">{query ? `${rows.length} of ${section.rows.length}` : `${section.rows.length.toLocaleString()} entries`}</span></div>
+    {section.id === 'cities' && <div className="catalog-city-filters">
+      <label>Role <select value={role} onChange={e => setRole(e.target.value)}><option value="">All roles</option>{['National capital','First-level subdivision capital','City'].map(r => <option key={r}>{r}</option>)}</select></label>
+      <label>Country <select value={country} onChange={e => setCountry(e.target.value)}><option value="">All countries</option>{countries.map(c => <option key={c}>{c}</option>)}</select></label>
+      {(role || country) && <button onClick={() => {setRole('');setCountry('');}}>Reset filters</button>}
+    </div>}
     <div className="catalog-table-scroll" role="region" aria-label={`${section.title} table`} tabIndex={0}>
       <table><thead><tr><th className="catalog-index" scope="col">#</th>{columns[section.id].map(col => <th key={col.key} scope="col" className={col.numeric ? 'catalog-numeric' : ''} aria-sort={sort.key === col.key ? sort.direction === 1 ? 'ascending' : 'descending' : 'none'}><button onClick={() => setSort({ key: col.key, direction: sort.key === col.key ? -sort.direction : 1 })}>{col.label}<span aria-hidden="true">{sort.key === col.key ? sort.direction === 1 ? '↑' : '↓' : '↕'}</span></button></th>)}</tr></thead>
         <tbody>{rows.map((row, index) => <tr key={row.id}><td className="catalog-index">{String(index + 1).padStart(2, '0')}</td>{columns[section.id].map(col => {
@@ -51,6 +59,7 @@ function CatalogTable({ section, query }: { section: Section; query: string }) {
             {col.key === 'name' && section.id === 'countries' && <span className="catalog-flag" aria-hidden="true">{flag(row.iso2)}</span>}
             {value == null || value === '' || (Array.isArray(value) && !value.length) ? <span className="catalog-missing" title="Not recorded in the reference snapshot">—</span> : Array.isArray(value) ? value.join(' · ') : typeof value === 'number' ? <>{section.id === 'ranges' && col.key === 'area' ? '≈ ' : ''}{number.format(value)}</> : value}
             {col.key === 'name' && row.sourceUrl && <a className="catalog-source" href={row.sourceUrl} target="_blank" rel="noreferrer" aria-label={`Reference for ${row.name}`} title="View reference">↗</a>}
+            {col.key === 'name' && row.note && <span className="catalog-year">{row.note}</span>}
             {col.key === 'population' && row.populationYear && <span className="catalog-year">{row.populationYear}</span>}
             {['area', 'volume', 'length'].includes(col.key) && row[`${col.key}Year`] && <span className="catalog-year">{row[`${col.key}Year`]}</span>}
           </td>;

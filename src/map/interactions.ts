@@ -18,6 +18,8 @@ export function setupInteractions(
   // fill beneath them; the open ocean is the last resort.
   const interactiveLayers = [
     'capital-star',
+    'subdivision-capital-small',
+    'subdivision-capital-major',
     'city-circle',
     // Peaks have no hit surface of their own — the rendered "▲ Name" symbol IS
     // the click target (symbol layers are queryable like any other).
@@ -37,7 +39,7 @@ export function setupInteractions(
   ];
   const priority = new Map(interactiveLayers.map((id, i) => [id, i]));
 
-  const cityLayerIds = new Set(['city-circle', 'capital-star']);
+  const cityLayerIds = new Set(['city-circle', 'capital-star', 'subdivision-capital-small', 'subdivision-capital-major']);
   const countryFillIds = countryFillLayerIds;
 
   // Natural Earth sea polygons carry a featurecla; map it to an InfoCard type.
@@ -176,12 +178,13 @@ export function setupInteractions(
 
     if (cityLayerIds.has(layerId)) {
       clearHighlights();
+      const capitalOf = typeof props.CAPITAL_OF === 'string' ? JSON.parse(props.CAPITAL_OF) : props.CAPITAL_OF ?? [];
       onSelectPoint({
         id: `city-${props.NAME}`,
         type: 'city',
         name: props.NAME,
         coordinates: [lng, lat],
-        summary: `${props.NAME} is a city in ${props.ADM0NAME}${props.ADM1NAME ? `, ${props.ADM1NAME}` : ''}. Population: ${Number(props.POP_MAX).toLocaleString()}.`,
+        summary: `${props.NAME} · ${props.CITY_ROLE ?? 'City'}${capitalOf.length ? ` of ${capitalOf.join(', ')}` : ` in ${props.ADM0NAME}`}.${props.CAPITAL_NOTE ? ` ${props.CAPITAL_NOTE}` : ''}${props.POP_MAX > 0 ? ` Population: ${Number(props.POP_MAX).toLocaleString()}.` : ''}`,
         population: props.POP_MAX,
         country: props.ADM0NAME,
         nativeName: props.name_native || undefined,

@@ -22,6 +22,11 @@ export const THEMES: Theme[] = [
     layerIds: ['admin1-border', 'admin1-border-focus', 'admin1-label', 'admin1-label-focus'],
   },
   {
+    id: 'subdivisionCapitals',
+    label: 'Subdivision capitals',
+    layerIds: ['subdivision-capital-small', 'subdivision-capital-major', 'subdivision-capital-label-small', 'subdivision-capital-label-major'],
+  },
+  {
     id: 'cities',
     label: 'Cities',
     layerIds: ['city-circle', 'capital-star', 'city-label', 'capital-label'],

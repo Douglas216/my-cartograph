@@ -658,12 +658,878 @@ function processCountryTier(rawName, outName) {
   writeGeo(outName, data);
 }
 
+// Explicit city→first-level-unit membership: do not trust obsolete NE capital flags.
+// Seasonal/shared capitals are retained; national role always takes precedence.
+// Provenance and conventions: docs/subdivision-capitals.md.
+const FIRST_LEVEL_CAPITALS = {
+  "RU": {
+    "Maykop": [
+      "Adygey"
+    ],
+    "Cherkessk": [
+      "Karachay-Cherkess"
+    ],
+    "Vladikavkaz": [
+      "North Ossetia"
+    ],
+    "Kaluga": [
+      "Kaluga"
+    ],
+    "Saransk": [
+      "Mordovia"
+    ],
+    "Yoshkar Ola": [
+      "Mariy-El"
+    ],
+    "Velikiy Novgorod": [
+      "Novgorod"
+    ],
+    "Kursk": [
+      "Kursk"
+    ],
+    "Tula": [
+      "Tula"
+    ],
+    "Tambov": [
+      "Tambov"
+    ],
+    "Kurgan": [
+      "Kurgan"
+    ],
+    "Salekhard": [
+      "Yamal-Nenets"
+    ],
+    "Syktyvkar": [
+      "Komi"
+    ],
+    "Cheboksary": [
+      "Chuvash"
+    ],
+    "Khanty Mansiysk": [
+      "Khanty-Mansiy"
+    ],
+    "Gorno Altaysk": [
+      "Gorno-Altay"
+    ],
+    "Makhachkala": [
+      "Dagestan"
+    ],
+    "Birobidzhan": [
+      "Yevrey"
+    ],
+    "Ivanovo": [
+      "Ivanovo"
+    ],
+    "Kostroma": [
+      "Kostroma"
+    ],
+    "Lipetsk": [
+      "Lipetsk"
+    ],
+    "Orel": [
+      "Orel"
+    ],
+    "Belgorod": [
+      "Belgorod"
+    ],
+    "Vladimir": [
+      "Vladimir"
+    ],
+    "Naryan Mar": [
+      "Nenets"
+    ],
+    "Izhevsk": [
+      "Udmurt"
+    ],
+    "Elista": [
+      "Kalmyk"
+    ],
+    "Nalchik": [
+      "Kabardin-Balkar"
+    ],
+    "Stavropol": [
+      "Stavropol'"
+    ],
+    "Kaliningrad": [
+      "Kaliningrad"
+    ],
+    "Pskov": [
+      "Pskov"
+    ],
+    "Bryansk": [
+      "Bryansk"
+    ],
+    "Smolensk": [
+      "Smolensk"
+    ],
+    "Petrozavodsk": [
+      "Karelia"
+    ],
+    "Tver": [
+      "Tver'"
+    ],
+    "Vologda": [
+      "Vologda"
+    ],
+    "Yaroslavl": [
+      "Yaroslavl'"
+    ],
+    "Rostov": [
+      "Rostov"
+    ],
+    "Krasnodar": [
+      "Krasnodar"
+    ],
+    "Penza": [
+      "Penza"
+    ],
+    "Ryazan": [
+      "Ryazan'"
+    ],
+    "Voronezh": [
+      "Voronezh"
+    ],
+    "Chelyabinsk": [
+      "Chelyabinsk"
+    ],
+    "Kirov": [
+      "Kirov"
+    ],
+    "Astrakhan": [
+      "Astrakhan'"
+    ],
+    "Orenburg": [
+      "Orenburg"
+    ],
+    "Saratov": [
+      "Saratov"
+    ],
+    "Ulyanovsk": [
+      "Ul'yanovsk"
+    ],
+    "Omsk": [
+      "Omsk"
+    ],
+    "Tyumen": [
+      "Tyumen'"
+    ],
+    "Kemerovo": [
+      "Kemerovo"
+    ],
+    "Grozny": [
+      "Chechnya"
+    ],
+    "Abakan": [
+      "Khakassia"
+    ],
+    "Kyzyl": [
+      "Tuva"
+    ],
+    "Ulan-Ude": [
+      "Buryat"
+    ],
+    "Blagoveshchensk": [
+      "Amur"
+    ],
+    "Khabarovsk": [
+      "Khabarovsk"
+    ],
+    "Yuzhno Sakhalinsk": [
+      "Sakhalin"
+    ],
+    "Tomsk": [
+      "Tomsk"
+    ],
+    "Anadyr": [
+      "Chukchi Autonomous Okrug"
+    ],
+    "Murmansk": [
+      "Murmansk"
+    ],
+    "Archangel": [
+      "Arkhangel'sk"
+    ],
+    "Nizhny Novgorod": [
+      "Nizhegorod"
+    ],
+    "Volgograd": [
+      "Volgograd"
+    ],
+    "Ufa": [
+      "Bashkortostan"
+    ],
+    "Yekaterinburg": [
+      "Sverdlovsk"
+    ],
+    "Samara": [
+      "Samara"
+    ],
+    "Kazan": [
+      "Tatarstan"
+    ],
+    "Barnaul": [
+      "Altay"
+    ],
+    "Novosibirsk": [
+      "Novosibirsk"
+    ],
+    "Irkutsk": [
+      "Irkutsk"
+    ],
+    "Krasnoyarsk": [
+      "Krasnoyarsk"
+    ],
+    "Chita": [
+      "Chita"
+    ],
+    "Vladivostok": [
+      "Primor'ye"
+    ],
+    "Yakutsk": [
+      "Sakha (Yakutia)"
+    ],
+    "Magadan": [
+      "Magadan Oblast"
+    ],
+    "Perm": [
+      "Perm'"
+    ],
+    "Petropavlovsk-Kamchatsky": [
+      "Kamchatka"
+    ],
+    "St.  Petersburg": [
+      "City of St. Petersburg"
+    ],
+    "Moscow": [
+      "Moskva"
+    ],
+    "Magas": [
+      "Ingushetia"
+    ],
+    "Gatchina": [
+      "Leningrad Oblast"
+    ],
+    "Krasnogorsk": [
+      "Moscow Oblast"
+    ]
+  },
+  "CN": {
+    "Haikou": [
+      "Hainan"
+    ],
+    "Hefei": [
+      "Anhui"
+    ],
+    "Shijiazhuang": [
+      "Hebei"
+    ],
+    "Hohhot": [
+      "Nei Mongol"
+    ],
+    "Xining": [
+      "Qinghai"
+    ],
+    "Lhasa": [
+      "Xizang"
+    ],
+    "Yinchuan": [
+      "Ningxia Hui"
+    ],
+    "Lanzhou": [
+      "Gansu"
+    ],
+    "Nanning": [
+      "Guangxi"
+    ],
+    "Guiyang": [
+      "Guizhou"
+    ],
+    "Chongqing": [
+      "Chongqing"
+    ],
+    "Fuzhou": [
+      "Fujian"
+    ],
+    "Guangzhou": [
+      "Guangdong"
+    ],
+    "Xian": [
+      "Shaanxi"
+    ],
+    "Taiyuan": [
+      "Shanxi"
+    ],
+    "Wuhan": [
+      "Hubei"
+    ],
+    "Changsha": [
+      "Hunan"
+    ],
+    "Kunming": [
+      "Yunnan"
+    ],
+    "Zhengzhou": [
+      "Henan"
+    ],
+    "Shenyeng": [
+      "Liaoning"
+    ],
+    "Jinan": [
+      "Shandong"
+    ],
+    "Tianjin": [
+      "Tianjin"
+    ],
+    "Nanchang": [
+      "Jiangxi"
+    ],
+    "Nanjing": [
+      "Jiangsu"
+    ],
+    "Hangzhou": [
+      "Zhejiang"
+    ],
+    "Changchun": [
+      "Jilin"
+    ],
+    "Harbin": [
+      "Heilongjiang"
+    ],
+    "Ürümqi": [
+      "Xinjiang Uygur"
+    ],
+    "Chengdu": [
+      "Sichuan"
+    ],
+    "Beijing": [
+      "Beijing"
+    ],
+    "Shanghai": [
+      "Shanghai"
+    ]
+  },
+  "IN": {
+    "Panaji": [
+      "Goa"
+    ],
+    "Simla": [
+      "Himachal Pradesh"
+    ],
+    "Gangtok": [
+      "Sikkim"
+    ],
+    "Kavaratti": [
+      "Lakshadweep"
+    ],
+    "Port Blair": [
+      "Andaman and Nicobar"
+    ],
+    "Kohima": [
+      "Nagaland"
+    ],
+    "Shillong": [
+      "Meghalaya"
+    ],
+    "Dehra Dun": [
+      "Uttarakhand"
+    ],
+    "Daman": [
+      "Dadra and Nagar Haveli and Daman and Diu"
+    ],
+    "Gandhinagar": [
+      "Gujarat"
+    ],
+    "Itanagar": [
+      "Arunachal Pradesh"
+    ],
+    "Aizawl": [
+      "Mizoram"
+    ],
+    "Agartala": [
+      "Tripura"
+    ],
+    "Imphal": [
+      "Manipur"
+    ],
+    "Chandigarh": [
+      "Punjab",
+      "Haryana",
+      "Chandigarh"
+    ],
+    "Dispur": [
+      "Assam"
+    ],
+    "Srinagar": [
+      "Jammu and Kashmir"
+    ],
+    "Thiruvananthapuram": [
+      "Kerala"
+    ],
+    "Lucknow": [
+      "Uttar Pradesh"
+    ],
+    "Ranchi": [
+      "Jharkhand"
+    ],
+    "Raipur": [
+      "Chhattisgarh"
+    ],
+    "Puducherry": [
+      "Puducherry"
+    ],
+    "Bhubaneswar": [
+      "Odisha"
+    ],
+    "Bhopal": [
+      "Madhya Pradesh"
+    ],
+    "Hyderabad": [
+      "Telangana"
+    ],
+    "Jaipur": [
+      "Rajasthan"
+    ],
+    "Patna": [
+      "Bihar"
+    ],
+    "Chennai": [
+      "Tamil Nadu"
+    ],
+    "New Delhi": [
+      "Delhi"
+    ],
+    "Bengaluru": [
+      "Karnataka"
+    ],
+    "Mumbai": [
+      "Maharashtra"
+    ],
+    "Kolkata": [
+      "West Bengal"
+    ],
+    "Leh": [
+      "Ladakh"
+    ],
+    "Amaravati": [
+      "Andhra Pradesh"
+    ],
+    "Jammu": [
+      "Jammu and Kashmir"
+    ],
+    "Dharamshala": [
+      "Himachal Pradesh"
+    ],
+    "Gairsain": [
+      "Uttarakhand"
+    ],
+    "Nagpur": [
+      "Maharashtra"
+    ],
+    "Kargil": [
+      "Ladakh"
+    ]
+  },
+  "US": {
+    "Montpelier": [
+      "Vermont"
+    ],
+    "Dover": [
+      "Delaware"
+    ],
+    "Annapolis": [
+      "Maryland"
+    ],
+    "Carson City": [
+      "Nevada"
+    ],
+    "Little Rock": [
+      "Arkansas"
+    ],
+    "Jefferson City": [
+      "Missouri"
+    ],
+    "Hartford": [
+      "Connecticut"
+    ],
+    "Providence": [
+      "Rhode Island"
+    ],
+    "Springfield": [
+      "Illinois"
+    ],
+    "Frankfort": [
+      "Kentucky"
+    ],
+    "Madison": [
+      "Wisconsin"
+    ],
+    "Trenton": [
+      "New Jersey"
+    ],
+    "Lansing": [
+      "Michigan"
+    ],
+    "Lincoln": [
+      "Nebraska"
+    ],
+    "Concord": [
+      "New Hampshire"
+    ],
+    "Columbus": [
+      "Ohio"
+    ],
+    "Albany": [
+      "New York"
+    ],
+    "Harrisburg": [
+      "Pennsylvania"
+    ],
+    "St.  Paul": [
+      "Minnesota"
+    ],
+    "Olympia": [
+      "Washington"
+    ],
+    "Salem": [
+      "Oregon"
+    ],
+    "Topeka": [
+      "Kansas"
+    ],
+    "Baton Rouge": [
+      "Louisiana"
+    ],
+    "Austin": [
+      "Texas"
+    ],
+    "Montgomery": [
+      "Alabama"
+    ],
+    "Tallahassee": [
+      "Florida"
+    ],
+    "Columbia": [
+      "South Carolina"
+    ],
+    "Indianapolis": [
+      "Indiana"
+    ],
+    "Richmond": [
+      "Virginia"
+    ],
+    "Charleston": [
+      "West Virginia"
+    ],
+    "Augusta": [
+      "Maine"
+    ],
+    "Helena": [
+      "Montana"
+    ],
+    "Bismarck": [
+      "North Dakota"
+    ],
+    "Boise": [
+      "Idaho"
+    ],
+    "Sacramento": [
+      "California"
+    ],
+    "Santa Fe": [
+      "New Mexico"
+    ],
+    "Salt Lake City": [
+      "Utah"
+    ],
+    "Cheyenne": [
+      "Wyoming"
+    ],
+    "Des Moines": [
+      "Iowa"
+    ],
+    "Oklahoma City": [
+      "Oklahoma"
+    ],
+    "Pierre": [
+      "South Dakota"
+    ],
+    "Jackson": [
+      "Mississippi"
+    ],
+    "Raleigh": [
+      "North Carolina"
+    ],
+    "Nashville": [
+      "Tennessee"
+    ],
+    "Juneau": [
+      "Alaska"
+    ],
+    "Honolulu": [
+      "Hawaii"
+    ],
+    "Phoenix": [
+      "Arizona"
+    ],
+    "Boston": [
+      "Massachusetts"
+    ],
+    "Denver": [
+      "Colorado"
+    ],
+    "Atlanta": [
+      "Georgia"
+    ],
+    "Washington,  D.C.": [
+      "District of Columbia"
+    ]
+  },
+  "BR": {
+    "Vitória": [
+      "Espírito Santo"
+    ],
+    "João Pessoa": [
+      "Paraíba"
+    ],
+    "Palmas": [
+      "Tocantins"
+    ],
+    "Aracaju": [
+      "Sergipe"
+    ],
+    "Rio Branco": [
+      "Acre"
+    ],
+    "São Luís": [
+      "Maranhão"
+    ],
+    "Porto Velho": [
+      "Rondônia"
+    ],
+    "Belo Horizonte": [
+      "Minas Gerais"
+    ],
+    "Cuiabá": [
+      "Mato Grosso"
+    ],
+    "Teresina": [
+      "Piauí"
+    ],
+    "Maceió": [
+      "Alagoas"
+    ],
+    "Natal": [
+      "Rio Grande do Norte"
+    ],
+    "Manaus": [
+      "Amazonas"
+    ],
+    "Campo Grande": [
+      "Mato Grosso do Sul"
+    ],
+    "Florianópolis": [
+      "Santa Catarina"
+    ],
+    "Boa Vista": [
+      "Roraima"
+    ],
+    "Macapá": [
+      "Amapá"
+    ],
+    "Belém": [
+      "Pará"
+    ],
+    "Brasília": [
+      "Distrito Federal"
+    ],
+    "Porto Alegre": [
+      "Rio Grande do Sul"
+    ],
+    "Curitiba": [
+      "Paraná"
+    ],
+    "Fortaleza": [
+      "Ceará"
+    ],
+    "Salvador": [
+      "Bahia"
+    ],
+    "Goiânia": [
+      "Goiás"
+    ],
+    "Recife": [
+      "Pernambuco"
+    ],
+    "Rio de Janeiro": [
+      "Rio de Janeiro"
+    ],
+    "São Paulo": [
+      "São Paulo"
+    ]
+  },
+  "CA": {
+    "Fredericton": [
+      "New Brunswick"
+    ],
+    "Iqaluit": [
+      "Nunavut"
+    ],
+    "Winnipeg": [
+      "Manitoba"
+    ],
+    "Regina": [
+      "Saskatchewan"
+    ],
+    "Victoria": [
+      "British Columbia"
+    ],
+    "Yellowknife": [
+      "Northwest Territories"
+    ],
+    "Whitehorse": [
+      "Yukon"
+    ],
+    "Québec": [
+      "Québec"
+    ],
+    "Halifax": [
+      "Nova Scotia"
+    ],
+    "St. John's": [
+      "Newfoundland and Labrador"
+    ],
+    "Charlottetown": [
+      "Prince Edward Island"
+    ],
+    "Edmonton": [
+      "Alberta"
+    ],
+    "Toronto": [
+      "Ontario"
+    ]
+  },
+  "MX": {
+    "Tlaxcala": [
+      "Tlaxcala"
+    ],
+    "Chilpancingo": [
+      "Guerrero"
+    ],
+    "Xalapa": [
+      "Veracruz"
+    ],
+    "Zacatecas": [
+      "Zacatecas"
+    ],
+    "Morelia": [
+      "Michoacán"
+    ],
+    "Tepic": [
+      "Nayarit"
+    ],
+    "Guanajuato": [
+      "Guanajuato"
+    ],
+    "Pachuca": [
+      "Hidalgo"
+    ],
+    "Toluca": [
+      "México"
+    ],
+    "Saltillo": [
+      "Coahuila"
+    ],
+    "Durango": [
+      "Durango"
+    ],
+    "Ciudad Victoria": [
+      "Tamaulipas"
+    ],
+    "Aguascalientes": [
+      "Aguascalientes"
+    ],
+    "Villahermosa": [
+      "Tabasco"
+    ],
+    "Cuernavaca": [
+      "Morelos"
+    ],
+    "Querétaro": [
+      "Querétaro"
+    ],
+    "Chetumal": [
+      "Quintana Roo"
+    ],
+    "Mexicali": [
+      "Baja California"
+    ],
+    "La Paz": [
+      "Baja California Sur"
+    ],
+    "Culiacán": [
+      "Sinaloa"
+    ],
+    "Hermosillo": [
+      "Sonora"
+    ],
+    "San Luis Potosí": [
+      "San Luis Potosí"
+    ],
+    "Colima": [
+      "Colima"
+    ],
+    "Campeche": [
+      "Campeche"
+    ],
+    "Oaxaca": [
+      "Oaxaca"
+    ],
+    "Chihuahua": [
+      "Chihuahua"
+    ],
+    "Tuxtla Gutiérrez": [
+      "Chiapas"
+    ],
+    "Mérida": [
+      "Yucatán"
+    ],
+    "Guadalajara": [
+      "Jalisco"
+    ],
+    "Puebla": [
+      "Puebla"
+    ],
+    "Monterrey": [
+      "Nuevo León"
+    ],
+    "Mexico City": [
+      "Mexico City"
+    ]
+  }
+};
+const CAPITAL_CITY_ADD = [{"iso": "RU", "name": "Magas", "coordinates": [44.812, 43.168]}, {"iso": "RU", "name": "Krasnogorsk", "coordinates": [37.3302, 55.8311]}, {"iso": "IN", "name": "Dharamshala", "coordinates": [76.3234, 32.219]}, {"iso": "IN", "name": "Gairsain", "coordinates": [79.288, 30.05]}, {"iso": "IN", "name": "Kargil", "coordinates": [76.132, 34.554]}];
+
+const FIRST_LEVEL_CAPITAL_SOURCE_IDS = {"RU":[1159128473,1159137059,1159137065,1159137249,1159137403,1159137563,1159146503,1159146519,1159146521,1159146523,1159146527,1159146537,1159146551,1159146557,1159146569,1159146581,1159146589,1159146751,1159148103,1159148105,1159148109,1159148111,1159148117,1159148121,1159148129,1159148141,1159148145,1159149521,1159149523,1159149527,1159149529,1159149531,1159149533,1159149535,1159149539,1159149541,1159149543,1159149545,1159149549,1159149551,1159149553,1159149557,1159149561,1159149565,1159149569,1159149571,1159149575,1159149577,1159149579,1159149581,1159149585,1159149587,1159149615,1159149621,1159149623,1159149625,1159149653,1159149657,1159150685,1159150687,1159150691,1159150693,1159150695,1159150697,1159150699,1159150701,1159150703,1159150705,1159150711,1159150713,1159150731,1159150733,1159150737,1159150739,1159150745,1159150749,1159150775,1159150795,1159151291,1159151585,1159137151],"CN":[1159146977,1159149793,1159149907,1159149941,1159150819,1159150879,1159150889,1159151321,1159151323,1159151325,1159151327,1159151329,1159151331,1159151363,1159151365,1159151367,1159151369,1159151371,1159151375,1159151377,1159151379,1159151381,1159151383,1159151385,1159151387,1159151393,1159151397,1159151531,1159151533,1159151595,1159151605],"IN":[1159122667,1159130425,1159130849,1159141813,1159141859,1159141873,1159141877,1159142837,1159142961,1159142979,1159142983,1159142991,1159142995,1159147213,1159149153,1159149165,1159150001,1159150007,1159150147,1159150153,1159150157,1159150163,1159150465,1159150985,1159151407,1159151423,1159151429,1159151431,1159151541,1159151543,1159151611,1159151617,1730025033,1730025037,1159149155,1159151413],"US":[1159124647,1159125621,1159125647,1159146205,1159146223,1159146229,1159146255,1159146257,1159146271,1159146273,1159146283,1159146287,1159146293,1159147389,1159147405,1159147453,1159147463,1159147469,1159149197,1159149211,1159149239,1159149243,1159149255,1159149261,1159149275,1159149277,1159149287,1159149289,1159149295,1159149297,1159149309,1159150471,1159150475,1159150477,1159150481,1159150485,1159150489,1159150493,1159150495,1159150499,1159150501,1159150511,1159150513,1159150519,1159150555,1159151221,1159151225,1159151239,1159151483,1159151489,1159151573],"BR":[1159147621,1159147623,1159148771,1159148827,1159150181,1159150183,1159150187,1159150193,1159150205,1159150213,1159150215,1159150225,1159151005,1159151019,1159151021,1159151055,1159151057,1159151441,1159151443,1159151447,1159151449,1159151451,1159151453,1159151459,1159151461,1159151619,1159151621],"CA":[1159148929,1159150241,1159151025,1159151029,1159151039,1159151047,1159151053,1159151065,1159151069,1159151071,1159151075,1159151455,1159151557],"MX":[1159129331,1159129353,1159129407,1159138385,1159138451,1159138477,1159138549,1159138571,1159138577,1159146787,1159146793,1159146797,1159146799,1159146807,1159146809,1159146811,1159146815,1159149659,1159149661,1159149667,1159149671,1159149675,1159149683,1159149685,1159149687,1159150753,1159150765,1159150769,1159151293,1159151295,1159151527,1159151587]};
+function firstLevelCapitalFor(p) {
+  return (p.CURATED_CAPITAL || FIRST_LEVEL_CAPITAL_SOURCE_IDS[p.ISO_A2]?.includes(p.NE_ID))
+    ? FIRST_LEVEL_CAPITALS[p.ISO_A2]?.[p.NAME] : undefined;
+}
+
 function processCities() {
   const data = readRaw('cities-raw.geojson');
+  for (const city of CAPITAL_CITY_ADD) {
+    data.features.push({type:'Feature',geometry:{type:'Point',coordinates:city.coordinates},properties:{
+      NAME:city.name, CURATED_CAPITAL:true, ISO_A2:city.iso, ADM0NAME:city.iso==='RU'?'Russia':'India',
+      ADM1NAME:FIRST_LEVEL_CAPITALS[city.iso][city.name][0], ADM0CAP:0, POP_MAX:null,
+      FEATURECLA:'Admin-1 capital', CAPITAL_NOTE:city.name==='Krasnogorsk'?'Seat of Moscow Oblast government; the oblast has no official capital.':null,
+    }});
+  }
   data.features = data.features
-    .filter((f) => f.properties.POP_MAX > 50000 || f.properties.ADM0CAP === 1)
+    .filter((f) => f.properties.POP_MAX > 50000 || f.properties.ADM0CAP === 1 || firstLevelCapitalFor(f.properties))
     .map((f) => {
       const p = f.properties;
+      const capitalOf = firstLevelCapitalFor(p);
+      const firstLevel = capitalOf || (!FIRST_LEVEL_CAPITALS[p.ISO_A2] && ['Admin-1 capital','Admin-1 region capital'].includes(p.FEATURECLA));
       // National capitals get the endonym of their country's primary language
       // (Beijing→北京, Moscow→Москва), via the same NATIVE_LANG_COLUMN table
       // that drives country endonyms. Multilingual countries aren't in that
@@ -684,7 +1550,11 @@ function processCities() {
           ADM1NAME: p.ADM1NAME,
           ISO_A2: p.ISO_A2,
           POP_MAX: p.POP_MAX,
-          FEATURECLA: p.FEATURECLA,
+          FEATURECLA: firstLevel ? 'Admin-1 capital' : (p.ADM0CAP === 1 ? p.FEATURECLA : 'Populated place'),
+          CITY_ROLE: p.ADM0CAP === 1 ? 'National capital' : firstLevel ? 'First-level subdivision capital' : 'City',
+          CAPITAL_OF: p.ADM0CAP === 1 ? [p.ADM0NAME] : capitalOf ?? (firstLevel ? [p.ADM1NAME] : []),
+          SHOW_ADMIN1_CAPITAL: !!capitalOf && p.ADM0CAP !== 1,
+          CAPITAL_NOTE: p.CAPITAL_NOTE ?? null,
           ADM0CAP: p.ADM0CAP,
           MEGACITY: p.MEGACITY,
           TIMEZONE: p.TIMEZONE,
@@ -2967,7 +3837,7 @@ function applyPersonalSelection() {
   // Production restores this ignored GeoJSON from its tracked compressed copy.
   fs.writeFileSync(path.join(__dirname, '..', 'data', 'packed', 'admin1.geojson.gz'), gzipSync(fs.readFileSync(path.join(GEO_DIR, 'admin1.geojson'))));
   filterFile('admin1-labels', f => keepAdmin(f.properties.iso_a2));
-  filterFile('cities', f => f.properties.ADM0CAP === 1 || f.properties.POP_MAX >= 1000000);
+  filterFile('cities', f => f.properties.ADM0CAP === 1 || f.properties.POP_MAX >= 1000000 || f.properties.SHOW_ADMIN1_CAPITAL);
   const riverNames = new Set(Object.values(PERSONAL_RIVERS).flat());
   filterFile('rivers', f => riverNames.has(f.properties.name));
   const lakeNames = new Set(PERSONAL_LAKES);
@@ -2992,7 +3862,7 @@ function applyPersonalSelection() {
     ['Cities', 'cities'], ['Rivers (local reach names)', 'rivers'], ['Canals','canals'], ['Lakes', 'lake-labels'],
     ['Mountain ranges', 'range-labels'], ['Peaks', 'peaks'], ['Oceans', 'ocean-labels'], ['Marine areas', 'sea-labels'],
   ];
-  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. All five oceans remain; named marine areas follow PERSONAL_MARINE_EXCLUDED. Cities: national capitals plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
+  let md = '# My geographical atlas\n\nA growing record of the places and features I have come to know. No tiers.\n\nGenerated by `node scripts/process-countries.mjs`; edit PERSONAL_* in that script to change membership. Raw geometry remains a reusable library. Themes, zoom and collisions still determine label visibility.\n\nAll countries/territories remain. All five oceans remain; named marine areas follow PERSONAL_MARINE_EXCLUDED. Cities: national capitals, first-level subdivision capitals of Russia, China, India, USA, Brazil, Canada and Mexico, plus population >= 1 million in the source dataset. Subdivision selections use Natural Earth continents (Russia is Europe); territories follow their geographical continent. The listed European countries are included throughout their available subdivision geometry. Sierra Nevada means the US range. Caspian and Black Sea remain marine features. Aral Sea is included as North and South Aral Sea geometry from the source dataset, not a reconstructed historical shoreline. River labels use the familiar identity at overview zoom and local reach names with that identity from zoom 6.5; selecting any reach highlights the whole river.\n\n## River selections and source aliases\n\n| Selection | Local reach names |\n|---|---|\n' + Object.entries(PERSONAL_RIVERS).map(([name, aliases]) => `| ${name} | ${aliases.join(', ')} |`).join('\n') + '\n';
   for (const [title, file] of sections) {
     const features = readGeo(file + '.geojson').features;
     const rows = [...new Set(features.map(f => {
@@ -3056,7 +3926,7 @@ function buildCatalog() {
     const capitals = capitalOverrides[p.ADM0_A3] ?? capitalData.capitals ?? rawCities.filter(c => c.properties.ADM0CAP === 1 && c.properties.ADM0NAME === raw?.ADMIN).map(c => c.properties.NAME);
     return { id: p.ADM0_A3, name: p.NAME_LONG || p.NAME, iso2: iso, capital: [...new Set(capitals)].join(' · ') || null, population: p.POP_EST >= 0 ? Math.round(p.POP_EST) : null, populationYear: raw?.POP_YEAR > 0 ? raw.POP_YEAR : null, sourceUrl: url(capitalData) };
   });
-  const cityRows = readGeo('cities.geojson').features.map((f, i) => ({ id: `city-${i}`, name: f.properties.NAME, country: countryNames.get(f.properties.ISO_A2) ?? f.properties.ADM0NAME, population: f.properties.POP_MAX > 0 ? f.properties.POP_MAX : null }));
+  const cityRows = readGeo('cities.geojson').features.map((f, i) => ({ id: `city-${i}`, name: f.properties.NAME, country: countryNames.get(f.properties.ISO_A2) ?? f.properties.ADM0NAME, role: f.properties.CITY_ROLE, capitalOf: f.properties.CAPITAL_OF, note: f.properties.CAPITAL_NOTE, population: f.properties.POP_MAX > 0 ? f.properties.POP_MAX : null }));
   const selectedRivers = readGeo('rivers.geojson').features;
   const riverRows = Object.keys(PERSONAL_RIVERS).map(name => {
     const p = selectedRivers.find(f => f.properties.label_name === name).properties;
@@ -3093,7 +3963,7 @@ function buildCatalog() {
   });
   const sections = [
     { id: 'countries', title: 'Countries & territories', description: 'All political features on the map. Capitals from the reference snapshot; Natural Earth population estimates; the reference year appears below each figure. A dash means no capital is recorded in the source.', rows: countryRows },
-    { id: 'cities', title: 'Cities', description: 'National capitals and cities with a source population of at least one million. Natural Earth estimates use differing urban definitions and reference dates; these are not current census counts.', rows: cityRows },
+    { id: 'cities', title: 'Cities', description: 'National capitals, selected first-level subdivision capitals, and cities with a source population of at least one million. First-level capitals are included for Russia, China, India, USA, Brazil, Canada and Mexico, including shared and seasonal seats. Natural Earth estimates use differing urban definitions and reference dates; these are not current census counts.', rows: cityRows },
     { id: 'rivers', title: 'Rivers & canals', description: 'One row per river or canal, including locally named river reaches. Canal endpoints are terminals, not a direction of flow. Lengths are approximate reference values; headwater conventions vary. Countries include border reaches, not every country in the drainage basin.', rows: riverRows },
     { id: 'lakes', title: 'Lakes', description: 'Reference surface areas and volumes, not live water levels. Available measurement years appear below the figures. A dash means the measurement is not recorded; the Aral Sea is listed as its North and South remnants.', rows: lakeRows },
     { id: 'ranges', title: 'Mountain ranges', description: 'Mapped span is the approximate area of the generalized Natural Earth or curated footprint, rounded to 1,000 km²—not a precise geological boundary. Countries describe conventional range extents.', rows: rangeRows },
