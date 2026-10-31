@@ -114,7 +114,8 @@ const PERSONAL_LAKES = [
   'Lake Baikal', 'Tai Hu', 'Qinghai Hu', 'Dead Sea', 'North Aral Sea', 'South Aral Sea', 'Lake Malawi', 'Lake Tanganyika', 'Lake Victoria', 'Lake Geneva',
 ];
 const PERSONAL_ASIA_EXCLUDED = new Set(['YE', 'OM', 'LB', 'SY', 'AF', 'IQ', 'GE', 'AM', 'AZ', 'JO', 'QA', 'AE', 'PS', 'TR', 'CY']);
-const PERSONAL_OTHER_ADMIN = new Set(['GB', 'ES', 'FR', 'IT', 'DE', 'BY', 'KM', 'CV', 'EG', 'SD', 'ET', 'ZA', 'CM', 'AU', 'PG']);
+// Natural Earth classifies Russia as Europe; explicitly retain all its subdivisions.
+const PERSONAL_OTHER_ADMIN = new Set(['GB', 'ES', 'FR', 'IT', 'DE', 'BY', 'RU', 'KM', 'CV', 'EG', 'SD', 'ET', 'ZA', 'CM', 'AU', 'PG']);
 // Selected cultural and geographical summits, sorted by elevation (not prominence).
 // References: https://ntb.gov.np/things-to-do/mountaineering and
 // https://www.geonames.org/NP/highest-mountains-in-nepal.html

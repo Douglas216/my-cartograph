@@ -327,7 +327,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Subdivisions
 
-1728 records; 1724 distinct catalog entries. Multiple geometry records can represent one feature.
+1814 records; 1810 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - `Asir — Saudi Arabia
 - Abra — Philippines
@@ -338,6 +338,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Ad Daqahliyah — Egypt
 - Adamaoua — Cameroon
 - Addis Ababa — Ethiopia
+- Adygey — Russia
 - Afar — Ethiopia
 - Aguascalientes — Mexico
 - Agusan del Norte — Philippines
@@ -390,6 +391,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Almaty City — Kazakhstan
 - Almería — Spain
 - Alta Verapaz — Guatemala
+- Altay — Russia
 - Alto Paraguay — Paraguay
 - Alto Paraná — Paraguay
 - Amambay — Paraguay
@@ -402,6 +404,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Amhara — Ethiopia
 - Amnat Charoen — Thailand
 - Ampāra — Sri Lanka
+- Amur — Russia
 - An Giang — Vietnam
 - Áncash — Peru
 - Andaman and Nicobar — India
@@ -436,6 +439,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Arima — Trinidad and Tobago
 - Arizona — United States of America
 - Arkansas — United States of America
+- Arkhangel'sk — Russia
 - Artemisa — Cuba
 - Artigas — Uruguay
 - Aruba — Aruba
@@ -447,6 +451,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Ashmore and Cartier Islands — Ashmore and Cartier Islands
 - Assam — India
 - Astana — Kazakhstan
+- Astrakhan' — Russia
 - Asturias — Spain
 - Asunción — Paraguay
 - Aswan — Egypt
@@ -499,6 +504,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Barima-Waini — Guyana
 - Barinas — Venezuela
 - Barisal — Bangladesh
+- Bashkortostan — Russia
 - Basilan — Philippines
 - Basilicata — Italy
 - Bataan — Philippines
@@ -513,6 +519,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Baykonur lease in Qyzylorda — Baykonur Cosmodrome
 - Beijing — China
 - Belait — Brunei
+- Belgorod — Russia
 - Belize — Belize
 - Bến Tre — Vietnam
 - Bengkulu — Indonesia
@@ -558,6 +565,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - British Virgin Islands — British Virgin Islands
 - Brokopondo — Suriname
 - Brunei and Muara — Brunei
+- Bryansk — Russia
 - Bueng Kan — Thailand
 - Buenos Aires — Argentina
 - Bukhoro — Uzbekistan
@@ -568,6 +576,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Bur Sa`id — Egypt
 - Burgos — Spain
 - Buri Ram — Thailand
+- Buryat — Russia
 - Busan — South Korea
 - Bushehr — Iran
 - Butuan — Philippines
@@ -644,6 +653,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Chanthaburi — Thailand
 - Chardzhou — Turkmenistan
 - Charlotte — Saint Vincent and the Grenadines
+- Chechnya — Russia
+- Chelyabinsk — Russia
 - Chhattisgarh — India
 - Chhukha — Bhutan
 - Chiang Mai — Thailand
@@ -661,6 +672,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Chiquimula — Guatemala
 - Chirang — Bhutan
 - Chiriquí — Panama
+- Chita — Russia
 - Chittagong — Bangladesh
 - Chocó — Colombia
 - Choiseul — Saint Lucia
@@ -672,8 +684,10 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Christ Church Nichola Town — Saint Kitts and Nevis
 - Christmas Island — Indian Ocean Territories
 - Chubut — Argentina
+- Chukchi Autonomous Okrug — Russia
 - Chumphon — Thailand
 - Chuquisaca — Bolivia
+- Chuvash — Russia
 - Chuy — Kyrgyzstan
 - Ciego de Ávila — Cuba
 - Cienfuegos — Cuba
@@ -681,6 +695,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - City of Hamilton — Bermuda
 - City of Minsk — Belarus
 - City of Saint George — Bermuda
+- City of St. Petersburg — Russia
 - Ciudad de Buenos Aires — Argentina
 - Ciudad de la Habana — Cuba
 - Ciudad Real — Spain
@@ -718,6 +733,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Cotopaxi — Ecuador
 - Couva-Tabaquite-Talparo — Trinidad and Tobago
 - Cova Lima — East Timor
+- Crimea — Russia
 - Crooked Island and Long Cay — The Bahamas
 - Cuenca — Spain
 - Cundinamarca — Colombia
@@ -730,6 +746,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Daegu — South Korea
 - Daejeon — South Korea
 - Daga — Bhutan
+- Dagestan — Russia
 - Dagupan — Philippines
 - Dajabón — Dominican Republic
 - Đắk Lắk — Vietnam
@@ -852,6 +869,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Goiás — Brazil
 - Golestan — Iran
 - Gomel — Belarus
+- Gorno-Altay — Russia
 - Gorno-Badakhshan — Tajikistan
 - Gorontalo — Indonesia
 - Govi-Altay — Mongolia
@@ -969,9 +987,11 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Incheon — South Korea
 - Independencia — Dominican Republic
 - Indiana — United States of America
+- Ingush — Russia
 - Inner Mongol — China
 - Intibucá — Honduras
 - Iowa — United States of America
+- Irkutsk — Russia
 - Isabela — Philippines
 - Ishikawa — Japan
 - Isla de la Juventud — Cuba
@@ -979,6 +999,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Islands — Hong Kong S.A.R.
 - Islas de la Bahía — Honduras
 - Itapúa — Paraguay
+- Ivanovo — Russia
 - Iwate — Japan
 - Izabal — Guatemala
 - Jaén — Spain
@@ -1010,6 +1031,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Junín — Peru
 - Jutiapa — Guatemala
 - K.P. — Pakistan
+- Kabardin-Balkar — Russia
 - Kachin — Myanmar
 - Kægalla — Sri Lanka
 - Kafr ash Shaykh — Egypt
@@ -1021,7 +1043,11 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Kalimantan Tengah — Indonesia
 - Kalimantan Timur — Indonesia
 - Kalinga — Philippines
+- Kaliningrad — Russia
+- Kalmyk — Russia
+- Kaluga — Russia
 - Kaḷutara — Sri Lanka
+- Kamchatka — Russia
 - Kamphaeng Phet — Thailand
 - Kâmpóng Cham — Cambodia
 - Kâmpóng Chhnang — Cambodia
@@ -1035,7 +1061,9 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Kansas — United States of America
 - Kaôh Kong — Cambodia
 - Kaohsiung City — Taiwan
+- Karachay-Cherkess — Russia
 - Karakalpakstan — Uzbekistan
+- Karelia — Russia
 - Karnali — Nepal
 - Karnataka — India
 - Kashkadarya — Uzbekistan
@@ -1046,14 +1074,18 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Kedah — Malaysia
 - Keelung City — Taiwan
 - Kelantan — Malaysia
+- Kemerovo — Russia
 - Kentucky — United States of America
 - Kep — Cambodia
 - Kepulauan Riau — Indonesia
 - Kerala — India
 - Kerman — Iran
 - Kermanshah — Iran
+- Khabarovsk — Russia
+- Khakass — Russia
 - Khammouan — Laos
 - Khánh Hòa — Vietnam
+- Khanty-Mansiy — Russia
 - Khartoum — Sudan
 - Khatlon — Tajikistan
 - Khon Kaen — Thailand
@@ -1064,21 +1096,28 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Kilinŏchchi — Sri Lanka
 - Kingston — Jamaica
 - Kinmen — Taiwan
+- Kirov — Russia
 - Kōchi — Japan
 - Kohgiluyeh and Buyer Ahmad — Iran
 - Kŏḷamba — Sri Lanka
+- Komi — Russia
 - Kommune Kujalleq — Greenland
 - Kommuneqarfik Sermersooq — Greenland
 - Kon Tum — Vietnam
 - Kordestan — Iran
+- Kostroma — Russia
 - Kowloon City — Hong Kong S.A.R.
 - Krabi — Thailand
 - Krâchéh — Cambodia
+- Krasnodar — Russia
+- Krasnoyarsk — Russia
 - Krong Pailin — Cambodia
 - Krong Preah Sihanouk — Cambodia
 - Kuala Lumpur — Malaysia
 - Kumamoto — Japan
 - Kuna Yala — Panama
+- Kurgan — Russia
+- Kursk — Russia
 - Kuruṇægala — Sri Lanka
 - Kwai Tsing — Hong Kong S.A.R.
 - KwaZulu-Natal — South Africa
@@ -1127,6 +1166,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Lazio — Italy
 - Lempira — Honduras
 - Leninabad — Tajikistan
+- Leningrad — Russia
 - León — Nicaragua
 - León — Spain
 - Lérida — Spain
@@ -1139,6 +1179,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Lima Province — Peru
 - Limón — Costa Rica
 - Limpopo — South Africa
+- Lipetsk — Russia
 - Liquica — East Timor
 - Littoral — Cameroon
 - Loei — Thailand
@@ -1170,6 +1211,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Madrid — Spain
 - Madriz — Nicaragua
 - Mae Hong Son — Thailand
+- Maga Buryatdan — Russia
 - Magallanes y Antártica Chilena — Chile
 - Magdalena — Colombia
 - Maguindanao — Philippines
@@ -1208,6 +1250,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - María Trinidad Sánchez — Dominican Republic
 - Marikina — Philippines
 - Marinduque — Philippines
+- Mariy-El — Russia
 - Markazi — Iran
 - Marowijne — Suriname
 - Martinique — France
@@ -1277,9 +1320,12 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Moore's Island — The Bahamas
 - Moquegua — Peru
 - Morazán — El Salvador
+- Mordovia — Russia
 - Morelos — Mexico
 - Morobe — Papua New Guinea
 - Morona Santiago — Ecuador
+- Moskovskaya — Russia
+- Moskva — Russia
 - Mosteiros — Cape Verde
 - Moûhîlî — Comoros
 - Mountain Province — Philippines
@@ -1289,6 +1335,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Mulativ — Sri Lanka
 - Muntinlupa — Philippines
 - Murcia — Spain
+- Murmansk — Russia
 - Naga — Philippines
 - Nagaland — India
 - Nagano — Japan
@@ -1322,6 +1369,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Negeri Sembilan — Malaysia
 - Negros Occidental — Philippines
 - Negros Oriental — Philippines
+- Nenets — Russia
 - Neuquén — Argentina
 - Nevada — United States of America
 - New Brunswick — Canada
@@ -1343,6 +1391,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Ninh Bình — Vietnam
 - Ninh Thuận — Vietnam
 - Nippes — Haiti
+- Nizhegorod — Russia
 - Nong Bua Lam Phu — Thailand
 - Nong Khai — Thailand
 - Nonthaburi — Thailand
@@ -1372,6 +1421,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - North Kazakhstan — Kazakhstan
 - North Khorasan — Iran
 - North Kordufan — Sudan
+- North Ossetia — Russia
 - North Side — Anguilla
 - North Solomons — Papua New Guinea
 - North West — Singapore
@@ -1388,6 +1438,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Northwest Territories — Canada
 - Nouvelle-Aquitaine — France
 - Nova Scotia — Canada
+- Novgorod — Russia
+- Novosibirsk — Russia
 - Ñuble — Chile
 - Nueva Ecija — Philippines
 - Nueva Esparta — Venezuela
@@ -1410,10 +1462,13 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Olancho — Honduras
 - Olongapo — Philippines
 - Ömnögovi — Mongolia
+- Omsk — Russia
 - Ontario — Canada
 - Orange Walk — Belize
 - Oregon — United States of America
+- Orel — Russia
 - Orellana — Ecuador
+- Orenburg — Russia
 - Orense — Spain
 - Orhon — Mongolia
 - Ormoc — Philippines
@@ -1466,9 +1521,11 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Penal-Debe — Trinidad and Tobago
 - Penghu — Taiwan
 - Pennsylvania — United States of America
+- Penza — Russia
 - Perak — Malaysia
 - Peravia — Dominican Republic
 - Perlis — Malaysia
+- Perm' — Russia
 - Pernambuco — Brazil
 - Petén — Guatemala
 - Phangnga — Thailand
@@ -1510,10 +1567,12 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Preah Vihéar — Cambodia
 - Presidente Hayes — Paraguay
 - Prey Vêng — Cambodia
+- Primor'ye — Russia
 - Prince Edward Island — Canada
 - Princes Town — Trinidad and Tobago
 - Provence-Alpes-Côte-d'Azur — France
 - Providenciales and West Caicos — Turks and Caicos Islands
+- Pskov — Russia
 - Puducherry — India
 - Puebla — Mexico
 - Puerto Plata — Dominican Republic
@@ -1592,9 +1651,12 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Romblon — Philippines
 - Rondônia — Brazil
 - Roraima — Brazil
+- Rostov — Russia
 - Rôtânôkiri — Cambodia
 - Rum Cay — The Bahamas
+- Russia
 - Ryanggang — North Korea
+- Ryazan' — Russia
 - Sa Kaeo — Thailand
 - Saarland — Germany
 - Sabah — Malaysia
@@ -1670,6 +1732,8 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Saint Thomas Middle Island — Saint Kitts and Nevis
 - Saint-Pierre — Saint Pierre and Miquelon
 - Saitama — Japan
+- Sakha (Yakutia) — Russia
+- Sakhalin — Russia
 - Sakon Nakhon — Thailand
 - Sal — Cape Verde
 - Salamanca — Spain
@@ -1678,6 +1742,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Salto — Uruguay
 - Samaná — Dominican Republic
 - Samar — Philippines
+- Samara — Russia
 - Samarkand — Uzbekistan
 - Samchi — Bhutan
 - Samdrup Jongkhar — Bhutan
@@ -1741,6 +1806,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Saraburi — Thailand
 - Saramacca — Suriname
 - Sarangani — Philippines
+- Saratov — Russia
 - Saravan — Laos
 - Sarawak — Malaysia
 - Sardegna — Italy
@@ -1757,6 +1823,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Seoul — South Korea
 - Sergipe — Brazil
 - Seti — Nepal
+- Sevastopol — Russia
 - Sevilla — Spain
 - Sha Tin — Hong Kong S.A.R.
 - Shaanxi — China
@@ -1785,6 +1852,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Sirdaryo — Uzbekistan
 - Sistan and Baluchestan — Iran
 - Smith's — Bermuda
+- Smolensk — Russia
 - Sóc Trăng — Vietnam
 - Sololá — Guatemala
 - Somali — Ethiopia
@@ -1827,6 +1895,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Spratly Islands — Spratly Is.
 - St. Martin — Saint Martin
 - Stann Creek — Belize
+- Stavropol' — Russia
 - Stœng Trêng — Cambodia
 - Stoney Ground — Anguilla
 - Suchitepéquez — Guatemala
@@ -1857,6 +1926,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Surin — Thailand
 - Surkhandarya — Uzbekistan
 - Svay Rieng — Cambodia
+- Sverdlovsk — Russia
 - Sylhet — Bangladesh
 - Tabasco — Mexico
 - Tabuk — Saudi Arabia
@@ -1875,6 +1945,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Takêv — Cambodia
 - Talas — Kyrgyzstan
 - Tamaulipas — Mexico
+- Tambov — Russia
 - Tamil Nadu — India
 - Tanintharyi — Myanmar
 - Taoyuan — Taiwan
@@ -1889,6 +1960,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Tashigang — Bhutan
 - Tashkent — Uzbekistan
 - Tasmania — Australia
+- Tatarstan — Russia
 - Tawi-Tawi — Philippines
 - Tây Ninh — Vietnam
 - Tehran — Iran
@@ -1920,6 +1992,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Toledo — Belize
 - Toledo — Spain
 - Tolima — Colombia
+- Tomsk — Russia
 - Tongsa — Bhutan
 - Toscana — Italy
 - Totonicapán — Guatemala
@@ -1939,14 +2012,20 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Tsuen Wan — Hong Kong S.A.R.
 - Tucumán — Argentina
 - Tuen Mun — Hong Kong S.A.R.
+- Tula — Russia
 - Tumbes — Peru
 - Tunapuna/Piarco — Trinidad and Tobago
 - Tungurahua — Ecuador
 - Tutong — Brunei
+- Tuva — Russia
 - Tuyên Quang — Vietnam
+- Tver' — Russia
+- Tyumen' — Russia
 - Ubon Ratchathani — Thailand
 - Ucayali — Peru
+- Udmurt — Russia
 - Udon Thani — Thailand
+- Ul'yanovsk — Russia
 - Ulaanbaatar — Mongolia
 - Ulsan — South Korea
 - Umbria — Italy
@@ -1986,6 +2065,10 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Viqueque — East Timor
 - Virginia — United States of America
 - Vitebsk — Belarus
+- Vladimir — Russia
+- Volgograd — Russia
+- Vologda — Russia
+- Voronezh — Russia
 - Wakayama — Japan
 - Wake Atoll — United States Minor Outlying Islands
 - Wan Chai — Hong Kong S.A.R.
@@ -2021,14 +2104,17 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Yala — Thailand
 - Yamagata — Japan
 - Yamaguchi — Japan
+- Yamal-Nenets — Russia
 - Yamanashi — Japan
 - Yangon — Myanmar
 - Yāpanaya — Sri Lanka
 - Yaracuy — Venezuela
+- Yaroslavl' — Russia
 - Yasothon — Thailand
 - Yau Tsim Mong — Hong Kong S.A.R.
 - Yazd — Iran
 - Yên Bái — Vietnam
+- Yevrey — Russia
 - Yilan — Taiwan
 - Yogyakarta — Indonesia
 - Yorkshire and the Humber — United Kingdom
