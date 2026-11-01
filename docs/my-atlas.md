@@ -3132,7 +3132,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-155 records; 155 distinct catalog entries. Multiple geometry records can represent one feature.
+157 records; 157 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -3211,7 +3211,9 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - Gulf of Odessa
 - Gulf of Oman
 - Gulf of Saint Lawrence
+- Gulf of Saint-Malo
 - Gulf of Suez
+- Gulf of Taranto
 - Gulf of Thailand
 - Gulf of Tomini
 - Gulf of Tonkin

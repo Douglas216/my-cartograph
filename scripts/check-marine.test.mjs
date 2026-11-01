@@ -19,7 +19,7 @@ test('all seven unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 148);
+  assert.equal(seaRows.length, 150);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay','Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Gulf of Taranto','Gulf of Saint-Malo','Gulf of Lion','Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay','Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -290,4 +290,35 @@ test('Bosporus reaches the northern lighthouse entrance as one connected water',
  assert(area(clipping.difference(probe,strait))<1e-10,'northern approach is missing');
  const vertices=strait.flat(2);
  for(const p of [[29.109223,41.235297],[29.150487,41.222829]])assert(vertices.some(q=>Math.hypot(q[0]-p[0],q[1]-p[1])<2e-6),'missing lighthouse mouth endpoint');
+});
+
+
+test('Taranto and Saint-Malo have sourced catalog entries and complete basin selections',()=>{
+ for(const [name,path] of [
+  ['Gulf of Taranto',['Atlantic Ocean','Mediterranean Sea','Ionian Sea','Gulf of Taranto']],
+  ['Gulf of Saint-Malo',['Atlantic Ocean','English Channel','Gulf of Saint-Malo']],
+ ]) {
+  assert.deepEqual(byName.get(name).path,path);
+  const rows=seaRows.filter(r=>r.name===name);assert.equal(rows.length,1);
+  const f=read('seas.geojson').features.find(f=>f.properties.name===name);
+  assert(f.properties.story&&f.properties.sourceUrl,name+' needs sourced story');
+  assert(area(clipping.difference(f.geometry.coordinates,selections.get(path.at(-2)).geometry.coordinates))<1e-8,name+' parent omits water');
+ }
+});
+
+test('Lion, Taranto and Saint-Malo share gap-free non-overlapping basin entrances',()=>{
+ const features=read('seas.geojson').features;
+ const geometry=n=>features.find(f=>f.properties.name===n).geometry.coordinates;
+ const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features
+  .filter(f=>['FRA','ESP','ITA','JEY','GGY'].includes(f.properties.ADM0_A3)).map(f=>f.geometry.coordinates);
+ for(const [basin,gulf,[w,s,e,n]] of [
+  ['Mediterranean Sea','Gulf of Lion',[3,42.4,6,43.6]],
+  ['Ionian Sea','Gulf of Taranto',[16.6,39.5,18.3,40.5]],
+  ['English Channel','Gulf of Saint-Malo',[-3.05,48.5,-1.6,49.7]],
+ ]){
+  assert(area(clipping.intersection(geometry(basin),geometry(gulf)))<1e-8,basin+' overlaps '+gulf);
+  const water=clipping.difference([[[w,s],[e,s],[e,n],[w,n],[w,s]]],...land);
+  assert(area(clipping.difference(water,clipping.union(geometry(basin),geometry(gulf))))<1e-7,basin+' has coastal gaps');
+ }
+ assert(area(clipping.intersection(geometry('Balearic Sea'),geometry('Gulf of Lion')))<1e-8);
 });

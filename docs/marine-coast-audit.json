@@ -540,6 +540,16 @@
     "maxShoreShiftDegrees": 0.028855575824831448
   },
   {
+    "name": "Gulf of Taranto",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
+    "name": "Gulf of Saint-Malo",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
     "name": "Gulf of Guinea",
     "coastalSegments": 0,
     "maxShoreShiftDegrees": 0

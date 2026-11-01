@@ -96,7 +96,7 @@
     {
       "name": "Mediterranean Sea",
       "valid": true,
-      "landOverlapSquareDegrees": 2.9319310039758505e-07
+      "landOverlapSquareDegrees": 2.9693501310392906e-07
     },
     {
       "name": "Ross Sea",
@@ -306,7 +306,7 @@
     {
       "name": "English Channel",
       "valid": true,
-      "landOverlapSquareDegrees": 5.547927659906684e-09
+      "landOverlapSquareDegrees": 5.547927656860233e-09
     },
     {
       "name": "Gulf of Honduras",
@@ -549,6 +549,16 @@
       "landOverlapSquareDegrees": 9.319714688755224e-10
     },
     {
+      "name": "Gulf of Taranto",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Saint-Malo",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
       "name": "Gulf of Guinea",
       "valid": true,
       "landOverlapSquareDegrees": 4.185759290256386e-09
@@ -571,7 +581,7 @@
     {
       "name": "Gulf of Lion",
       "valid": true,
-      "landOverlapSquareDegrees": 1.2074747891373867e-08
+      "landOverlapSquareDegrees": 2.1501025591504165e-09
     },
     {
       "name": "Gulf of Suez",
@@ -1312,6 +1322,16 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Taranto",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Gulf of Saint-Malo",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },
