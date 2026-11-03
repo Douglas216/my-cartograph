@@ -540,6 +540,11 @@
     "maxShoreShiftDegrees": 0.028855575824831448
   },
   {
+    "name": "Garabogazköl Basin",
+    "coastalSegments": 0,
+    "maxShoreShiftDegrees": 0
+  },
+  {
     "name": "Gulf of Taranto",
     "coastalSegments": 0,
     "maxShoreShiftDegrees": 0

@@ -37,13 +37,14 @@ const MARINE_OCEAN_GROUPS = {
     'Southern Ocean': ['Weddell Sea', 'Ross Sea', 'Bellingshausen Sea', 'Amundsen Sea'],
     'Atlantic / Southern oceans': ['Scotia Sea'],
     'Atlantic / Pacific / Southern oceans': ['Drake Passage'],
-    'Inland basin · no ocean outlet': ['Caspian Sea', 'Türkmenbaşy Gulf'],
+    'Inland basin · no ocean outlet': ['Garabogazköl Basin','Caspian Sea', 'Türkmenbaşy Gulf'],
   };
 
 // Curated selection parents, including owner-defined groups of connected basins.
 // Connections never expand into another ocean by default. Declaring a hierarchy
 // does not add new geometry; new waters also need a source polygon.
 const MARINE_PARENT_OVERRIDES = {
+  'Garabogazköl Basin':'Caspian Sea',
   'Gulf of Taranto':'Ionian Sea', 'Gulf of Saint-Malo':'English Channel',
   'Bight of Benin':'Gulf of Guinea', 'Bight of Bonny':'Gulf of Guinea', 'Corisco Bay':'Gulf of Guinea',
   'Gulf of Suez':'Red Sea', 'Gulf of Aqaba':'Red Sea',
@@ -143,6 +144,7 @@ const PERSONAL_PEAKS = [
 
 const FIVE_YUE_NATIVE = { 'Mount Tai':'泰山', 'Mount Hua':'华山', 'Mount Heng (Hunan)':'衡山', 'Mount Heng (Shanxi)':'恒山', 'Mount Song':'嵩山' };
 const FEATURE_ADDITIONS = {
+  'Garabogazköl Basin': {countries:['Turkmenistan'],story:'Also known as Kara-Bogaz-Gol, this shallow hypersaline lagoon receives water from the Caspian Sea through a narrow inlet. Strong evaporation concentrates its salts, making the basin an important evaporative sink for the Caspian.',sourceUrl:'https://science.nasa.gov/earth/earth-observatory/overview-of-the-zaliv-kara-bogaz-gol-3550/'},
   'Gulf of Taranto': {countries:['Italy'],story:'The Ionian Sea reaches between Calabria and the Salento peninsula here. Taranto, founded as a Greek colony, developed into an important commercial and naval port at the head of the gulf.',sourceUrl:'https://www.esa.int/ESA_Multimedia/Images/2019/06/Gulf_of_Taranto_Italy'},
   'Gulf of Saint-Malo': {countries:['France','Jersey','Guernsey'],story:'Also called the Norman–Breton Gulf, this island-studded part of the English Channel lies between northern Brittany and the Cotentin peninsula. Strong tides shape its bays, estuaries and island passages.',sourceUrl:'https://www.fao.org/4/af033e/AF033E04.htm'},
   'Bight of Benin': {countries:['Ghana','Togo','Benin','Nigeria'],story:'The lagoon-backed coast between Cape Saint Paul and Cape Formoso links the ports of Lomé, Cotonou and Lagos along the northern Gulf of Guinea.',sourceUrl:'https://msi.nga.mil/api/publications/download?key=16694491%2FSFH00000%2FPub123bk.pdf&type=view'},
@@ -647,7 +649,7 @@ function processCountryTier(rawName, outName) {
         ISO_A2: ISO2_FIXUP[adm0] || iso2raw,
         ADM0_A3: adm0,
         // Coast-fitted Gujarat gulfs appear at z3; switch all political layers together.
-        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU','EGY','SAU','JOR','ISR','FRA','ESP','ITA','JEY','GGY','LBR','CIV','GHA','TGO','BEN','NGA','CMR','GNQ','GAB','STP'].includes(adm0),
+        COAST_DETAIL: ['IND','UKR','RUS','BGR','TUR','ROU','EGY','SAU','JOR','ISR','TKM','FRA','ESP','ITA','JEY','GGY','LBR','CIV','GHA','TGO','BEN','NGA','CMR','GNQ','GAB','STP'].includes(adm0),
         MAPCOLOR13: color,
         POP_EST: p.POP_EST,
         CONTINENT: p.CONTINENT,
@@ -2154,6 +2156,8 @@ function buildSeaLabels() {
 // doi:10.3390/w13121702 (upper Gulf of Thailand: Hua Hin–Ko Samaesarn),
 // NGA Sailing Directions Pub.157, sector 6 (Hangzhou Wan entrances).
 const SEA_ADD = [
+  {name:'Garabogazköl Basin',featurecla:'gulf',scalerank:4,labelAt:[53.6,41.5],keepLabelComponent:true,
+    coastBetween:{country:'TKM',entrance:[[52.882335,41.050442],[52.916515,41.08515]]}},
   // Geographic gulf limits; these do not depict territorial-water claims.
   {name:'Gulf of Taranto',featurecla:'gulf',scalerank:4,labelAt:[17.35,40.05],keepLabelComponent:true,
     coastBetween:{country:'ITA',entrance:[[17.206391,39.029486],[18.368337,39.796617]]}},
@@ -2527,6 +2531,12 @@ function enrichSeas() {
   if(!guinea||!benin||!bonny||!corisco)throw Error('Missing Gulf of Guinea waters');
   bonny.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(bonny.geometry.coordinates,corisco.geometry.coordinates)};
   guinea.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(guinea.geometry.coordinates,benin.geometry.coordinates,bonny.geometry.coordinates,corisco.geometry.coordinates)};
+  // Garabogazköl uses the original lagoon shore; one shared inlet edge.
+  const caspian=data.features.find(f=>f.properties.name==='Caspian Sea');
+  const garabogaz=data.features.find(f=>f.properties.name==='Garabogazköl Basin');
+  const garabogazInlet=clipRingToWater([[52.8,40.9],[53.1,40.9],[53.1,41.25],[52.8,41.25],[52.8,40.9]],land,landBb);
+  if(!garabogazInlet)throw Error('Missing Garabogazköl inlet');
+  caspian.geometry={type:'MultiPolygon',coordinates:polygonClipping.difference(polygonClipping.union(caspian.geometry.coordinates,roundMarineCoordinates(garabogazInlet.coordinates)),garabogaz.geometry.coordinates)};
   // Shared Red Sea entrances: restore the northern coastal water, then let
   // each gulf own its complete footprint up to the common mouth boundary.
   const redSea=data.features.find(f=>f.properties.name==='Red Sea');

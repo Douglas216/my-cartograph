@@ -549,6 +549,11 @@
       "landOverlapSquareDegrees": 9.319714688755224e-10
     },
     {
+      "name": "Garabogazk\u00f6l Basin",
+      "valid": true,
+      "landOverlapSquareDegrees": 0.0
+    },
+    {
       "name": "Gulf of Taranto",
       "valid": true,
       "landOverlapSquareDegrees": 0.0
@@ -1322,6 +1327,11 @@
     },
     {
       "name": "Sea of Marmara",
+      "valid": true,
+      "parentGapSquareDegrees": 0.0
+    },
+    {
+      "name": "Garabogazk\u00f6l Basin",
       "valid": true,
       "parentGapSquareDegrees": 0.0
     },

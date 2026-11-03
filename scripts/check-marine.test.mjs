@@ -19,7 +19,7 @@ test('all seven unlearned waters are absent from labels, hit targets, selection 
     assert(!seaRows.some(r => r.name === name), name);
     for (const r of hierarchy) assert(!r.descendants.includes(name), `${r.name}: ${name}`);
   }
-  assert.equal(seaRows.length, 150);
+  assert.equal(seaRows.length, 151);
 });
 
 test('ocean and sea selections follow containment, including nested descendants', () => {
@@ -130,7 +130,7 @@ test('new marine label anchors sit within their water polygons', () => {
     return inside;
   };
   const contains=(geometry,point)=>(geometry.type==='Polygon'?[geometry.coordinates]:geometry.coordinates).some(poly=>insideRing(point,poly[0])&&!poly.slice(1).some(r=>insideRing(point,r)));
-  const names=['Gulf of Taranto','Gulf of Saint-Malo','Gulf of Lion','Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay','Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
+  const names=['Garabogazköl Basin','Gulf of Taranto','Gulf of Saint-Malo','Gulf of Lion','Taman Bay','Dnieper-Bug Estuary','Burgas Bay','Gulf of Odessa','Karkinit Bay','Kalamita Bay','Taganrog Bay','Sea of Azov','Strait of Gibraltar','Gulf of Cádiz','Sea of Crete','Dardanelles','Sea of Marmara','Bosporus','Kerch Strait','Alboran Sea','Ligurian Sea','Cantabrian Sea','Kattegat','Skagerrak','Gulf of Ob','Khatanga Gulf','Strait of Tartary','Shelikhov Gulf','Penzhina Bay','Academy Bay'];
   const features=read('seas.geojson').features, labels=read('sea-labels.geojson').features;
   for(const name of names) {
     const label=labels.find(f=>f.properties.name===name).geometry.coordinates;
@@ -321,4 +321,23 @@ test('Lion, Taranto and Saint-Malo share gap-free non-overlapping basin entrance
   assert(area(clipping.difference(water,clipping.union(geometry(basin),geometry(gulf))))<1e-7,basin+' has coastal gaps');
  }
  assert(area(clipping.intersection(geometry('Balearic Sea'),geometry('Gulf of Lion')))<1e-8);
+});
+
+
+test('Garabogazköl is an inland Caspian child with original shoreline and sourced catalog entry',()=>{
+ const name='Garabogazköl Basin';
+ assert.deepEqual(byName.get(name).path,['Caspian Sea',name]);
+ assert.equal(byName.get(name).ocean,'Inland basin · no ocean outlet');
+ const rows=seaRows.filter(r=>r.name===name);assert.equal(rows.length,1);assert(rows[0].story&&rows[0].sourceUrl);
+ const features=read('seas.geojson').features;
+ const basin=features.find(f=>f.properties.name===name).geometry.coordinates;
+ const caspian=features.find(f=>f.properties.name==='Caspian Sea').geometry.coordinates;
+ assert.equal(basin.length,1);
+ assert(area(basin)>1&&area(basin)<4,'lagoon footprint is implausible');
+ assert(area(clipping.intersection(basin,caspian))<1e-8,'inlet hit targets overlap');
+ assert(area(clipping.difference(basin,selections.get('Caspian Sea').geometry.coordinates))<1e-8);
+ const land=JSON.parse(fs.readFileSync(new URL('../data/raw/countries-10m-raw.geojson',import.meta.url))).features.find(f=>f.properties.ADM0_A3==='TKM');
+ assert(area(clipping.intersection(basin,land.geometry.coordinates))<1e-6,'lagoon overlaps land');
+ const inlet=clipping.difference([[[52.8,40.98],[53.03,40.98],[53.03,41.18],[52.8,41.18],[52.8,40.98]]],land.geometry.coordinates);
+ assert(area(clipping.difference(inlet,clipping.union(basin,caspian)))<1e-8,'Caspian inlet has an uncovered coastal gap');
 });

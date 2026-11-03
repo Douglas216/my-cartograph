@@ -3132,7 +3132,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 
 ## Marine areas
 
-157 records; 157 distinct catalog entries. Multiple geometry records can represent one feature.
+158 records; 158 distinct catalog entries. Multiple geometry records can represent one feature.
 
 - Academy Bay
 - Adriatic Sea
@@ -3185,6 +3185,7 @@ All countries/territories remain. All five oceans remain; named marine areas fol
 - East China Sea
 - East Siberian Sea
 - English Channel
+- Garabogazköl Basin
 - Golfo de California
 - Golfo de Panamá
 - Great Australian Bight
