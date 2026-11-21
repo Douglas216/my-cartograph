@@ -55,3 +55,14 @@ test('saved handles reproduce the normal map after reload, update parent highlig
  assert.deepEqual(data.seas.features[0].geometry,geometry,'published baseline was mutated');
  const stale=applyAtlasBoundaries(data,[{...saved[0],fingerprint:'old'}]);assert.equal(stale.warnings.length,1);assert.deepEqual(stale.sources.seas.features[0].geometry,geometry);
 });
+
+test('with an edit passcode, the atlas is public to read and only the passcode can save',async()=>{
+ const env={...environment(),EDIT_PASSCODE:'secret'};try{
+ const put=(passcode,headers={})=>new Request('https://atlas.example/api/marine-boundaries',{method:'PUT',headers:{'content-type':'application/json',origin:'https://atlas.example',...(passcode?{'x-edit-passcode':passcode}:{}),...headers},body:JSON.stringify(draft)});
+ const denied=await boundaryAPI(put(''),env,manifest);assert.equal(denied.status,401);assert.equal((await denied.json()).passcode,true);
+ assert.equal((await boundaryAPI(put('wrong'),env,manifest)).status,401);
+ assert.equal((await boundaryAPI(put('',{'oai-authenticated-user-id':'a'}),env,manifest)).status,401,'OpenAI header must not bypass the passcode');
+ assert.equal((await boundaryAPI(put('secret'),env,manifest)).status,200);
+ const anonymous=await(await boundaryAPI(request('GET',''),env,manifest)).json();assert.equal(anonymous.features.length,1);
+ }finally{env.close();}
+});

@@ -14,10 +14,22 @@ export function validateSave(body,manifest){
  }
  return {name:body.name,fingerprint:body.fingerprint,revision:body.revision,edits};
 }
+export const OWNER='owner';
+async function samePasscode(given,expected){
+ const digest=async v=>new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v)));
+ const [a,b]=await Promise.all([digest(given),digest(expected)]);
+ let diff=0;for(let i=0;i<a.length;i++)diff|=a[i]^b[i];return diff===0;
+}
 const row=r=>({name:r.name,fingerprint:r.fingerprint,edits:JSON.parse(r.edits_json),revision:r.revision,updatedAt:r.updated_at});
 export async function boundaryAPI(request,env,manifest){
- const user=request.headers.get('oai-authenticated-user-id');
+ // Two hosts: OpenAI Sites adds a trusted signed-in user header; on Cloudflare the atlas is
+ // public to read and the owner's EDIT_PASSCODE secret is required to save. The OpenAI header
+ // is ignored whenever a passcode is configured, because there anyone could send it.
+ const passcodeMode=typeof env.EDIT_PASSCODE==='string'&&env.EDIT_PASSCODE.length>0;
+ const user=passcodeMode?OWNER:request.headers.get('oai-authenticated-user-id');
  if(!user)return json({error:'Sign in to save and load your atlas.'},401);
+ if(passcodeMode&&request.method==='PUT'&&!(await samePasscode(request.headers.get('x-edit-passcode')??'',env.EDIT_PASSCODE)))
+  return json({error:'Enter your editing passcode to save.',passcode:true},401);
  if(!env.DB)return json({error:'Atlas storage is unavailable. Your draft has not been saved.'},503);
  if(request.method==='GET'){
   const result=await env.DB.prepare('SELECT name, fingerprint, edits_json, revision, updated_at FROM marine_boundaries WHERE user_id = ? ORDER BY name').bind(user).all();

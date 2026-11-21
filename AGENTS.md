@@ -26,6 +26,12 @@ everything-at-once wall map, and labels follow a **typographic hierarchy**
   `/api/marine-boundaries` endpoint backed by a D1 `DB` binding (schema in `drizzle/`). Rows are
   keyed by the stable signed-in user ID + water name, with conditional revisions against
   stale-tab overwrites. Vite dev/preview does not emulate account storage; storage tests use SQLite.
+- **Cloudflare (moving here from OpenAI Sites):** `wrangler.jsonc` deploys the same Worker as
+  `my-cartograph` with the `dist/client` assets and a D1 `DB` (migrations in `drizzle/`).
+  Cloudflare Workers Builds deploys every push to `main` and gives other branches preview links.
+  There, the site is public to read and saving needs the `EDIT_PASSCODE` secret (rows use the
+  fixed user `owner`); the OpenAI user header is ignored whenever that secret is set. Keep
+  `.openai/` and `scripts/build-server.mjs` until OpenAI hosting is retired.
 
 ## Architecture: build-time pipeline + runtime layer stack
 
