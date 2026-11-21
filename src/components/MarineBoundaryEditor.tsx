@@ -14,8 +14,10 @@ type Draft={name:string;fingerprint:string;edits:Edits};
 const KEY='knowledge-map-marine-drafts-v1';
 function readDrafts():Draft[]{try{const data=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(data)?data:[];}catch{return [];}}
 const empty={type:'FeatureCollection',features:[]} as const;
-export default function MarineBoundaryEditor(){
-  const [open,setOpen]=useState(false),[names,setNames]=useState<string[]>([]),[name,setName]=useState('');
+// The launcher button lives in the top-left overlay stack (App.tsx) so it flows
+// below the search bar and zoom label instead of sitting at a fixed offset.
+export default function MarineBoundaryEditor({open,setOpen}:{open:boolean;setOpen:(open:boolean)=>void}){
+  const [names,setNames]=useState<string[]>([]),[name,setName]=useState('');
   const [definition,setDefinition]=useState<Definition|null>(null),[edits,setEdits]=useState<Edits>({}),[history,setHistory]=useState<Edits[]>([]),[future,setFuture]=useState<Edits[]>([]);
   const [boundaryId,setBoundaryId]=useState(''),[selected,setSelected]=useState<number|null>(null);
   const [busy,setBusy]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState(''),[ready,setReady]=useState(false);
@@ -166,7 +168,6 @@ export default function MarineBoundaryEditor(){
   };
   const boundary=definition?.boundaries.find(b=>b.id===boundaryId),points=boundary?(edits[boundaryId]||boundary.handles):[];
   return <>
-    {!open&&<button className="marine-editor-open" onClick={()=>setOpen(true)}>✎ Edit water boundaries</button>}
     {open&&<section className="marine-editor" aria-label="Marine boundary editor">
       <header><div><span className="marine-eyebrow">MY ATLAS · BOUNDARY EDITOR</span><h2>Edit water boundaries</h2></div><button disabled={saving} aria-label="Close boundary editor" onClick={()=>{if(!saving&&guard())setOpen(false);}}>×</button></header>
       <p>Adjust entrances and offshore limits. Dataset coastlines stay locked.</p>

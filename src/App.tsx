@@ -14,6 +14,7 @@ import './styles/global.css';
 
 export default function App() {
   const [catalogTab, setCatalogTab] = useState(() => window.location.hash.startsWith('#catalog') ? window.location.hash.split('/')[1] || 'countries' : null);
+  const [marineEditorOpen, setMarineEditorOpen] = useState(false);
   const [mapVisited, setMapVisited] = useState(() => !window.location.hash.startsWith('#catalog'));
   useEffect(() => {
     const update = () => {
@@ -39,9 +40,10 @@ export default function App() {
           <SearchBar onFlyTo={handleFlyTo} />
           <button className="catalog-open-button" onClick={() => navigateCatalog('countries')}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16"/></svg><span>My atlas · Tables</span><span aria-hidden="true">→</span></button>
           <ZoomIndicator />
+          {!marineEditorOpen && <button className="marine-editor-open" onClick={() => setMarineEditorOpen(true)}>✎ Edit water boundaries</button>}
         </div>
         <LayerPanel />
-        <MarineBoundaryEditor />
+        <MarineBoundaryEditor open={marineEditorOpen} setOpen={setMarineEditorOpen} />
         <PolicyNote />
         <InsetPanel />
         <InfoCard />
