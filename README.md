@@ -1,188 +1,40 @@
-# React + TypeScript + Vite
+# My Cartograph
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**One person's world map, built a piece at a time as I learn it.**
 
-Currently, two official plugins are available:
+<!-- Live site link goes here once the URL is known:
+👉 **[Open the map](LIVE_URL_HERE)**
+-->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<!-- Screenshot goes here once docs/screenshot.png exists:
+![A view of My Cartograph](docs/screenshot.png)
+-->
 
-## React Compiler
+Most maps try to show you everything. This one only shows what I've chosen to put on it.
+Every border, mountain range, river, sea and bay here earned its place because I looked it
+up, learned something about it, and decided it belonged. So it's part atlas, part
+travel journal for my geography curiosity.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## What you can do
 
-## Expanding the ESLint configuration
+- **Explore the world.** Pan and zoom around countries, territories and their regions,
+  with mountains, terrain, rivers, seas and oceans layered on top.
+- **Click on anything.** Tap a country, peak or body of water to see what it is,
+  where it sits, and a few key facts like capitals, population and size.
+- **Browse it like a reference book.** Open *My atlas · Tables* to see everything on
+  the map in searchable, sortable lists, grouped by category.
+- **See how waters fit together.** Seas sit inside oceans, bays inside seas. Pick one
+  and the map shows the whole family it belongs to.
+- **Redraw the sea edges (signed-in).** Where a sea's offshore edge looks wrong to me,
+  I can drag it into a better shape and save it, and the map remembers it everywhere.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Where the data comes from
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The shapes start from [Natural Earth](https://www.naturalearthdata.com/), a free public
+map dataset. Facts like populations and heights come from public references, with
+sources linked in the app. Sea boundaries are my own atlas choices, not legal borders.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-## Personal atlas membership
-
-[My atlas catalog](docs/my-atlas.md) lists the current map contents by category.
-Edit the `PERSONAL_*` selections in `scripts/process-countries.mjs`, then run
-`node scripts/process-countries.mjs` to regenerate map geometry, labels, the catalog,
-and the packed deployment subdivisions. There are no editorial tiers.
-
-The complete source geometry is retained in `data/raw/`; the displayed files in
-`public/geo/` contain only the selected features. On a fresh setup, run
-`bash scripts/download-geodata.sh` first to populate the source cache.
-Country/territory coverage remains unrestricted. Marine membership follows the explicit personal exclusions in the build script.
-
-## Atlas tables
-
-Open **My atlas · Tables** below the map search, or `/#catalog/countries`.
-Six category tabs contain eight searchable, sortable tables generated from the
-selected map features. The map stays mounted after its first visit, preserving
-its viewport when switching back from the catalog.
-
-`public/geo/catalog.json` is regenerated by `node scripts/process-countries.mjs`.
-Population estimates retain Natural Earth's reference years. Capital and physical
-measurement references are snapshotted in `data/catalog-reference.json`, with
-per-feature source links. Run `python scripts/fetch-catalog-reference.py` to refresh
-that public reference snapshot, then regenerate. This requires network access;
-normal builds do not. Country extents and measurement overrides remain curated in
-the build script. Mountain range areas measure the generalized map footprint;
-unavailable measurements remain null rather than zero.
-
-Checks: `node --test scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs`.
-
-## Nested marine selections
-
-`PERSONAL_MARINE_EXCLUDED` controls labels, individual hit targets and catalog rows.
-`MARINE_PARENT_OVERRIDES` declares the curated selection hierarchy; connections
-alone do not create parent links. The owner’s Atlantic–Mediterranean grouping
-places Black Sea beneath Mediterranean Sea, with Dardanelles, Sea of Marmara and
-Bosporus as sibling entries. The build emits `marine-hierarchy.json` for metadata and
-`marine-selections.geojson` with dissolved parent-plus-descendant highlight shapes.
-Excluded names remain absent from the UI while their physical water remains part
-of the containing ocean's geographic extent. Raw marine geometry is cached in
-`data/raw/seas-raw.geojson`, so rebuilding does not permanently discard it.
-
-The table shows immediate parents, and selection cards show the containment path.
-Run `node --experimental-strip-types --test scripts/check-marine.test.mjs scripts/check-catalog.test.mjs scripts/check-rivers.test.mjs scripts/check-ocean-lookup.test.mjs`.
-
-
-Marine boundary lines use the same dissolved geometry as selection highlights,
-so an old parent edge cannot cut through an included bay. The northern Andaman
-coast is repaired before hierarchy generation. Martaban and the five added bays
-use generalized coastal limits clipped to the cached 10m coastline; these are
-atlas extents, not legal maritime boundaries. Ocean fallback clicks use basin
-containment and distance to water boundaries, with antimeridian handling, rather
-than distance to ocean label points.
-
-
-Coastal waters now share the detailed land coastline. The build follows matching
-coastal vertices and removes land/islands, while retaining offshore limits and
-nested selections. See [the coastline audit](docs/marine-coast-audit.md).
-Run the regular regression checks with `scripts/check-coast-matching.test.mjs`
-included. The optional independent GEOS audit is
-`python3 scripts/audit-marine-coasts.py` (requires Shapely in the Python environment).
-
-## Marine boundary editor
-
-Choose **Edit water boundaries** on the map, then a named water body and its
-offshore line. Drag numbered handles, select a handle and **Add midpoint**, or
-remove interior handles. Endpoints touching land snap to the cached Natural
-Earth 10m coastline. The coastline itself is never editable. Gold shading is
-the draft; the gray outline previews its containing water. Normal feature
-selection is suspended while editing. Undo/redo and Reset shape are available.
-
-**Save to my atlas** writes the current water's offshore handles to your signed-in
-account. The normal map applies them immediately and loads them again after a
-refresh or on another device. Existing browser drafts still open in the editor;
-press Save to my atlas to migrate one. No download or separate publication is
-required. To return to the dataset boundary, choose **Reset shape**, then save.
-**Reload saved boundaries** refreshes a water after a conflict with another tab.
-
-The same geometry engine reconstructs both previews and normal-map sources from
-the immutable 10m coastline. Parent selection/highlight geometry is recomputed;
-labels that fall outside an adjusted shape are moved inside the water. Stale
-baseline fingerprints are surfaced for review rather than silently applied.
-
-Hosted storage uses a D1 `DB` binding and the schema migration in `drizzle/`.
-The ESM Worker serves an authenticated `/api/marine-boundaries` endpoint alongside
-the existing Vite SPA assets. Rows are keyed by Sites' stable authenticated user
-ID and water name. Conditional revisions prevent stale-tab overwrites; saves are
-same-origin JSON requests and return errors without discarding the current edit.
-Deployment preserves the existing site audience. Ordinary Vite dev/preview does
-not emulate account storage; API/storage regression tests use SQLite locally.
-
-Export remains an optional backup/manual integration path. For that workflow,
-browser storage holds only legacy drafts, so clearing it does not remove account
-saves. To incorporate an export into the shared build-time dataset:
-
-To apply an exported file:
-
-```sh
-node scripts/import-marine-edits.mjs /absolute/path/to/marine-boundary-edits.json
-node scripts/process-countries.mjs
-node --experimental-strip-types --test scripts/check-*.test.mjs
-npm run build
-```
-
-The importer validates geometry and baseline fingerprints before appending to
-`data/marine-boundary-edits.json`. Builds replay that edit history before generating
-hierarchy, labels and catalog. Source-data changes that invalidate an old draft
-fail explicitly rather than silently moving the wrong boundary. A browser draft
-from an older baseline remains exportable for review, but is not auto-applied.
-
-The editor discovers offshore chains from fitted marine polygons and loads its
-coastline data only on demand, inside a background worker. It excludes ocean-only
-outlines, the inland Caspian Sea, reef footprints and sub-kilometre rounding seams.
-Offshore limits are editorial atlas extents, not maritime legal boundaries.
+<sub>For developers: it's a Vite + React + MapLibre site with a small Worker backend.
+See [AGENTS.md](AGENTS.md) for how it's built and how to regenerate the map data.</sub>
