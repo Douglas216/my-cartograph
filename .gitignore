@@ -29,3 +29,20 @@ public/geo/admin1.geojson
 *.njsproj
 *.sln
 *.sw?
+
+# Local / personal files
+.claude/settings.local.json
+.Rhistory
+**/.DS_Store
+
+# Secrets and local runtime state
+.env
+.env.*
+.dev.vars
+.wrangler/
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.pyc
